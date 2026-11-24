@@ -236,6 +236,46 @@ const app=http.createServer(async(req,res)=>{
       }catch(e){return json(res,200,{error:e?.name==='AbortError'?'timeout':e.name||'error'});}
       finally{clearTimeout(timer);ctl.abort();}
     }
+    if(req.method==='GET' && pathname==='/api/official-format-probe') {
+      const format=new URL(req.url,'http://localhost').searchParams.get('format');
+      if(!['ts','m3u8'].includes(format))return json(res,400,{error:'invalid_format'});
+      const u=new URL('/get.php',origin);
+      u.searchParams.set('username',s.u);u.searchParams.set('password',s.p);
+      u.searchParams.set('type','m3u_plus');u.searchParams.set('output',format);
+      const ctl=new AbortController();
+      const timer=setTimeout(()=>ctl.abort(),12000);
+      let report={format,playlistStatus:null,streamStatus:null};
+      try{
+        const list=await fetch(u,{signal:ctl.signal,redirect:'manual',headers:{'user-agent':'IBO-TV/1.0','accept':'*/*'}});
+        report.playlistStatus=list.status;
+        if(!list.ok||!list.body)return json(res,200,report);
+        const reader=list.body.getReader();
+        const b=await reader.read();
+        const text=Buffer.from(b.value||new Uint8Array()).toString('utf8');
+        void reader.cancel().catch(()=>{});
+        const line=text.split(/\r?\n/).find(x=>/^https?:\/\//i.test(x.trim()));
+        if(!line){report.error='no_media_in_first_chunk';return json(res,200,report)}
+        const media=new URL(line.trim());
+        if(media.hostname.toLowerCase()!==origin.hostname.toLowerCase()){report.error='different_host';return json(res,200,report)}
+        report.sourceProtocol=media.protocol.replace(':','');
+        report.sourcePort=media.port||(media.protocol==='https:'?'443':'80');
+        report.sourceSuffix=media.pathname.match(/\.(m3u8|ts)$/i)?.[1]||'none';
+        const st=await fetch(media,{method:'GET',redirect:'manual',signal:ctl.signal,headers:{'user-agent':'IBO-TV/1.0','accept':'*/*'}});
+        report.streamStatus=st.status;report.mime=(st.headers.get('content-type')||'').split(';')[0];
+        if(st.ok && st.body){
+          const rd=st.body.getReader();const part=await rd.read();
+          const bytes=part.value||new Uint8Array();
+          const value=Buffer.from(bytes.subarray(0,40)).toString('utf8').trimStart();
+          report.signature=bytes[0]===71?'MPEG_TS':value.startsWith('#EXTM3U')?'HLS':value.startsWith('<')?'HTML':'unknown';
+          report.firstBytes=bytes.length;
+          void rd.cancel().catch(()=>{});
+        }
+        else {void st.body?.cancel().catch(()=>{});}
+        console.log('OFFICIAL_FORMAT_PROBE format='+format+' playlist='+list.status+' media='+st.status);
+        return json(res,200,report);
+      }catch(e){report.error=e.name||'error';return json(res,200,report)}
+      finally{clearTimeout(timer);ctl.abort();}
+    }
     const probe=pathname.match(/^\/api\/probe\/([0-9]{1,16})$/);
     if(req.method==='GET' && probe) {
       const id=Number(probe[1]);
