@@ -1,72 +1,123 @@
-<!doctype html>
-<html lang="tr">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>İBO TV | Özel Sinema • Canlı TV</title>
-<meta name="theme-color" content="#10131b"><meta name="description" content="İBO TV canlı yayın platformu. Film sitesinden bağımsız test ve bağlantı ekranı.">
+<!DOCTYPE html>
+<html lang="tr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0e16"><meta name="robots" content="noindex, nofollow">
+<meta name="description" content="İBO TV - Kişisel canlı TV izleme alanı.">
+<title>İBO TV | Özel Sinema</title>
 <style>
-:root{color-scheme:dark;--bg:#090b10;--panel:#151a25;--line:#29303e;--txt:#f5f5f7;--muted:#9ea8b7;--red:#ed2349}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 90% -15%,#361628 0,transparent 45%),#090b10;color:var(--txt);font:15px system-ui,-apple-system,'Segoe UI',sans-serif}
-header{height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff15;padding:0 clamp(16px,5vw,70px);background:#0d1119bd;backdrop-filter:blur(16px)}
-.brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit}.mark{font-size:18px;font-weight:950;letter-spacing:-1px;background:#dc2243;border-radius:13px;padding:10px 12px;box-shadow:0 4px 22px #9b123566}.brand strong{display:block;font-size:17px;letter-spacing:.08em}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:.2em;margin-top:2px}
-nav{display:flex;gap:20px;align-items:center}nav a{color:#bbc3d1;text-decoration:none;font-size:13px;font-weight:700}nav a:hover,nav a:focus-visible{color:white}
-.pill{border:1px solid #543c49;border-radius:99px;background:#261b25;color:#f5bdc9;padding:7px 11px;font-size:10px;font-weight:800;letter-spacing:.11em}
-main{max-width:1540px;margin:0 auto;padding:clamp(19px,3.5vw,45px) clamp(12px,3.2vw,50px)}
-.pretitle{color:#ed647e;font-size:12px;font-weight:800;letter-spacing:.18em;margin:0 0 8px}.top{display:flex;gap:30px;justify-content:space-between;align-items:end;flex-wrap:wrap;margin-bottom:25px}
-h1{font-size:clamp(29px,4.7vw,56px);letter-spacing:-.06em;margin:0 0 7px;line-height:1.1}h1 span{color:#f03459}p{color:var(--muted);line-height:1.6;margin:0}
-.button{display:inline-flex;gap:9px;align-items:center;justify-content:center;color:#fff;background:#282f40;border:1px solid #485268;border-radius:10px;padding:12px 16px;text-decoration:none;cursor:pointer;font-weight:750;font-size:13px}
-.button:hover{background:#354158}.button:focus-visible{outline:3px solid #ec4f69}
-.content{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:19px}
-.player{border:1px solid #354050;background:#0f141e;border-radius:19px;overflow:hidden;box-shadow:0 14px 65px #0007}
-.playerhead{padding:16px 20px;display:flex;gap:12px;align-items:center;justify-content:space-between}
-.live{font-size:12px;font-weight:900;letter-spacing:.13em}.dot{display:inline-block;width:8px;height:8px;margin-right:8px;background:#ee294b;border-radius:50%;box-shadow:0 0 15px #f22}
-.source{color:#a5b1be;font-size:12px}
-.framewrap{background:#030509;min-height:240px;height:clamp(360px,65vh,850px)}
-iframe{border:0;width:100%;height:100%;display:block;background:#040609}
-.controls{padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid #253043}
-.controls small{color:#9ea8b7}
-.sidebar{display:flex;flex-direction:column;gap:14px}
-.panel{border:1px solid #303746;background:linear-gradient(135deg,#1a2230,#111620);border-radius:17px;padding:22px}
-.panel h2{font-size:16px;margin:0 0 11px}.panel p{font-size:13px}.panel a{color:#f4d7de}
-.info{margin:0;padding:0;list-style:none}.info li{font-size:12px;color:#bec8d6;padding:10px 0;border-bottom:1px solid #ffffff16}.info li:last-child{border-bottom:0}.info b{color:white}
-.note{margin-top:18px;padding:14px 18px;border:1px solid #544332;border-radius:12px;background:#231d19;color:#e5ccb0;font-size:12px;line-height:1.7}
-footer{padding:32px 0 8px;color:#788394;font-size:12px}
-@media(max-width:950px){.content{grid-template-columns:1fr}.sidebar{display:grid;grid-template-columns:1fr 1fr}.framewrap{height:65vh}nav{gap:10px}}
-@media(max-width:620px){header{height:65px;padding:0 12px}.brand{gap:8px}.brand strong{font-size:13px}.mark{font-size:14px;padding:8px}.pill{display:none}nav a{font-size:12px}nav{gap:8px}.top{margin-bottom:14px}.framewrap{height:73dvh;min-height:430px}.sidebar{grid-template-columns:1fr}.playerhead,.controls{padding:12px}.source{font-size:10px}main{padding:20px 9px}.panel{padding:18px}}
-</style>
-</head>
+:root{color-scheme:dark;--bg:#0a0d14;--panel:#151b26;--border:#2c3544;--text:#f5f7fb;--sub:#9da8ba;--accent:#f43a5b;--glow:#533348;--blue:#80b6ff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(900px 420px at 6% -14%,#29314d6f,transparent 82%),radial-gradient(600px 400px at 100% -10%,#48203762,transparent 78%),var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Arial,sans-serif}
+button,a{-webkit-tap-highlight-color:transparent}button{font:inherit}a{color:inherit;text-decoration:none}
+.shell{max-width:1510px;margin:0 auto;padding:0 clamp(13px,3vw,48px)}
+.topbar{border-bottom:1px solid #ffffff18;background:#0c111acb;backdrop-filter:blur(24px);position:sticky;top:0;z-index:20}
+.topbar>.shell{height:72px;display:flex;align-items:center;gap:22px;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:11px;white-space:nowrap}.logo{width:43px;height:43px;border-radius:13px;background:linear-gradient(135deg,#f74163,#a40d36);box-shadow:0 9px 25px #ef2f5340;display:grid;place-items:center;font-weight:950;font-size:15px;letter-spacing:-.07em}.brandname{display:block;font-size:17px;font-weight:850;letter-spacing:.01em}.brandname strong{color:#ff6d87}.brandtag{display:block;letter-spacing:.19em;font-size:9px;color:#9aa5b6;font-weight:750;margin-top:3px}
+nav{display:flex;align-items:center;gap:14px}nav a{color:#b7c3d4;font-size:12px;font-weight:700;padding:10px 12px;border-radius:9px}nav a:hover,nav a:focus-visible{background:#263041;color:white}
+.statuspill{display:flex;align-items:center;gap:8px;border:1px solid #3a4655;background:#17202e;border-radius:30px;color:#c2cad7;padding:8px 12px;font-size:11px;font-weight:750;white-space:nowrap}
+.light{width:8px;height:8px;border-radius:50%;background:#eaa74c;box-shadow:0 0 0 3px #f0aa4317;flex-shrink:0}
+.light.on{background:#56d69c;box-shadow:0 0 0 3px #56d69c1d}.light.off{background:#fa6370;box-shadow:0 0 0 3px #fa637022}
+.main{padding-top:31px;padding-bottom:40px}
+.intro{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:23px}
+.eyebrow{display:flex;align-items:center;gap:9px;color:#ff899e;font-size:11px;font-weight:800;letter-spacing:.19em;text-transform:uppercase;margin-bottom:7px}.eyebrow:before{content:"";width:18px;height:2px;background:#ff6282;border-radius:5px}
+h1{font-size:clamp(30px,4.8vw,54px);font-weight:860;letter-spacing:-.055em;line-height:1.12;margin:0 0 9px}
+h1 em{font-style:normal;color:#ff617c}.lede{font-size:14px;color:var(--sub);max-width:650px;margin:0}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap}
+.action{appearance:none;display:inline-flex;justify-content:center;align-items:center;gap:8px;padding:12px 17px;border-radius:11px;border:1px solid #445064;background:#202b3b;color:#f7fbff;font-size:13px;font-weight:750;cursor:pointer;white-space:nowrap;transition:background .2s,border-color .2s,transform .2s}
+.action:hover{background:#344053;border-color:#8b9aaf}.action:active{transform:scale(.98)}
+.action.primary{background:linear-gradient(120deg,#fc4869,#cb2148);border-color:#ed4b68;color:white;box-shadow:0 8px 26px #c927492a}
+.action.primary:hover{background:#ed3156}
+.action svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:19px;align-items:start}
+.screenpanel,.asidepanel{background:linear-gradient(180deg,#151c29,#101622);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 25px 68px #0003}
+.playerhead{min-height:62px;display:flex;justify-content:space-between;gap:12px;align-items:center;padding:13px 20px}
+.playerhead .left{display:flex;align-items:center;gap:11px;font-size:13px;font-weight:780}.onair{border:1px solid #ad284a;background:#3c1d2a;color:#ff9ab0;padding:5px 8px;font-size:10px;font-weight:850;border-radius:6px;letter-spacing:.12em}.tag{font-size:11px;color:#96a6b9;white-space:nowrap}
+.screen{height:clamp(390px,67vh,820px);background:#02040a;position:relative}
+iframe{width:100%;height:100%;border:0;display:block;background:#05070f}
+.playerfoot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 20px;min-height:64px;border-top:1px solid #273346}
+.liveinfo{display:flex;align-items:center;gap:11px;min-width:0}.mini{width:35px;height:35px;display:grid;place-items:center;border:1px solid #394457;border-radius:10px;color:#fa7890;font-weight:900;background:#1c2535}
+.liveinfo b{display:block;font-size:13px}.liveinfo small{display:block;color:#96a6b8;font-size:11px;white-space:normal}
+.subbtn{background:none;border:1px solid #3e4c5d;border-radius:9px;color:#e2e8f0;font-size:12px;font-weight:720;padding:9px 12px;cursor:pointer;white-space:nowrap}
+.side{display:flex;flex-direction:column;gap:16px}
+.asidepanel{padding:23px}
+.asidepanel h2{font-size:17px;margin:0 0 13px;letter-spacing:-.015em}
+.cardlabel{font-size:11px;color:#8fa2b8;font-weight:800;letter-spacing:.13em;margin:0 0 12px;text-transform:uppercase}
+.connection{display:flex;align-items:center;gap:13px;margin:0 0 13px}.connection .bubble{width:44px;height:44px;border-radius:14px;background:#2a3545;display:grid;place-items:center;font-weight:850;color:#91c1ff;font-size:20px}.connection strong{display:block;font-size:14px}.connection small{color:#a2adbd}
+.detail{margin:15px 0 0;display:grid;gap:11px}.detail div{display:flex;justify-content:space-between;gap:16px;border-top:1px solid #ffffff0f;padding-top:11px;font-size:12px}.detail dt{color:#a8b2c2}.detail dd{margin:0;color:#ecf2fc;font-weight:720;text-align:right}
+.helptext{font-size:13px;line-height:1.65;color:#b4bdcb;margin:0}
+.testlink{display:flex;justify-content:space-between;align-items:center;border:1px solid #384559;padding:14px 15px;border-radius:12px;background:#1b2637;font-weight:750;font-size:13px;margin-top:15px}
+.testlink:hover{background:#29364a}
+.statenote{border:1px solid #524537;background:#211d1d;border-radius:13px;padding:13px 17px;font-size:12px;color:#d4c2b6;line-height:1.6;margin-top:19px}
+footer{color:#738196;font-size:11px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:27px 0}
+@media(max-width:1050px){.stage{grid-template-columns:minmax(0,1fr)}.side{display:grid;grid-template-columns:1fr 1fr}.screen{height:66vh}.asidepanel{padding:18px}}
+@media(max-width:610px){.topbar>.shell{height:64px;gap:8px}.brand{gap:8px}.brandname{font-size:14px}.brandtag{font-size:8px;letter-spacing:.12em}.logo{width:38px;height:38px;border-radius:10px}.statuspill{font-size:0;padding:8px}.statuspill .light{width:9px;height:9px}nav{gap:4px}nav a{font-size:11px;padding:8px 4px}.main{padding-top:20px}.intro{margin-bottom:17px;gap:18px}.lede{font-size:13px}.toolbar{display:grid;grid-template-columns:repeat(2,1fr);width:100%}.action{padding:12px 6px;font-size:12px}.screenpanel,.asidepanel{border-radius:15px}.screen{height:min(72dvh,760px);min-height:400px}.playerhead{min-height:55px;padding:10px 12px}.playerfoot{padding:12px}.side{grid-template-columns:1fr;gap:11px}.tag{font-size:9px}.statenote{margin-top:14px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style></head>
 <body>
-<header>
- <a class="brand" href="/" aria-label="İBO TV ana sayfa"><span class="mark">İBO</span><span><strong>ÖZEL SİNEMA</strong><small>CANLI TV PLATFORMU</small></span></a>
- <nav><a href="#izle">Canlı TV</a><a href="/proof">Test Kanalları</a></nav><span class="pill">BAĞIMSIZ SİTE</span>
-</header>
-<main>
- <div class="top">
-  <div><div class="pretitle">İBO TV · KİŞİSEL YAYIN MERKEZİ</div><h1>Canlı TV <span>tek ekranda.</span></h1>
-  <p>İBO Özel Sinema ana sitesinden bağımsız izleme alanı. Mevcut PC yayın sayfası bu pencerede açılır.</p></div>
-  <a class="button" href="/proof" aria-label="Doğrulanmış örnek yayın testini aç">Test kanallarını izle</a>
- </div>
- <div class="content" id="izle">
-  <section class="player" aria-label="İBO TV yayın alanı">
-   <div class="playerhead"><div class="live"><i class="dot"></i>CANLI TV</div><div class="source">Kaynak: PC üzerindeki mevcut TV sayfası</div></div>
-   <div class="framewrap"><iframe id="tv" title="İBO TV canlı yayın oynatıcısı" src="https://maui-telecharger-surgeons-pentium.trycloudflare.com/tv" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen referrerpolicy="no-referrer"></iframe></div>
-   <div class="controls"><small id="status">Yayın sayfası yükleniyor. PC'nin açık olması gerekir.</small><button class="button" type="button" id="refresh">Yayın sayfasını yenile</button></div>
-  </section>
-  <aside class="sidebar">
-   <section class="panel"><h2>İBO TV</h2><p>Bu sayfa doğrudan bağımsız barındırmada çalışır. Ana sinema sitesine herhangi bir değişiklik yapılmamıştır.</p></section>
-   <section class="panel"><h2>Bağlantı bilgisi</h2>
-    <ul class="info"><li><b>PC kaynak:</b> Mevcut yayın sunucusu</li><li><b>Test oynatıcı:</b> <a href="/proof">3 örnek kanal</a></li><li><b>IPTV şifresi:</b> Bu site kodunda bulunmaz</li><li><b>Durum:</b> Canlı yayın ve girişsiz erişim ayrıca doğrulanacak</li></ul>
-   </section>
-  </aside>
- </div>
- <div class="note">Bu sayfa mevcut PC TV kaynağını başka bir sekmeye yönlendirmeden çerçeve içinde açar. <strong>İzleyicinin IPTV hesabı girmeden gerçek yayını oynatması henüz doğrulanmış değildir.</strong> Sunucu PC kapalıyken TV kaynağına erişemeyebilir. Gerçek yayını yeniden dağıtmak için gerekli yayın hakları ve sağlayıcı izni bulunmalıdır.</div>
- <footer>© İBO Özel Sinema · Bağımsız Canlı TV Platformu · Deneme bağlantısı</footer>
+<header class="topbar"><div class="shell">
+<a href="/" class="brand" aria-label="İBO TV ana sayfa"><span class="logo">İBO</span><span><span class="brandname">İBO <strong>TV</strong></span><span class="brandtag">ÖZEL SİNEMA</span></span></a>
+<nav><a href="#canli">Canlı TV</a><a href="/proof">Test</a></nav>
+<div class="statuspill" id="statusPill" aria-live="polite"><span class="light" id="statusLight"></span><span id="statusMini">Kontrol ediliyor</span></div>
+</div></header>
+<main class="shell main">
+<section class="intro"><div><div class="eyebrow">İBO ÖZEL SİNEMA</div><h1>Canlı TV, <em>tek adreste.</em></h1><p class="lede">Özel yayın merkezine hoş geldin. Kanal seç, tam ekrana geç ve izle. IPTV giriş ekranıyla uğraşmana gerek yok.</p></div>
+<div class="toolbar">
+<button class="action primary" id="reload" type="button"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.2 6"/><path d="M20 4v7h-7"/></svg>Yeniden bağlan</button>
+<button class="action" id="copy" type="button"><svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>Linki paylaş</button>
+</div></section>
+<div class="stage" id="canli">
+<section class="screenpanel">
+<div class="playerhead"><div class="left"><span class="onair">CANLI TV</span><span>İBO TV yayınları</span></div><span class="tag">HD oynatıcı · Mobil uyumlu</span></div>
+<div class="screen"><iframe id="player" title="İBO TV canlı kanal oynatıcısı" src="https://learned-phpbb-rental-contests.trycloudflare.com/tv-guest" allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="no-referrer" allowfullscreen loading="eager"></iframe></div>
+<div class="playerfoot"><div class="liveinfo"><span class="mini">TV</span><div><b id="connectionTitle">Sunucu kontrol ediliyor</b><small id="connectionDesc">Bağlantı bilgisi alınıyor…</small></div></div>
+<button class="subbtn" id="fullscreen" type="button">Tam ekran</button></div>
+</section>
+<div class="side">
+<aside class="asidepanel"><p class="cardlabel">Yayın durumu</p>
+<div class="connection"><span class="bubble" id="statusSymbol">●</span><div><strong id="panelStatus">Kontrol ediliyor</strong><small id="panelSub">Sunucuya bağlanılıyor</small></div></div>
+<p class="helptext">Bağlantı koparsa site durumu tekrar kontrol eder; erişim geri geldiğinde oynatıcıyı yeniden bağlar.</p>
+<dl class="detail"><div><dt>Bağlantı</dt><dd id="linkStatus">Kontrol ediliyor</dd></div><div><dt>İzleme erişimi</dt><dd>Bağlantısı olanlar</dd></div><div><dt>IPTV girişi</dt><dd>Tek seferlik kurulum</dd></div><div><dt>Eşzamanlı yayın</dt><dd>1 izleyici</dd></div></dl></aside>
+<aside class="asidepanel"><p class="cardlabel">Ek seçenekler</p><h2>Yayın deneyimi</h2><p class="helptext">Yayın yavaşlarsa yeniden bağlanmayı deneyebilirsin. Bağlantının tamamen kesildiği durumlarda internet veya yayın sağlayıcısının geri gelmesi gerekir.</p>
+<a class="testlink" href="/proof"><span>Oynatıcı test kanalları</span><span aria-hidden="true">↗</span></a></aside>
+</div>
+</div>
+<div class="statenote"><strong>Bilgi:</strong> Site bağlantıyı bilen herkese açıktır; ancak mevcut IPTV üyeliği bir defada yalnızca tek yayın bağlantısına izin verir. Bu sayfa yayın lisansı veya sağlayıcı kaynaklı erişim kesintilerini kaldıramaz. Bilgisayarın ve yayın tünelinin açık olması gerekir.</div>
+<footer><span>© İBO TV · Özel Sinema</span><span>Bağımsız yayın platformu</span></footer>
 </main>
 <script>
 (()=>{
- const f=document.getElementById('tv'),s=document.getElementById('status'),b=document.getElementById('refresh');
- f.addEventListener('load',()=>{s.textContent='TV sayfası yüklendi. Bu, gerçek video oynadığını doğrulamaz.'});
- b.addEventListener('click',()=>{s.textContent='Yayın sayfası yeniden yükleniyor.';f.src=f.src});
+const player=document.getElementById('player'),light=document.getElementById('statusLight');
+const statusMini=document.getElementById('statusMini'),title=document.getElementById('connectionTitle'),desc=document.getElementById('connectionDesc');
+const panel=document.getElementById('panelStatus'),sub=document.getElementById('panelSub'),link=document.getElementById('linkStatus');
+let last='unknown',checking=false;
+function present(state){
+const copy={
+online:['Sunucu erişilebilir','Bağlantı hazır. Kanalı oynatıcıdan seç.','Yayın geçidi çevrimiçi','Çevrimiçi'],
+setup:['Bir defalık kurulum bekleniyor','IPTV sahibi giriş bilgilerini kendi PC’sinde kaydetmeli.','Kurulum bekleniyor','Hazırlanıyor'],
+offline:['Bağlantı geçici olarak kesildi','Site otomatik olarak yeniden kontrol edecek.','Bağlantı aranıyor','Kesinti var']
+}[state]||['Kontrol ediliyor','Sunucu durumu kontrol ediliyor.','Kontrol ediliyor','Kontrol ediliyor'];
+title.textContent=copy[0];desc.textContent=copy[1];panel.textContent=copy[2];sub.textContent=copy[1];link.textContent=copy[3];
+statusMini.textContent=copy[3];light.className='light'+(state==='online'?' on':state==='offline'?' off':'');
+document.getElementById('statusSymbol').textContent=state==='online'?'✓':state==='offline'?'!':'●';
+}
+async function check(){
+if(checking||document.hidden)return;
+checking=true;
+try{
+const ac=new AbortController();const timer=setTimeout(()=>ac.abort(),5500);
+let r;try{r=await fetch('/api/tv-status',{cache:'no-store',signal:ac.signal})}finally{clearTimeout(timer)}
+if(!r.ok)throw Error('health_http');
+const j=await r.json();const next=j.bridge==='online'?(j.configured?'online':'setup'):'offline';
+present(next);
+if(last==='offline'&&next==='online'){player.src=player.src}
+if(last==='setup'&&next==='online'){player.src=player.src}
+last=next;
+}catch{present('offline');last='offline'}finally{checking=false}
+}
+document.getElementById('reload').addEventListener('click',()=>{player.src=player.src;check()});
+document.getElementById('fullscreen').addEventListener('click',async()=>{try{await player.requestFullscreen()}catch{title.textContent='Tam ekran bu tarayıcıda desteklenmiyor.'}});
+document.getElementById('copy').addEventListener('click',async()=>{const b=document.getElementById('copy');try{await navigator.clipboard.writeText(location.origin+'/');b.textContent='Link kopyalandı';setTimeout(()=>b.textContent='Linki paylaş',2500)}catch{b.textContent='Adres çubuğundan kopyalayabilirsin'}});
+window.addEventListener('online',check);document.addEventListener('visibilitychange',()=>{if(!document.hidden)check()});
+check();setInterval(check,18000);
 })();
 </script>
 </body></html>

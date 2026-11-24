@@ -16,6 +16,10 @@ const personalHome=readFileSync(path.join(base,'home.html'));
 const proofHTML=readFileSync(path.join(base, 'proof.html'));
 const proofVideos=[null,...[1,2,3].map(i=>readFileSync(path.join(base,'proof-media','channel-'+i+'.mp4')))];
 const playerJS = readFileSync(path.join(base, 'node_modules/mpegts.js/dist/mpegts.js'));
+const TV_HEALTH_URL='https://learned-phpbb-rental-contests.trycloudflare.com/gateway-health';
+let healthCache={at:0,body:{bridge:'offline',configured:false}};
+async function guestHealth(){const now=Date.now();if(now-healthCache.at<7000)return healthCache.body;healthCache.at=now;try{const r=await fetch(TV_HEALTH_URL,{signal:AbortSignal.timeout(4400),cache:'no-store'});if(!r.ok)throw Error('HEALTH_HTTP');const j=await r.json();healthCache.body={bridge:j.gateway===true?'online':'offline',configured:j.ready===true};}catch{healthCache.body={bridge:'offline',configured:false}}return healthCache.body}
+
 const sessions = new Map();
 const logins = new Map();
 const SESSION_MS = 12 * 60 * 60 * 1000;
@@ -28,7 +32,8 @@ function reply(res, status, data, type='application/json; charset=utf-8') {
     'content-type':type,
     'cache-control':'no-store',
     'x-content-type-options':'nosniff',
-    'referrer-policy':'no-referrer'
+    'referrer-policy':'no-referrer',
+    'x-robots-tag':'noindex, nofollow'
   });
   res.end(payload);
 }
@@ -147,6 +152,7 @@ const app=http.createServer(async(req,res)=>{
   const pathname=new URL(req.url,'http://localhost').pathname;
   try {
     if(req.method==='GET' && pathname==='/api/health') return json(res,200,{ok:true,mode:'one-user-low-cpu-relay'});
+    if(req.method==='GET' && pathname==='/api/tv-status') return json(res,200,await guestHealth());
     if(req.method==='GET' && pathname==='/') return reply(res,200,personalHome,'text/html; charset=utf-8');
     if(req.method==='GET' && pathname==='/iptv-login') return reply(res,200,html,'text/html; charset=utf-8');    if(req.method==='GET' && pathname==='/proof') return reply(res,200,proofHTML,'text/html; charset=utf-8');
     const proofMatch=pathname.match(/^\/proof-media\/channel-([123])\.mp4$/);
