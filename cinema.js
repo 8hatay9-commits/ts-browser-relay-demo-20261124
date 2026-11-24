@@ -360,5 +360,6 @@ async function init(){
  window.addEventListener('online',tvHealth);
  document.addEventListener('visibilitychange',()=>{if(!document.hidden)tvHealth()});
 }
+window.IBO={playEntry,openCollection,data,collectionInfo};
 init();
 })();
