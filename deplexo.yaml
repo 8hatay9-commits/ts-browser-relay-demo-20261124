@@ -1,0 +1,8 @@
+version: 1
+type: web
+build:
+  framework: auto
+  install: npm ci --ignore-scripts --no-audit --no-fund
+run:
+  command: HOST=0.0.0.0 node server.mjs
+  port: 3000

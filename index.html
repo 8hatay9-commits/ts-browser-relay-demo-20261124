@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bağımsız Canlı TV Testi</title>
+<style>
+:root{font-family:Inter,system-ui,Arial,sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:#0b1020;color:#f1f5f9}
+header{border-bottom:1px solid #26334c;padding:17px 22px;background:#131c2d;display:flex;justify-content:space-between}
+header strong{font-size:19px}header span{color:#93a4be}
+main{max-width:1220px;margin:28px auto;padding:0 16px}
+h1{margin:4px 0 14px;font-size:24px}
+small,.sub{color:#aebbd1}
+.panel{background:#141e30;border:1px solid #27374e;border-radius:14px;padding:20px}
+label{display:block;color:#cbd5e1;margin:12px 0 6px}
+input{width:100%;background:#0a1424;color:#fff;border:1px solid #41536e;border-radius:8px;padding:11px}
+button{background:#e31529;color:#fff;border:0;border-radius:9px;font-weight:700;padding:11px 16px;cursor:pointer}
+button:disabled{opacity:.5;cursor:wait}button.secondary{background:#37465f}
+#login{max-width:430px;margin:45px auto}
+#layout{display:none;grid-template-columns:minmax(245px,340px) minmax(0,1fr);gap:16px}
+#list{height:63vh;overflow:auto;padding:4px}
+.item{width:100%;text-align:left;margin:3px 0;background:#22314c;border-radius:7px;font-weight:500}
+.item.active{background:#e31529}
+.screen{background:#050811;border-radius:11px;min-height:240px;display:grid;place-items:center;overflow:hidden}
+video{width:100%;max-height:68vh;min-height:220px;background:#000}
+#status{margin-top:12px;color:#cbd5e1;min-height:24px;overflow-wrap:anywhere}
+.actions{display:flex;align-items:center;gap:10px;margin-bottom:15px}
+@media(max-width:800px){#layout{grid-template-columns:1fr}#list{max-height:260px}}
+</style>
+</head>
+<body>
+<header><strong>CANLI TV</strong><span>Bağımsız test</span></header>
+<main>
+<section class="panel" id="login">
+<h1>IPTV hesabınla bağlan</h1>
+<p class="sub">Şifre yalnızca bu test sunucusunun geçici oturumunda tutulur; internet sayfasına yazılmaz.</p>
+<form id="form">
+<label for="username">Kullanıcı adı</label><input id="username" autocomplete="username" required>
+<label for="password">Şifre</label><input id="password" type="password" autocomplete="current-password" required>
+<p><button id="connect" type="submit">Bağlan</button></p>
+</form>
+<div id="loginMessage" role="status"></div>
+</section>
+<section id="layout">
+<div class="panel">
+<div class="actions"><b>Kanallar</b><button id="logout" class="secondary">Çıkış</button></div>
+<input id="search" placeholder="Kanal ara..." aria-label="Kanal ara">
+<div id="list"></div>
+</div>
+<div class="panel">
+<h1 id="playing">Kanal seç</h1>
+<div class="screen"><video id="video" controls playsinline preload="none"></video></div>
+<div id="status" role="status">Yayın bekleniyor.</div>
+<p><small>Test sürümü: Tarayıcıda MPEG-TS → MP4 dönüştürme. İzleme yalnızca sağlayıcının izin verdiği yayında mümkündür.</small></p>
+</div>
+</section>
+</main>
+<script defer src="/assets/mpegts.min.js"></script>
+<script>
+'use strict';
+const el=id=>document.getElementById(id);
+let data=[],player=null,active=null;
+async function api(path,opts={}){
+ const r=await fetch(path,{credentials:'same-origin',cache:'no-store',...opts});
+ const j=await r.json().catch(()=>({error:'invalid_server_response'}));
+ if(!r.ok)throw Error(j.error||'HTTP '+r.status);
+ return j;
+}
+function stop(){
+ if(player){try{player.pause();player.unload();player.detachMediaElement();player.destroy()}catch{};player=null}
+ el('video').removeAttribute('src');el('video').load();
+}
+function show(logged){
+ el('login').style.display=logged?'none':'block';
+ el('layout').style.display=logged?'grid':'none';
+}
+function render(){
+ const q=el('search').value.toLocaleLowerCase('tr');
+ const list=el('list');list.replaceChildren();
+ for(const ch of data){
+   if(!ch.name.toLocaleLowerCase('tr').includes(q))continue;
+   const b=document.createElement('button');
+   b.className='item'+(active===ch.id?' active':'');
+   b.textContent=ch.name;
+   b.onclick=()=>play(ch);
+   list.appendChild(b);
+ }
+}
+function play(ch){
+ stop();active=ch.id;render();el('playing').textContent=ch.name;
+ if(!window.mpegts||!window.mpegts.isSupported()){el('status').textContent='Bu tarayıcı MPEG-TS canlı yayını desteklemiyor.';return}
+ const features=mpegts.getFeatureList();
+ if(!features.mseLivePlayback){el('status').textContent='Canlı MSE desteği bulunamadı.';return}
+ el('status').textContent='Sağlayıcıdan yayın bekleniyor...';
+ player=mpegts.createPlayer({type:'mpegts',isLive:true,url:'/api/stream/'+ch.id+'.ts'},
+  {enableStashBuffer:false,autoCleanupSourceBuffer:true,lazyLoad:false});
+ player.attachMediaElement(el('video'));
+ player.on(mpegts.Events.ERROR,(type,detail)=>{
+   el('status').textContent='Yayın açılmadı: '+String(type)+' / '+String(detail);
+ });
+ player.on(mpegts.Events.LOADING_COMPLETE,()=>{el('status').textContent='Yayın sona erdi'});
+ player.load();
+ player.play().then(()=>{el('status').textContent='Yayın oynatılıyor.'})
+ .catch(()=>{el('status').textContent='Oynatmak için videoya dokun.'});
+}
+async function load(){
+ const result=await api('/api/channels');
+ data=Array.isArray(result)?result:[];
+ active=null;render();show(true);
+ el('status').textContent=data.length+' kanal yüklendi. Bir kanal seç.';
+}
+el('form').onsubmit=async e=>{
+ e.preventDefault();el('connect').disabled=true;el('loginMessage').textContent='Bağlanılıyor...';
+ try{
+  await api('/api/login',{method:'POST',headers:{'content-type':'application/json'},
+   body:JSON.stringify({username:el('username').value,password:el('password').value})});
+  el('password').value='';await load();
+ }catch(err){el('loginMessage').textContent='Bağlantı hatası: '+err.message}
+ finally{el('connect').disabled=false}
+};
+el('search').oninput=render;
+el('logout').onclick=async()=>{stop();try{await api('/api/logout',{method:'POST'})}catch{};show(false)};
+api('/api/session').then(load).catch(()=>show(false));
+</script>
+</body></html>
