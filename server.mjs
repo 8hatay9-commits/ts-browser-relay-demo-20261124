@@ -61,46 +61,43 @@ function providerAPI(u,p,action='', category='') {
 }
 const mediaPlaylists=new Map();
 async function authorizedMediaURL(s,id){
-  const cache=mediaPlaylists.get(s.sid);
-  if(cache && cache.expires>Date.now() && cache.map.has(id))return cache.map.get(id);
+  const cached=mediaPlaylists.get(s.sid);
+  if(cached && cached.expires>Date.now()){
+    return new URL(cached.prefix+id+cached.suffix);
+  }
   const m3u=new URL('/get.php',origin);
   m3u.searchParams.set('username',s.u);
   m3u.searchParams.set('password',s.p);
   m3u.searchParams.set('type','m3u_plus');
   m3u.searchParams.set('output','ts');
   const ctl=new AbortController();
-  const timer=setTimeout(()=>ctl.abort(),16000);
-  try {
+  const timer=setTimeout(()=>ctl.abort(),12000);
+  try{
     const r=await fetch(m3u,{method:'GET',redirect:'manual',signal:ctl.signal,headers:{'user-agent':'IBO-TV/1.0','accept':'*/*'}});
     if(!r.ok||!r.body)throw Error('playlist_not_available');
-    const chunks=[];let total=0;
-    for await(const chunk of Readable.fromWeb(r.body)){
-      total+=chunk.length;
-      if(total>4000000)throw Error('playlist_size_limit');
-      chunks.push(chunk);
-    }
-    const data=Buffer.concat(chunks).toString('utf8');
+    const reader=r.body.getReader();
+    const part=await reader.read();
+    const data=Buffer.from(part.value||new Uint8Array()).toString('utf8');
     if(!data.trimStart().startsWith('#EXTM3U'))throw Error('playlist_invalid');
-    const map=new Map();
+    let chosen=null;
     for(const line of data.split(/\r?\n/)){
       if(!/^https?:\/\//i.test(line.trim()))continue;
       try{
         const media=new URL(line.trim());
         if(!['http:','https:'].includes(media.protocol)||media.hostname.toLowerCase()!==origin.hostname.toLowerCase())continue;
-        const segments=decodeURIComponent(media.pathname).split('/').filter(Boolean);
-        if(!segments.includes(s.u)||!segments.includes(s.p))continue;
-        const last=segments.at(-1);
-        const found=last?.match(/^(\d+)(?:\.(ts|m3u8))?$/i);
-        if(!found)continue;
-        const number=Number(found[1]);
-        if(!Number.isSafeInteger(number)||number<1)continue;
-        map.set(number,media);
+        const decoded=decodeURIComponent(media.pathname);
+        if(!decoded.includes('/'+s.u+'/'+s.p+'/'))continue;
+        const match=media.pathname.match(/^(.*\/)(\d+)(\.(?:ts|m3u8))?$/i);
+        if(!match)continue;
+        chosen={prefix:media.origin+match[1],suffix:match[3]||''};
+        break;
       }catch{}
     }
-    if(map.size===0)throw Error('playlist_did_not_contain_streams');
-    mediaPlaylists.set(s.sid,{map,expires:Date.now()+900000});
-    console.log('M3U_MEDIA_MAP_OK count='+map.size);
-    return map.get(id)||null;
+    void reader.cancel().catch(()=>{});
+    if(!chosen)throw Error('playlist_media_template_missing');
+    mediaPlaylists.set(s.sid,{...chosen,expires:Date.now()+900000});
+    console.log('M3U_MEDIA_TEMPLATE_OK host='+origin.hostname);
+    return new URL(chosen.prefix+id+chosen.suffix);
   }finally{clearTimeout(timer);ctl.abort();}
 }
 async function upstream(url,ms=reqTimeoutMs) {
