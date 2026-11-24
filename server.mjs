@@ -8,7 +8,7 @@ import path from 'node:path';
 
 const base = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT || 18091);
-const HOST = process.env.HOST || '127.0.0.1';
+const HOST = process.env.HOST || '0.0.0.0';
 const origin = new URL(process.env.IPTV_SERVER_URL || 'http://fx.mertnet.in');
 if (!['http:', 'https:'].includes(origin.protocol)) throw Error('Unsupported provider protocol');
 const html = readFileSync(path.join(base, 'index.html'));
