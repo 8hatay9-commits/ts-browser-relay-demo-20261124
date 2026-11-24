@@ -13,8 +13,9 @@ const origin = new URL(process.env.IPTV_SERVER_URL || 'http://fx.mertnet.in');
 if (!['http:', 'https:'].includes(origin.protocol)) throw Error('Unsupported provider protocol');
 const html = readFileSync(path.join(base, 'index.html'));
 const personalHome=readFileSync(path.join(base,'home.html'));
-const proofHTML=readFileSync(path.join(base, 'proof.html'));
-const proofVideos=[null,...[1,2,3].map(i=>readFileSync(path.join(base,'proof-media','channel-'+i+'.mp4')))];
+const cinemaCss=readFileSync(path.join(base,'cinema.css'));
+const cinemaJs=readFileSync(path.join(base,'cinema.js'));
+const cinemaCatalog=readFileSync(path.join(base,'catalog.json'));
 const playerJS = readFileSync(path.join(base, 'node_modules/mpegts.js/dist/mpegts.js'));
 const TV_HEALTH_URL='https://learned-phpbb-rental-contests.trycloudflare.com/gateway-health';
 let healthCache={at:0,body:{bridge:'offline',configured:false}};
@@ -27,7 +28,7 @@ const reqTimeoutMs = 15000;
 
 function reply(res, status, data, type='application/json; charset=utf-8') {
   if (res.headersSent) return;
-  const payload = type.startsWith('application/json') ? JSON.stringify(data) : data;
+  const payload = type.startsWith('application/json') && !Buffer.isBuffer(data) && typeof data !== 'string' ? JSON.stringify(data) : data;
   res.writeHead(status,{
     'content-type':type,
     'cache-control':'no-store',
@@ -154,24 +155,10 @@ const app=http.createServer(async(req,res)=>{
     if(req.method==='GET' && pathname==='/api/health') return json(res,200,{ok:true,mode:'one-user-low-cpu-relay'});
     if(req.method==='GET' && pathname==='/api/tv-status') return json(res,200,await guestHealth());
     if(req.method==='GET' && pathname==='/') return reply(res,200,personalHome,'text/html; charset=utf-8');
-    if(req.method==='GET' && pathname==='/iptv-login') return reply(res,200,html,'text/html; charset=utf-8');    if(req.method==='GET' && pathname==='/proof') return reply(res,200,proofHTML,'text/html; charset=utf-8');
-    const proofMatch=pathname.match(/^\/proof-media\/channel-([123])\.mp4$/);
-    if((req.method==='GET'||req.method==='HEAD')&&proofMatch){
-      const video=proofVideos[Number(proofMatch[1])],size=video.byteLength;
-      const range=req.headers.range;
-      let start=0,end=size-1,code=200;
-      if(range){
-        const m=/^bytes=(\d+)-(\d*)$/.exec(range);
-        if(!m){res.writeHead(416,{'content-range':'bytes */'+size});return res.end();}
-        start=Number(m[1]);end=m[2]?Math.min(size-1,Number(m[2])):size-1;
-        if(start>=size||end<start){res.writeHead(416,{'content-range':'bytes */'+size});return res.end();}
-        code=206;
-      }
-      const headers={'content-type':'video/mp4','accept-ranges':'bytes','content-length':end-start+1,'x-content-type-options':'nosniff','cache-control':'public, max-age=3600'};
-      if(code===206)headers['content-range']='bytes '+start+'-'+end+'/'+size;
-      res.writeHead(code,headers);
-      return req.method==='HEAD'?res.end():res.end(video.subarray(start,end+1));
-    }
+    if(req.method==='GET' && pathname==='/cinema.css') return reply(res,200,cinemaCss,'text/css; charset=utf-8');
+    if(req.method==='GET' && pathname==='/cinema.js') return reply(res,200,cinemaJs,'text/javascript; charset=utf-8');
+    if(req.method==='GET' && pathname==='/catalog.json') return reply(res,200,cinemaCatalog,'application/json; charset=utf-8');
+    if(req.method==='GET' && pathname==='/iptv-login') {res.writeHead(302,{'location':'/','cache-control':'no-store'});return res.end();}
     if(req.method==='GET' && pathname==='/assets/mpegts.min.js')
       return reply(res,200,playerJS,'text/javascript; charset=utf-8');
     if(req.method==='POST' && !isValidOrigin(req)) return json(res,403,{error:'invalid_origin'});

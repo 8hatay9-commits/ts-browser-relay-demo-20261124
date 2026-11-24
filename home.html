@@ -1,123 +1,174 @@
-<!DOCTYPE html>
-<html lang="tr"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b0e16"><meta name="robots" content="noindex, nofollow">
-<meta name="description" content="İBO TV - Kişisel canlı TV izleme alanı.">
-<title>İBO TV | Özel Sinema</title>
-<style>
-:root{color-scheme:dark;--bg:#0a0d14;--panel:#151b26;--border:#2c3544;--text:#f5f7fb;--sub:#9da8ba;--accent:#f43a5b;--glow:#533348;--blue:#80b6ff}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(900px 420px at 6% -14%,#29314d6f,transparent 82%),radial-gradient(600px 400px at 100% -10%,#48203762,transparent 78%),var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Arial,sans-serif}
-button,a{-webkit-tap-highlight-color:transparent}button{font:inherit}a{color:inherit;text-decoration:none}
-.shell{max-width:1510px;margin:0 auto;padding:0 clamp(13px,3vw,48px)}
-.topbar{border-bottom:1px solid #ffffff18;background:#0c111acb;backdrop-filter:blur(24px);position:sticky;top:0;z-index:20}
-.topbar>.shell{height:72px;display:flex;align-items:center;gap:22px;justify-content:space-between}
-.brand{display:flex;align-items:center;gap:11px;white-space:nowrap}.logo{width:43px;height:43px;border-radius:13px;background:linear-gradient(135deg,#f74163,#a40d36);box-shadow:0 9px 25px #ef2f5340;display:grid;place-items:center;font-weight:950;font-size:15px;letter-spacing:-.07em}.brandname{display:block;font-size:17px;font-weight:850;letter-spacing:.01em}.brandname strong{color:#ff6d87}.brandtag{display:block;letter-spacing:.19em;font-size:9px;color:#9aa5b6;font-weight:750;margin-top:3px}
-nav{display:flex;align-items:center;gap:14px}nav a{color:#b7c3d4;font-size:12px;font-weight:700;padding:10px 12px;border-radius:9px}nav a:hover,nav a:focus-visible{background:#263041;color:white}
-.statuspill{display:flex;align-items:center;gap:8px;border:1px solid #3a4655;background:#17202e;border-radius:30px;color:#c2cad7;padding:8px 12px;font-size:11px;font-weight:750;white-space:nowrap}
-.light{width:8px;height:8px;border-radius:50%;background:#eaa74c;box-shadow:0 0 0 3px #f0aa4317;flex-shrink:0}
-.light.on{background:#56d69c;box-shadow:0 0 0 3px #56d69c1d}.light.off{background:#fa6370;box-shadow:0 0 0 3px #fa637022}
-.main{padding-top:31px;padding-bottom:40px}
-.intro{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:23px}
-.eyebrow{display:flex;align-items:center;gap:9px;color:#ff899e;font-size:11px;font-weight:800;letter-spacing:.19em;text-transform:uppercase;margin-bottom:7px}.eyebrow:before{content:"";width:18px;height:2px;background:#ff6282;border-radius:5px}
-h1{font-size:clamp(30px,4.8vw,54px);font-weight:860;letter-spacing:-.055em;line-height:1.12;margin:0 0 9px}
-h1 em{font-style:normal;color:#ff617c}.lede{font-size:14px;color:var(--sub);max-width:650px;margin:0}
-.toolbar{display:flex;gap:9px;flex-wrap:wrap}
-.action{appearance:none;display:inline-flex;justify-content:center;align-items:center;gap:8px;padding:12px 17px;border-radius:11px;border:1px solid #445064;background:#202b3b;color:#f7fbff;font-size:13px;font-weight:750;cursor:pointer;white-space:nowrap;transition:background .2s,border-color .2s,transform .2s}
-.action:hover{background:#344053;border-color:#8b9aaf}.action:active{transform:scale(.98)}
-.action.primary{background:linear-gradient(120deg,#fc4869,#cb2148);border-color:#ed4b68;color:white;box-shadow:0 8px 26px #c927492a}
-.action.primary:hover{background:#ed3156}
-.action svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.stage{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:19px;align-items:start}
-.screenpanel,.asidepanel{background:linear-gradient(180deg,#151c29,#101622);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 25px 68px #0003}
-.playerhead{min-height:62px;display:flex;justify-content:space-between;gap:12px;align-items:center;padding:13px 20px}
-.playerhead .left{display:flex;align-items:center;gap:11px;font-size:13px;font-weight:780}.onair{border:1px solid #ad284a;background:#3c1d2a;color:#ff9ab0;padding:5px 8px;font-size:10px;font-weight:850;border-radius:6px;letter-spacing:.12em}.tag{font-size:11px;color:#96a6b9;white-space:nowrap}
-.screen{height:clamp(390px,67vh,820px);background:#02040a;position:relative}
-iframe{width:100%;height:100%;border:0;display:block;background:#05070f}
-.playerfoot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 20px;min-height:64px;border-top:1px solid #273346}
-.liveinfo{display:flex;align-items:center;gap:11px;min-width:0}.mini{width:35px;height:35px;display:grid;place-items:center;border:1px solid #394457;border-radius:10px;color:#fa7890;font-weight:900;background:#1c2535}
-.liveinfo b{display:block;font-size:13px}.liveinfo small{display:block;color:#96a6b8;font-size:11px;white-space:normal}
-.subbtn{background:none;border:1px solid #3e4c5d;border-radius:9px;color:#e2e8f0;font-size:12px;font-weight:720;padding:9px 12px;cursor:pointer;white-space:nowrap}
-.side{display:flex;flex-direction:column;gap:16px}
-.asidepanel{padding:23px}
-.asidepanel h2{font-size:17px;margin:0 0 13px;letter-spacing:-.015em}
-.cardlabel{font-size:11px;color:#8fa2b8;font-weight:800;letter-spacing:.13em;margin:0 0 12px;text-transform:uppercase}
-.connection{display:flex;align-items:center;gap:13px;margin:0 0 13px}.connection .bubble{width:44px;height:44px;border-radius:14px;background:#2a3545;display:grid;place-items:center;font-weight:850;color:#91c1ff;font-size:20px}.connection strong{display:block;font-size:14px}.connection small{color:#a2adbd}
-.detail{margin:15px 0 0;display:grid;gap:11px}.detail div{display:flex;justify-content:space-between;gap:16px;border-top:1px solid #ffffff0f;padding-top:11px;font-size:12px}.detail dt{color:#a8b2c2}.detail dd{margin:0;color:#ecf2fc;font-weight:720;text-align:right}
-.helptext{font-size:13px;line-height:1.65;color:#b4bdcb;margin:0}
-.testlink{display:flex;justify-content:space-between;align-items:center;border:1px solid #384559;padding:14px 15px;border-radius:12px;background:#1b2637;font-weight:750;font-size:13px;margin-top:15px}
-.testlink:hover{background:#29364a}
-.statenote{border:1px solid #524537;background:#211d1d;border-radius:13px;padding:13px 17px;font-size:12px;color:#d4c2b6;line-height:1.6;margin-top:19px}
-footer{color:#738196;font-size:11px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:27px 0}
-@media(max-width:1050px){.stage{grid-template-columns:minmax(0,1fr)}.side{display:grid;grid-template-columns:1fr 1fr}.screen{height:66vh}.asidepanel{padding:18px}}
-@media(max-width:610px){.topbar>.shell{height:64px;gap:8px}.brand{gap:8px}.brandname{font-size:14px}.brandtag{font-size:8px;letter-spacing:.12em}.logo{width:38px;height:38px;border-radius:10px}.statuspill{font-size:0;padding:8px}.statuspill .light{width:9px;height:9px}nav{gap:4px}nav a{font-size:11px;padding:8px 4px}.main{padding-top:20px}.intro{margin-bottom:17px;gap:18px}.lede{font-size:13px}.toolbar{display:grid;grid-template-columns:repeat(2,1fr);width:100%}.action{padding:12px 6px;font-size:12px}.screenpanel,.asidepanel{border-radius:15px}.screen{height:min(72dvh,760px);min-height:400px}.playerhead{min-height:55px;padding:10px 12px}.playerfoot{padding:12px}.side{grid-template-columns:1fr;gap:11px}.tag{font-size:9px}.statenote{margin-top:14px}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
-</style></head>
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080a0e">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="İBO Özel Sinema — Kurtlar Vadisi, diziler, filmler ve canlı televizyon tek bir ekranda.">
+<title>İBO Özel Sinema | Film, Dizi ve Canlı TV</title>
+<link rel="preconnect" href="https://i.ytimg.com" crossorigin>
+<link rel="preconnect" href="https://www.youtube-nocookie.com" crossorigin>
+<link rel="stylesheet" href="/cinema.css">
+<script src="/cinema.js" defer></script>
+</head>
 <body>
-<header class="topbar"><div class="shell">
-<a href="/" class="brand" aria-label="İBO TV ana sayfa"><span class="logo">İBO</span><span><span class="brandname">İBO <strong>TV</strong></span><span class="brandtag">ÖZEL SİNEMA</span></span></a>
-<nav><a href="#canli">Canlı TV</a><a href="/proof">Test</a></nav>
-<div class="statuspill" id="statusPill" aria-live="polite"><span class="light" id="statusLight"></span><span id="statusMini">Kontrol ediliyor</span></div>
-</div></header>
-<main class="shell main">
-<section class="intro"><div><div class="eyebrow">İBO ÖZEL SİNEMA</div><h1>Canlı TV, <em>tek adreste.</em></h1><p class="lede">Özel yayın merkezine hoş geldin. Kanal seç, tam ekrana geç ve izle. IPTV giriş ekranıyla uğraşmana gerek yok.</p></div>
-<div class="toolbar">
-<button class="action primary" id="reload" type="button"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.2 6"/><path d="M20 4v7h-7"/></svg>Yeniden bağlan</button>
-<button class="action" id="copy" type="button"><svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>Linki paylaş</button>
-</div></section>
-<div class="stage" id="canli">
-<section class="screenpanel">
-<div class="playerhead"><div class="left"><span class="onair">CANLI TV</span><span>İBO TV yayınları</span></div><span class="tag">HD oynatıcı · Mobil uyumlu</span></div>
-<div class="screen"><iframe id="player" title="İBO TV canlı kanal oynatıcısı" src="https://learned-phpbb-rental-contests.trycloudflare.com/tv-guest" allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="no-referrer" allowfullscreen loading="eager"></iframe></div>
-<div class="playerfoot"><div class="liveinfo"><span class="mini">TV</span><div><b id="connectionTitle">Sunucu kontrol ediliyor</b><small id="connectionDesc">Bağlantı bilgisi alınıyor…</small></div></div>
-<button class="subbtn" id="fullscreen" type="button">Tam ekran</button></div>
-</section>
-<div class="side">
-<aside class="asidepanel"><p class="cardlabel">Yayın durumu</p>
-<div class="connection"><span class="bubble" id="statusSymbol">●</span><div><strong id="panelStatus">Kontrol ediliyor</strong><small id="panelSub">Sunucuya bağlanılıyor</small></div></div>
-<p class="helptext">Bağlantı koparsa site durumu tekrar kontrol eder; erişim geri geldiğinde oynatıcıyı yeniden bağlar.</p>
-<dl class="detail"><div><dt>Bağlantı</dt><dd id="linkStatus">Kontrol ediliyor</dd></div><div><dt>İzleme erişimi</dt><dd>Bağlantısı olanlar</dd></div><div><dt>IPTV girişi</dt><dd>Tek seferlik kurulum</dd></div><div><dt>Eşzamanlı yayın</dt><dd>1 izleyici</dd></div></dl></aside>
-<aside class="asidepanel"><p class="cardlabel">Ek seçenekler</p><h2>Yayın deneyimi</h2><p class="helptext">Yayın yavaşlarsa yeniden bağlanmayı deneyebilirsin. Bağlantının tamamen kesildiği durumlarda internet veya yayın sağlayıcısının geri gelmesi gerekir.</p>
-<a class="testlink" href="/proof"><span>Oynatıcı test kanalları</span><span aria-hidden="true">↗</span></a></aside>
+<header class="site-header" id="top">
+ <div class="site-header__inner page-container">
+  <a class="logo" href="/" aria-label="İBO Özel Sinema - ana sayfa">
+   <span class="logo__mark">İBO<span class="logo__dot">.</span></span>
+   <span class="logo__name"><strong>ÖZEL SİNEMA</strong><small>FİLM · DİZİ · CANLI TV</small></span>
+  </a>
+  <nav class="desktop-nav" aria-label="Ana menü">
+   <a href="#kesfet" class="desktop-nav__active">Keşfet</a>
+   <a href="#diziler">Diziler</a>
+   <a href="#filmler">Filmler</a>
+   <a href="#canli">Canlı TV</a>
+  </nav>
+  <div class="header-actions">
+   <button id="searchToggle" class="icon-button" type="button" aria-label="Arama yap" title="Film veya bölüm ara">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+   </button>
+   <button id="headerLive" class="header-live" type="button"><span class="live-dot"></span>CANLI TV</button>
+  </div>
+ </div>
+</header>
+
+<div class="search-drawer" id="searchDrawer" hidden>
+ <div class="page-container search-drawer__inner">
+  <span class="search-symbol" aria-hidden="true">⌕</span>
+  <input id="globalSearch" type="search" placeholder="Film, dizi veya bölüm ara…" aria-label="Film veya bölüm ara" autocomplete="off">
+  <button id="searchClose" type="button" class="icon-button" aria-label="Aramayı kapat">✕</button>
+ </div>
+ <div class="page-container"><div id="searchResults" class="search-results"></div></div>
 </div>
-</div>
-<div class="statenote"><strong>Bilgi:</strong> Site bağlantıyı bilen herkese açıktır; ancak mevcut IPTV üyeliği bir defada yalnızca tek yayın bağlantısına izin verir. Bu sayfa yayın lisansı veya sağlayıcı kaynaklı erişim kesintilerini kaldıramaz. Bilgisayarın ve yayın tünelinin açık olması gerekir.</div>
-<footer><span>© İBO TV · Özel Sinema</span><span>Bağımsız yayın platformu</span></footer>
+
+<main id="kesfet">
+ <section class="hero" aria-label="Öne çıkan içerik">
+  <div class="hero__image" role="img" aria-label="Kurtlar Vadisi afiş görseli"></div>
+  <div class="hero__gradient"></div>
+  <div class="page-container hero__inner">
+   <div class="hero__text">
+    <p class="eyebrow"><span class="eyebrow__line"></span> İBO ÖZEL SİNEMA SUNAR</p>
+    <p class="hero__genre">EFSANE DİZİ <span>•</span> AKSİYON <span>•</span> DRAM</p>
+    <h1>KURTLAR<br><em>VADİSİ</em></h1>
+    <p class="hero__copy">Efsane kaldığı yerden devam ediyor. Bütün bölümler, sevilen Türk filmleri ve canlı TV tek bir sinema deneyiminde.</p>
+    <div class="hero__actions">
+     <button id="heroWatch" class="button button--primary" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7z" fill="currentColor" stroke="none"/></svg> 1. Bölümü İzle
+     </button>
+     <button id="heroEpisodes" class="button button--outline" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg> Tüm Bölümler
+     </button>
+    </div>
+    <div class="hero__metadata"><span class="hero__meta-dot"></span> <span id="heroMeta">Koleksiyon yükleniyor</span><span class="hero__divider">·</span><span>Kesintisiz arşiv deneyimi</span></div>
+   </div>
+   <div class="hero__edge" aria-hidden="true">İBO <strong>CINEMA</strong></div>
+  </div>
+ </section>
+
+ <div class="page-container content">
+  <section class="quick-row" aria-label="Hızlı izleme">
+   <button id="quickTv" class="quick-card quick-card--live" type="button">
+    <span class="quick-card__icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 22h8M12 19v3"/></svg></span>
+    <span><b>Canlı Televizyon</b><small>Kanallar · Hemen izle</small></span>
+    <span class="quick-card__arrow">↗</span>
+   </button>
+   <button id="quickSeries" class="quick-card quick-card--series" type="button">
+    <span class="quick-card__icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="m10 8 6 4-6 4z"/></svg></span>
+    <span><b>Popüler Diziler</b><small>Kurtlar Vadisi · Pusu · Üvey Baba</small></span>
+    <span class="quick-card__arrow">↗</span>
+   </button>
+   <button id="quickMovies" class="quick-card quick-card--movies" type="button">
+    <span class="quick-card__icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M8 4l3 6M15 4l3 6"/></svg></span>
+    <span><b>Sinema Arşivi</b><small>Klasikler · Korku · Komedi</small></span>
+    <span class="quick-card__arrow">↗</span>
+   </button>
+  </section>
+
+  <section class="catalog-section" id="diziler">
+   <div class="section-heading"><div><span class="section-kicker">SEVİLEN YAPIMLAR</span><h2>Dizi koleksiyonları<span class="period">.</span></h2></div><p>Hikâyene kaldığın yerden devam et</p></div>
+   <div id="seriesCollections" class="collection-grid" aria-label="Dizi kategorileri"></div>
+  </section>
+
+  <section class="catalog-section shelf-section" id="featuredSeries">
+   <div class="section-heading"><div><span class="section-kicker">BÖLÜMLER</span><h2>Kurtlar Vadisi<span class="period">.</span></h2></div><button type="button" class="text-link" data-open-collection="kv">Tüm bölümler <span>→</span></button></div>
+   <div class="media-rail" id="kvRail"></div>
+  </section>
+
+  <section class="catalog-section shelf-section" id="pusuSeries">
+   <div class="section-heading"><div><span class="section-kicker">DEVAM SERİSİ</span><h2>Kurtlar Vadisi Pusu<span class="period">.</span></h2></div><button type="button" class="text-link" data-open-collection="pusu">Tüm bölümler <span>→</span></button></div>
+   <div class="media-rail" id="pusuRail"></div>
+  </section>
+
+  <section class="catalog-section" id="filmler">
+   <div class="section-heading"><div><span class="section-kicker">BÜYÜK ARŞİV</span><h2>Film koleksiyonları<span class="period">.</span></h2></div><p>Her zevke özel bir seçim</p></div>
+   <div id="filmCollections" class="collection-grid collection-grid--films" aria-label="Film kategorileri"></div>
+  </section>
+
+  <section class="catalog-section shelf-section" id="cinemaShelf">
+   <div class="section-heading"><div><span class="section-kicker">KORKU SEÇKİSİ</span><h2>Cin Filmleri<span class="period">.</span></h2></div><button type="button" class="text-link" data-open-collection="cin">Tüm filmler <span>→</span></button></div>
+   <div class="media-rail" id="cinRail"></div>
+  </section>
+
+  <section class="catalog-section shelf-section" id="comedyShelf">
+   <div class="section-heading"><div><span class="section-kicker">UNUTULMAZLAR</span><h2>Kemal Sunal<span class="period">.</span></h2></div><button type="button" class="text-link" data-open-collection="ks">Tüm filmler <span>→</span></button></div>
+   <div class="media-rail" id="ksRail"></div>
+  </section>
+
+  <section class="tv-section" id="canli">
+   <div class="tv-feature">
+    <div class="tv-feature__art" aria-hidden="true"><span class="tv-feature__glow"></span><span class="tv-feature__circle">TV</span></div>
+    <div class="tv-feature__content">
+     <div class="eyebrow"><span class="eyebrow__line"></span> 7/24 CANLI YAYIN</div>
+     <h2>Televizyon<br><em>senin ekranında.</em></h2>
+     <p>Kanallara tek dokunuşla ulaş. Kanal listesi, arama ve tam ekran oynatıcı tek bir izleme alanında.</p>
+     <div class="tv-feature__actions">
+      <button id="openLive" type="button" class="button button--primary"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7z" fill="currentColor" stroke="none"/></svg> Canlı TV'yi Aç</button>
+      <span class="tv-feature__state"><i id="liveDot" class="state-dot"></i><span id="liveLabel">Yayın kontrol ediliyor</span></span>
+     </div>
+    </div>
+   </div>
+  </section>
+ </div>
 </main>
-<script>
-(()=>{
-const player=document.getElementById('player'),light=document.getElementById('statusLight');
-const statusMini=document.getElementById('statusMini'),title=document.getElementById('connectionTitle'),desc=document.getElementById('connectionDesc');
-const panel=document.getElementById('panelStatus'),sub=document.getElementById('panelSub'),link=document.getElementById('linkStatus');
-let last='unknown',checking=false;
-function present(state){
-const copy={
-online:['Sunucu erişilebilir','Bağlantı hazır. Kanalı oynatıcıdan seç.','Yayın geçidi çevrimiçi','Çevrimiçi'],
-setup:['Bir defalık kurulum bekleniyor','IPTV sahibi giriş bilgilerini kendi PC’sinde kaydetmeli.','Kurulum bekleniyor','Hazırlanıyor'],
-offline:['Bağlantı geçici olarak kesildi','Site otomatik olarak yeniden kontrol edecek.','Bağlantı aranıyor','Kesinti var']
-}[state]||['Kontrol ediliyor','Sunucu durumu kontrol ediliyor.','Kontrol ediliyor','Kontrol ediliyor'];
-title.textContent=copy[0];desc.textContent=copy[1];panel.textContent=copy[2];sub.textContent=copy[1];link.textContent=copy[3];
-statusMini.textContent=copy[3];light.className='light'+(state==='online'?' on':state==='offline'?' off':'');
-document.getElementById('statusSymbol').textContent=state==='online'?'✓':state==='offline'?'!':'●';
-}
-async function check(){
-if(checking||document.hidden)return;
-checking=true;
-try{
-const ac=new AbortController();const timer=setTimeout(()=>ac.abort(),5500);
-let r;try{r=await fetch('/api/tv-status',{cache:'no-store',signal:ac.signal})}finally{clearTimeout(timer)}
-if(!r.ok)throw Error('health_http');
-const j=await r.json();const next=j.bridge==='online'?(j.configured?'online':'setup'):'offline';
-present(next);
-if(last==='offline'&&next==='online'){player.src=player.src}
-if(last==='setup'&&next==='online'){player.src=player.src}
-last=next;
-}catch{present('offline');last='offline'}finally{checking=false}
-}
-document.getElementById('reload').addEventListener('click',()=>{player.src=player.src;check()});
-document.getElementById('fullscreen').addEventListener('click',async()=>{try{await player.requestFullscreen()}catch{title.textContent='Tam ekran bu tarayıcıda desteklenmiyor.'}});
-document.getElementById('copy').addEventListener('click',async()=>{const b=document.getElementById('copy');try{await navigator.clipboard.writeText(location.origin+'/');b.textContent='Link kopyalandı';setTimeout(()=>b.textContent='Linki paylaş',2500)}catch{b.textContent='Adres çubuğundan kopyalayabilirsin'}});
-window.addEventListener('online',check);document.addEventListener('visibilitychange',()=>{if(!document.hidden)check()});
-check();setInterval(check,18000);
-})();
-</script>
+
+<footer class="footer"><div class="page-container footer__inner"><a href="#top" class="footer__brand">İBO <b>ÖZEL SİNEMA</b></a><span>Film · Dizi · Canlı TV</span><span>Her zaman senin ekranında.</span></div></footer>
+
+<div id="catalogLayer" class="layer" aria-hidden="true">
+ <div class="layer__backdrop" data-close="catalog"></div>
+ <section class="catalog-dialog" role="dialog" aria-modal="true" aria-labelledby="catalogDialogTitle">
+  <header class="dialog-header">
+   <div><span class="dialog-eyebrow">İBO ÖZEL SİNEMA</span><h2 id="catalogDialogTitle">Bölümler</h2><p id="catalogDialogCount">Yükleniyor…</p></div>
+   <button id="catalogClose" type="button" class="dialog-close" aria-label="Kapat">✕</button>
+  </header>
+  <div class="dialog-filters">
+   <label><span class="sr-only">Bölüm veya film ara</span><input id="catalogFilter" placeholder="Bölüm veya film ara…" type="search"></label>
+   <select id="catalogSort" aria-label="Sıralama"><option value="asc">Eskiden yeniye</option><option value="desc">Yeniden eskiye</option></select>
+  </div>
+  <div id="catalogGrid" class="catalog-dialog__grid" role="list"></div>
+  <div class="catalog-dialog__footer"><button id="loadMore" class="button button--soft" type="button">Daha fazla göster</button></div>
+ </section>
+</div>
+
+<div id="videoLayer" class="layer layer--video" aria-hidden="true">
+ <section class="view-dialog" role="dialog" aria-modal="true" aria-labelledby="videoTitle">
+  <header class="watch-header"><div class="watch-header__title"><span class="watch-header__eyebrow">İBO ÖZEL SİNEMA</span><strong id="videoTitle">İzleniyor</strong></div><div class="watch-header__actions">
+   <button id="previousEpisode" class="watch-header__button" type="button">← Önceki</button>
+   <button id="nextEpisode" class="watch-header__button" type="button">Sonraki →</button>
+   <button id="videoClose" class="watch-header__button watch-header__button--close" type="button" aria-label="Oynatıcıyı kapat">✕ Kapat</button>
+  </div></header>
+  <div class="watch-stage"><iframe id="videoFrame" title="Film ve dizi oynatıcısı" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+  <div class="watch-footer"><p id="videoDescription">Kaynak: YouTube oynatıcısı</p><button id="showEpisodes" type="button" class="button button--soft">Diğer bölümler</button></div>
+ </section>
+</div>
+
+<div id="liveLayer" class="layer layer--live" aria-hidden="true">
+ <section class="live-dialog" role="dialog" aria-modal="true" aria-label="Canlı TV kanalları">
+  <header class="watch-header"><div class="watch-header__title"><span class="watch-header__eyebrow">İBO ÖZEL SİNEMA</span><strong>Canlı Televizyon</strong></div><div class="watch-header__actions"><button id="reloadLive" class="watch-header__button" type="button">↻ Yenile</button><button id="closeLive" class="watch-header__button watch-header__button--close" type="button">✕ Kapat</button></div></header>
+  <div class="live-stage"><iframe id="liveFrame" title="İBO TV kanal seçimi ve oynatıcı" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen referrerpolicy="no-referrer"></iframe></div>
+ </section>
+</div>
+
+<div id="toast" role="status" class="toast" aria-live="polite"></div>
 </body></html>
