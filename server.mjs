@@ -16,6 +16,7 @@ const personalHome=readFileSync(path.join(base,'home.html'));
 const cinemaCss=readFileSync(path.join(base,'cinema.css'));
 const cinemaLight=readFileSync(path.join(base,'cinema-light.css'));
 const cinemaV3=readFileSync(path.join(base,'cinema-v3.css'));
+const cinemaV4=readFileSync(path.join(base,'cinema-v4.css'));
 const cinemaJs=readFileSync(path.join(base,'cinema.js'));
 const cinemaCatalog=readFileSync(path.join(base,'catalog.json'));
 const playerJS = readFileSync(path.join(base, 'node_modules/mpegts.js/dist/mpegts.js'));
@@ -170,6 +171,7 @@ const app=http.createServer(async(req,res)=>{
     if(req.method==='GET' && pathname==='/cinema.css') return reply(res,200,cinemaCss,'text/css; charset=utf-8');
     if(req.method==='GET' && pathname==='/cinema-light.css') return reply(res,200,cinemaLight,'text/css; charset=utf-8');
     if(req.method==='GET' && pathname==='/cinema-v3.css') return reply(res,200,cinemaV3,'text/css; charset=utf-8');
+    if(req.method==='GET' && pathname==='/cinema-v4.css') return reply(res,200,cinemaV4,'text/css; charset=utf-8');
     if(req.method==='GET' && pathname==='/cinema.js') return reply(res,200,cinemaJs,'text/javascript; charset=utf-8');
     if(req.method==='GET' && pathname==='/catalog.json') return reply(res,200,cinemaCatalog,'application/json; charset=utf-8');
     if(req.method==='GET' && pathname==='/iptv-login') {res.writeHead(302,{'location':'/','cache-control':'no-store'});return res.end();}

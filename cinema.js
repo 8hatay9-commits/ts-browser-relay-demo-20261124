@@ -57,7 +57,24 @@ function saveHistory(category,item){
   const key=category+'-'+item.n;
   const result=[{key,category,n:item.n,at:Date.now()},...safeHistory().filter(x=>x.key!==key)].slice(0,20);
   localStorage.setItem(recentKey,JSON.stringify(result));
+  updateResume();
  }catch{}
+}
+function updateResume(){
+ const recent=safeHistory();
+ const first=recent.find(h=>collectionInfo[h.category]&&Array.isArray(data[h.category])&&data[h.category].some(entry=>entry.n===h.n));
+ const target=byId('resumeLast'),title=byId('resumeTitle'),detail=byId('resumeSubtitle'),art=byId('resumeArt');
+ if(!target||!title||!detail||!art)return;
+ if(first){
+  const item=data[first.category].find(x=>x.n===first.n);
+  title.textContent=niceTitle(first.category,item);
+  detail.textContent=collectionInfo[first.category].title+' · Son açılan';
+  if(thumb(item)){art.style.backgroundImage='url("'+thumb(item)+'")';art.textContent='';}
+  target.onclick=()=>playEntry(first.category,item);
+ }else{
+  title.textContent='Yeni bir hikâye keşfet';detail.textContent='Koleksiyonu aç ve izlemeye başla';
+  target.onclick=()=>openCollection('kv');
+ }
 }
 function toast(msg){
  const e=byId('toast');e.textContent=msg;e.classList.add('on');
@@ -69,7 +86,7 @@ function layerOpen(id){
  openLayerName=id;
  const el=byId(id);el.classList.add('open');el.setAttribute('aria-hidden','false');
  document.body.classList.add('modal-active');
- const first=el.querySelector('.dialog-close,.watch-header__button--close');
+ const first=el.querySelector('.close-icon,.watch-close,.dialog-close,.watch-header__button--close');
  first?.focus({preventScroll:true});
 }
 function layerClose(id,restore=true){
@@ -136,6 +153,7 @@ function renderRails(){
   const items=(data[id]||[]).filter(x=>!x.y&&x.id).slice(0,12);
   byId(target).replaceChildren(...items.map(it=>entryCard(id,it)));
  }
+ updateResume();
  byId('heroMeta').textContent=(data.kv?.length||0)+' bölüm · Kurtlar Vadisi arşivi';
 }
 function openCollection(id){
