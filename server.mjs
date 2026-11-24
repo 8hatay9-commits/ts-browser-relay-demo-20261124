@@ -163,13 +163,31 @@ const app=http.createServer(async(req,res)=>{
             const part=await reader.read();
             const data=Buffer.from(part.value||new Uint8Array()).toString('utf8');
             detail.isM3U=data.trimStart().startsWith('#EXTM3U');
-            const hostnames=new Set();
+            const hostnames=new Set(),formats=new Set();
+            let firstMediaFormat=null;
             for(const line of data.split(/\r?\n/)) {
               if(!/^https?:\/\//i.test(line.trim())) continue;
-              try{hostnames.add(new URL(line.trim()).hostname)}catch{}
-              if(hostnames.size>=5)break;
+              try {
+                const media=new URL(line.trim());
+                hostnames.add(media.hostname);
+                const decoded=decodeURIComponent(media.pathname);
+                const format={
+                  protocol:media.protocol.replace(':',''),
+                  port:media.port||(media.protocol==='https:'?'443':'80'),
+                  extension:media.pathname.match(/\.(ts|m3u8|mp4)$/i)?.[1]||'none',
+                  pathKind:decoded.includes('/live/'+s.u+'/'+s.p+'/')?'xtream_live'
+                    :decoded.includes('/'+s.u+'/'+s.p+'/')?'xtream_other'
+                    :media.searchParams.has('username')?'query_auth':'other',
+                  queryParameters:media.searchParams.size>0
+                };
+                formats.add(JSON.stringify(format));
+                if(firstMediaFormat===null)firstMediaFormat=format;
+              }catch{}
+              if(hostnames.size>=5&&formats.size>=3)break;
             }
             detail.streamHosts=[...hostnames];
+            detail.firstMediaFormat=firstMediaFormat;
+            detail.uniqueMediaFormats=[...formats].slice(0,3).map(v=>JSON.parse(v));
           } finally {await reader.cancel().catch(()=>{});}
         }
         else { await upstreamResponse.body?.cancel().catch(()=>{}); }
