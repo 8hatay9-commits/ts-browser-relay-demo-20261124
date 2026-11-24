@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>İBO TV | Özel Sinema • Canlı TV</title>
+<meta name="theme-color" content="#10131b"><meta name="description" content="İBO TV canlı yayın platformu. Film sitesinden bağımsız test ve bağlantı ekranı.">
+<style>
+:root{color-scheme:dark;--bg:#090b10;--panel:#151a25;--line:#29303e;--txt:#f5f5f7;--muted:#9ea8b7;--red:#ed2349}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 90% -15%,#361628 0,transparent 45%),#090b10;color:var(--txt);font:15px system-ui,-apple-system,'Segoe UI',sans-serif}
+header{height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff15;padding:0 clamp(16px,5vw,70px);background:#0d1119bd;backdrop-filter:blur(16px)}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit}.mark{font-size:18px;font-weight:950;letter-spacing:-1px;background:#dc2243;border-radius:13px;padding:10px 12px;box-shadow:0 4px 22px #9b123566}.brand strong{display:block;font-size:17px;letter-spacing:.08em}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:.2em;margin-top:2px}
+nav{display:flex;gap:20px;align-items:center}nav a{color:#bbc3d1;text-decoration:none;font-size:13px;font-weight:700}nav a:hover,nav a:focus-visible{color:white}
+.pill{border:1px solid #543c49;border-radius:99px;background:#261b25;color:#f5bdc9;padding:7px 11px;font-size:10px;font-weight:800;letter-spacing:.11em}
+main{max-width:1540px;margin:0 auto;padding:clamp(19px,3.5vw,45px) clamp(12px,3.2vw,50px)}
+.pretitle{color:#ed647e;font-size:12px;font-weight:800;letter-spacing:.18em;margin:0 0 8px}.top{display:flex;gap:30px;justify-content:space-between;align-items:end;flex-wrap:wrap;margin-bottom:25px}
+h1{font-size:clamp(29px,4.7vw,56px);letter-spacing:-.06em;margin:0 0 7px;line-height:1.1}h1 span{color:#f03459}p{color:var(--muted);line-height:1.6;margin:0}
+.button{display:inline-flex;gap:9px;align-items:center;justify-content:center;color:#fff;background:#282f40;border:1px solid #485268;border-radius:10px;padding:12px 16px;text-decoration:none;cursor:pointer;font-weight:750;font-size:13px}
+.button:hover{background:#354158}.button:focus-visible{outline:3px solid #ec4f69}
+.content{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:19px}
+.player{border:1px solid #354050;background:#0f141e;border-radius:19px;overflow:hidden;box-shadow:0 14px 65px #0007}
+.playerhead{padding:16px 20px;display:flex;gap:12px;align-items:center;justify-content:space-between}
+.live{font-size:12px;font-weight:900;letter-spacing:.13em}.dot{display:inline-block;width:8px;height:8px;margin-right:8px;background:#ee294b;border-radius:50%;box-shadow:0 0 15px #f22}
+.source{color:#a5b1be;font-size:12px}
+.framewrap{background:#030509;min-height:240px;height:clamp(360px,65vh,850px)}
+iframe{border:0;width:100%;height:100%;display:block;background:#040609}
+.controls{padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid #253043}
+.controls small{color:#9ea8b7}
+.sidebar{display:flex;flex-direction:column;gap:14px}
+.panel{border:1px solid #303746;background:linear-gradient(135deg,#1a2230,#111620);border-radius:17px;padding:22px}
+.panel h2{font-size:16px;margin:0 0 11px}.panel p{font-size:13px}.panel a{color:#f4d7de}
+.info{margin:0;padding:0;list-style:none}.info li{font-size:12px;color:#bec8d6;padding:10px 0;border-bottom:1px solid #ffffff16}.info li:last-child{border-bottom:0}.info b{color:white}
+.note{margin-top:18px;padding:14px 18px;border:1px solid #544332;border-radius:12px;background:#231d19;color:#e5ccb0;font-size:12px;line-height:1.7}
+footer{padding:32px 0 8px;color:#788394;font-size:12px}
+@media(max-width:950px){.content{grid-template-columns:1fr}.sidebar{display:grid;grid-template-columns:1fr 1fr}.framewrap{height:65vh}nav{gap:10px}}
+@media(max-width:620px){header{height:65px;padding:0 12px}.brand{gap:8px}.brand strong{font-size:13px}.mark{font-size:14px;padding:8px}.pill{display:none}nav a{font-size:12px}nav{gap:8px}.top{margin-bottom:14px}.framewrap{height:73dvh;min-height:430px}.sidebar{grid-template-columns:1fr}.playerhead,.controls{padding:12px}.source{font-size:10px}main{padding:20px 9px}.panel{padding:18px}}
+</style>
+</head>
+<body>
+<header>
+ <a class="brand" href="/" aria-label="İBO TV ana sayfa"><span class="mark">İBO</span><span><strong>ÖZEL SİNEMA</strong><small>CANLI TV PLATFORMU</small></span></a>
+ <nav><a href="#izle">Canlı TV</a><a href="/proof">Test Kanalları</a></nav><span class="pill">BAĞIMSIZ SİTE</span>
+</header>
+<main>
+ <div class="top">
+  <div><div class="pretitle">İBO TV · KİŞİSEL YAYIN MERKEZİ</div><h1>Canlı TV <span>tek ekranda.</span></h1>
+  <p>İBO Özel Sinema ana sitesinden bağımsız izleme alanı. Mevcut PC yayın sayfası bu pencerede açılır.</p></div>
+  <a class="button" href="/proof" aria-label="Doğrulanmış örnek yayın testini aç">Test kanallarını izle</a>
+ </div>
+ <div class="content" id="izle">
+  <section class="player" aria-label="İBO TV yayın alanı">
+   <div class="playerhead"><div class="live"><i class="dot"></i>CANLI TV</div><div class="source">Kaynak: PC üzerindeki mevcut TV sayfası</div></div>
+   <div class="framewrap"><iframe id="tv" title="İBO TV canlı yayın oynatıcısı" src="https://maui-telecharger-surgeons-pentium.trycloudflare.com/tv" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen referrerpolicy="no-referrer"></iframe></div>
+   <div class="controls"><small id="status">Yayın sayfası yükleniyor. PC'nin açık olması gerekir.</small><button class="button" type="button" id="refresh">Yayın sayfasını yenile</button></div>
+  </section>
+  <aside class="sidebar">
+   <section class="panel"><h2>İBO TV</h2><p>Bu sayfa doğrudan bağımsız barındırmada çalışır. Ana sinema sitesine herhangi bir değişiklik yapılmamıştır.</p></section>
+   <section class="panel"><h2>Bağlantı bilgisi</h2>
+    <ul class="info"><li><b>PC kaynak:</b> Mevcut yayın sunucusu</li><li><b>Test oynatıcı:</b> <a href="/proof">3 örnek kanal</a></li><li><b>IPTV şifresi:</b> Bu site kodunda bulunmaz</li><li><b>Durum:</b> Canlı yayın ve girişsiz erişim ayrıca doğrulanacak</li></ul>
+   </section>
+  </aside>
+ </div>
+ <div class="note">Bu sayfa mevcut PC TV kaynağını başka bir sekmeye yönlendirmeden çerçeve içinde açar. <strong>İzleyicinin IPTV hesabı girmeden gerçek yayını oynatması henüz doğrulanmış değildir.</strong> Sunucu PC kapalıyken TV kaynağına erişemeyebilir. Gerçek yayını yeniden dağıtmak için gerekli yayın hakları ve sağlayıcı izni bulunmalıdır.</div>
+ <footer>© İBO Özel Sinema · Bağımsız Canlı TV Platformu · Deneme bağlantısı</footer>
+</main>
+<script>
+(()=>{
+ const f=document.getElementById('tv'),s=document.getElementById('status'),b=document.getElementById('refresh');
+ f.addEventListener('load',()=>{s.textContent='TV sayfası yüklendi. Bu, gerçek video oynadığını doğrulamaz.'});
+ b.addEventListener('click',()=>{s.textContent='Yayın sayfası yeniden yükleniyor.';f.src=f.src});
+})();
+</script>
+</body></html>

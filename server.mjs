@@ -12,6 +12,7 @@ const HOST = process.env.HOST || '0.0.0.0';
 const origin = new URL(process.env.IPTV_SERVER_URL || 'http://fx.mertnet.in');
 if (!['http:', 'https:'].includes(origin.protocol)) throw Error('Unsupported provider protocol');
 const html = readFileSync(path.join(base, 'index.html'));
+const personalHome=readFileSync(path.join(base,'home.html'));
 const proofHTML=readFileSync(path.join(base, 'proof.html'));
 const proofVideos=[null,...[1,2,3].map(i=>readFileSync(path.join(base,'proof-media','channel-'+i+'.mp4')))];
 const playerJS = readFileSync(path.join(base, 'node_modules/mpegts.js/dist/mpegts.js'));
@@ -146,7 +147,8 @@ const app=http.createServer(async(req,res)=>{
   const pathname=new URL(req.url,'http://localhost').pathname;
   try {
     if(req.method==='GET' && pathname==='/api/health') return json(res,200,{ok:true,mode:'one-user-low-cpu-relay'});
-    if(req.method==='GET' && pathname==='/') return reply(res,200,html,'text/html; charset=utf-8');    if(req.method==='GET' && pathname==='/proof') return reply(res,200,proofHTML,'text/html; charset=utf-8');
+    if(req.method==='GET' && pathname==='/') return reply(res,200,personalHome,'text/html; charset=utf-8');
+    if(req.method==='GET' && pathname==='/iptv-login') return reply(res,200,html,'text/html; charset=utf-8');    if(req.method==='GET' && pathname==='/proof') return reply(res,200,proofHTML,'text/html; charset=utf-8');
     const proofMatch=pathname.match(/^\/proof-media\/channel-([123])\.mp4$/);
     if((req.method==='GET'||req.method==='HEAD')&&proofMatch){
       const video=proofVideos[Number(proofMatch[1])],size=video.byteLength;
