@@ -142,6 +142,41 @@ const app=http.createServer(async(req,res)=>{
       return json(res,200,rows.filter(x=>Number.isSafeInteger(Number(x.stream_id))&&Number(x.stream_id)>0)
         .map(x=>({id:Number(x.stream_id),name:String(x.name||'Kanal').slice(0,150)})));
     }
+    if(req.method==='GET' && pathname==='/api/playlist-probe') {
+      const u=new URL('/get.php',origin);
+      u.searchParams.set('username',s.u);
+      u.searchParams.set('password',s.p);
+      u.searchParams.set('type','m3u_plus');
+      u.searchParams.set('output','ts');
+      const ctl=new AbortController();
+      const timer=setTimeout(()=>ctl.abort(),10000);
+      try {
+        const upstreamResponse=await fetch(u,{signal:ctl.signal,redirect:'manual',headers:{'user-agent':'IBO-TV/1.0','accept':'*/*'}});
+        const detail={http:upstreamResponse.status,mime:(upstreamResponse.headers.get('content-type')||'').split(';')[0]};
+        if(upstreamResponse.status>=300 && upstreamResponse.status<400) {
+          const loc=upstreamResponse.headers.get('location');
+          if(loc) {try{detail.redirectHost=new URL(loc,u).hostname}catch{}}
+        }
+        else if(upstreamResponse.ok && upstreamResponse.body) {
+          const reader=upstreamResponse.body.getReader();
+          try {
+            const part=await reader.read();
+            const data=Buffer.from(part.value||new Uint8Array()).toString('utf8');
+            detail.isM3U=data.trimStart().startsWith('#EXTM3U');
+            const hostnames=new Set();
+            for(const line of data.split(/\r?\n/)) {
+              if(!/^https?:\/\//i.test(line.trim())) continue;
+              try{hostnames.add(new URL(line.trim()).hostname)}catch{}
+              if(hostnames.size>=5)break;
+            }
+            detail.streamHosts=[...hostnames];
+          } finally {await reader.cancel().catch(()=>{});}
+        }
+        else { await upstreamResponse.body?.cancel().catch(()=>{}); }
+        return json(res,200,detail);
+      }catch(e){return json(res,200,{error:e?.name==='AbortError'?'timeout':e.name||'error'});}
+      finally{clearTimeout(timer);ctl.abort();}
+    }
     const probe=pathname.match(/^\/api\/probe\/([0-9]{1,16})$/);
     if(req.method==='GET' && probe) {
       const id=Number(probe[1]);
