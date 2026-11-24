@@ -12,6 +12,8 @@ const HOST = process.env.HOST || '0.0.0.0';
 const origin = new URL(process.env.IPTV_SERVER_URL || 'http://fx.mertnet.in');
 if (!['http:', 'https:'].includes(origin.protocol)) throw Error('Unsupported provider protocol');
 const html = readFileSync(path.join(base, 'index.html'));
+const proofHTML=readFileSync(path.join(base, 'proof.html'));
+const proofVideos=[null,...[1,2,3].map(i=>readFileSync(path.join(base,'proof-media','channel-'+i+'.mp4')))];
 const playerJS = readFileSync(path.join(base, 'node_modules/mpegts.js/dist/mpegts.js'));
 const sessions = new Map();
 const logins = new Map();
@@ -144,7 +146,24 @@ const app=http.createServer(async(req,res)=>{
   const pathname=new URL(req.url,'http://localhost').pathname;
   try {
     if(req.method==='GET' && pathname==='/api/health') return json(res,200,{ok:true,mode:'one-user-low-cpu-relay'});
-    if(req.method==='GET' && pathname==='/') return reply(res,200,html,'text/html; charset=utf-8');
+    if(req.method==='GET' && pathname==='/') return reply(res,200,html,'text/html; charset=utf-8');    if(req.method==='GET' && pathname==='/proof') return reply(res,200,proofHTML,'text/html; charset=utf-8');
+    const proofMatch=pathname.match(/^\/proof-media\/channel-([123])\.mp4$/);
+    if((req.method==='GET'||req.method==='HEAD')&&proofMatch){
+      const video=proofVideos[Number(proofMatch[1])],size=video.byteLength;
+      const range=req.headers.range;
+      let start=0,end=size-1,code=200;
+      if(range){
+        const m=/^bytes=(\d+)-(\d*)$/.exec(range);
+        if(!m){res.writeHead(416,{'content-range':'bytes */'+size});return res.end();}
+        start=Number(m[1]);end=m[2]?Math.min(size-1,Number(m[2])):size-1;
+        if(start>=size||end<start){res.writeHead(416,{'content-range':'bytes */'+size});return res.end();}
+        code=206;
+      }
+      const headers={'content-type':'video/mp4','accept-ranges':'bytes','content-length':end-start+1,'x-content-type-options':'nosniff','cache-control':'public, max-age=3600'};
+      if(code===206)headers['content-range']='bytes '+start+'-'+end+'/'+size;
+      res.writeHead(code,headers);
+      return req.method==='HEAD'?res.end():res.end(video.subarray(start,end+1));
+    }
     if(req.method==='GET' && pathname==='/assets/mpegts.min.js')
       return reply(res,200,playerJS,'text/javascript; charset=utf-8');
     if(req.method==='POST' && !isValidOrigin(req)) return json(res,403,{error:'invalid_origin'});
