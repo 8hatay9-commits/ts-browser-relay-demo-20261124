@@ -1,11 +1,9 @@
-# İBO V5 — 2026-11-24 18:38 TRT checkpoint
-
-User selected option 3, requested further modernization and PC-independent live TV. Current live site is https://ibo-tv-independent-test.de.deplexo.com/ at v4 af8002e; production has NOT been modified.
-
-Completed: revised visual mock; v5 watch-first frontend; inline live player with bounded same-origin media relay; retained 8 collections/1067 catalogue records; filtering; next episode; search; accurate offline/retry states. No IPTV credentials copied. Worktree D:\ArbitrajX\IBO_V5_REDESIGN_20261124, branch design/live-stage-v5-20261124.
-
-Verification: node syntax checks passed; DOM simulation passed collections/filter/search/next/player cleanup; HTTP root, CSS, JS, catalogue 200. Cloud-browser preview initially blocked at terminal.local; resolved by exact sites-preview CLI URL http://127.0.0.1:4173/. New page rendered and real-browser collection search 15 => 1 episode verified. Browser console had only extension-origin metadata error in sampled logs. Live playback failed in preview, /api/tv-status returned offline. This does NOT establish production/provider outage: executor network reachability differs. Mobile rendering, visual fidelity during playback and real media playback not verified.
-
-Open defects: live media connection in preview unavailable; no PC-independent source configured; all upstreams in source are PC quick-tunnels. v5 idle state/cover artwork differs from selected mock. Same-state visual QA blocked. Native player controls differ from glass mock controls. Do not release as complete.
-
-Next: restore approved reachable live source in cloud staging, verify increasing playback time and decoded resolution; finalize visual fidelity and mobile browser QA; then deploy v5 to existing service and verify production. Provider cloud access must be established for PC independence; do not evade provider access controls. Saved code is a candidate, not a released product.
+# V5 checkpoint — 2026-11-24 18:47 TRT
+Branch: design/live-stage-v5-20261124. Production remains v4 af8002e.
+Implemented light watch-first design, responsive catalogue, inline HLS player, muted autoplay, actual decoded height indicator, retry, mobile 230px stage minimum and constrained width; corrected pause status.
+Verified: Node syntax; DOM initialization, 8 collections, 3 curated covers, 12 previews, search, episode 15/16 navigation, close cleanup.
+Remote candidate server http://127.0.0.1:18092: health playing=true current1481 pinned; playlist HTTP200; segment HTTP200 773620 bytes; ffprobe h264 1920x1080.
+Cloud browser 390px and 320px iframe viewport QA: widths375/305 excluding scrollbars, scroll widths match; mobile clipping fixed. Not physical-device testing.
+Blocked: cloud preview cannot reach upstream; same-state playing screenshot unverified. Catalogue media not exhaustively verified. No PC-independent source. Existing provider cloud denial not bypassed.
+Publishing: explicit private config CLI reports sign-in required; default config credential permission error. Do not extract browser cookies/credentials. Browser https://deplexo.com/login requests login; secure auth needed. No production deployment or main merge yet.
+Next: authenticate Deplexo, stage v5 and verify browser video advancement, then deploy verified candidate to existing audience. Preserve rollback af8002e and separate original here.now site.
