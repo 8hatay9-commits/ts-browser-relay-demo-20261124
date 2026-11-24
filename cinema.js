@@ -135,7 +135,10 @@ function collectionTile(id){
  const b=document.createElement('button');b.type='button';b.className='collection-tile';
  b.dataset.category=id;
  const poster=items.find(x=>x?.id)||items[0];
- if(thumb(poster))b.style.setProperty('--poster','url("'+thumb(poster)+'")');
+ // Select a recognisable human-focused frame for each featured collection.
+ const curatedArt={kv:'fB0BosiUAws',ks:'GOZ7Waq9VkQ',cin:'iKd626W0hhU'};
+ const artworkId=curatedArt[id]||poster?.id;
+ if(artworkId)b.style.setProperty('--poster','url("https://i.ytimg.com/vi/'+artworkId+'/hqdefault.jpg")');
  const top=text('span','','collection-tile__top');
  top.append(text('span',info.key,'collection-tile__pill'));
  top.append(text('span',items.length+(info.kind==='Dizi'?' bölüm':' film'),'collection-tile__count'));
