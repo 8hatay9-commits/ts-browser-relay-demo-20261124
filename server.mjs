@@ -14,12 +14,23 @@ if (!['http:', 'https:'].includes(origin.protocol)) throw Error('Unsupported pro
 const html = readFileSync(path.join(base, 'index.html'));
 const personalHome=readFileSync(path.join(base,'home.html'));
 const cinemaCss=readFileSync(path.join(base,'cinema.css'));
+const cinemaLight=readFileSync(path.join(base,'cinema-light.css'));
 const cinemaJs=readFileSync(path.join(base,'cinema.js'));
 const cinemaCatalog=readFileSync(path.join(base,'catalog.json'));
 const playerJS = readFileSync(path.join(base, 'node_modules/mpegts.js/dist/mpegts.js'));
-const TV_HEALTH_URL='https://learned-phpbb-rental-contests.trycloudflare.com/gateway-health';
-let healthCache={at:0,body:{bridge:'offline',configured:false}};
-async function guestHealth(){const now=Date.now();if(now-healthCache.at<7000)return healthCache.body;healthCache.at=now;try{const r=await fetch(TV_HEALTH_URL,{signal:AbortSignal.timeout(4400),cache:'no-store'});if(!r.ok)throw Error('HEALTH_HTTP');const j=await r.json();healthCache.body={bridge:j.gateway===true?'online':'offline',configured:j.ready===true};}catch{healthCache.body={bridge:'offline',configured:false}}return healthCache.body}
+const TV_TUNNELS=[process.env.IPTV_TUNNEL_PRIMARY||'https://learned-phpbb-rental-contests.trycloudflare.com',process.env.IPTV_TUNNEL_SECONDARY||'https://mesa-strongly-balance-rooms.trycloudflare.com'].filter(x=>/^https:\/\/[a-z0-9-]+\.trycloudflare\.com$/i.test(x));
+let healthCache={at:0,body:{bridge:'offline',configured:false,viewerUrl:null}};
+async function guestHealth(){
+ const now=Date.now();if(now-healthCache.at<7000)return healthCache.body;
+ healthCache.at=now;
+ const checks=await Promise.all(TV_TUNNELS.map(async host=>{
+  try{const r=await fetch(host+'/gateway-health',{signal:AbortSignal.timeout(4400),cache:'no-store'});if(!r.ok)throw Error('OFFLINE');const j=await r.json();if(!j.gateway||!j.ownerConfigured||!j.shared)throw Error('NOT_CONFIGURED');return host}
+  catch{return null}
+ }));
+ const active=checks.find(Boolean);
+ healthCache.body={bridge:active?'online':'offline',configured:!!active,viewerUrl:active?active+'/tv-guest':null};
+ return healthCache.body;
+}
 
 const sessions = new Map();
 const logins = new Map();
@@ -156,6 +167,7 @@ const app=http.createServer(async(req,res)=>{
     if(req.method==='GET' && pathname==='/api/tv-status') return json(res,200,await guestHealth());
     if(req.method==='GET' && pathname==='/') return reply(res,200,personalHome,'text/html; charset=utf-8');
     if(req.method==='GET' && pathname==='/cinema.css') return reply(res,200,cinemaCss,'text/css; charset=utf-8');
+    if(req.method==='GET' && pathname==='/cinema-light.css') return reply(res,200,cinemaLight,'text/css; charset=utf-8');
     if(req.method==='GET' && pathname==='/cinema.js') return reply(res,200,cinemaJs,'text/javascript; charset=utf-8');
     if(req.method==='GET' && pathname==='/catalog.json') return reply(res,200,cinemaCatalog,'application/json; charset=utf-8');
     if(req.method==='GET' && pathname==='/iptv-login') {res.writeHead(302,{'location':'/','cache-control':'no-store'});return res.end();}

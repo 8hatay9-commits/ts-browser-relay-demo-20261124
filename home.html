@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://i.ytimg.com" crossorigin>
 <link rel="preconnect" href="https://www.youtube-nocookie.com" crossorigin>
 <link rel="stylesheet" href="/cinema.css">
+<link rel="stylesheet" href="/cinema-light.css">
 <script src="/cinema.js" defer></script>
 </head>
 <body>
@@ -61,7 +62,7 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg> Tüm Bölümler
      </button>
     </div>
-    <div class="hero__metadata"><span class="hero__meta-dot"></span> <span id="heroMeta">Koleksiyon yükleniyor</span><span class="hero__divider">·</span><span>Kesintisiz arşiv deneyimi</span></div>
+    <div class="hero__metadata"><span class="hero__meta-dot"></span> <span id="heroMeta">Koleksiyon yükleniyor</span><span class="hero__divider">·</span><span>Diziler, filmler, canlı yayın</span></div>
    </div>
    <div class="hero__edge" aria-hidden="true">İBO <strong>CINEMA</strong></div>
   </div>
@@ -170,5 +171,11 @@
  </section>
 </div>
 
+<nav class="mobile-dock" aria-label="Mobil menü">
+ <a href="#kesfet" class="mobile-dock__tab mobile-dock__tab--active"><span class="mobile-dock__icon">⌂</span><span>Keşfet</span></a>
+ <a href="#diziler" class="mobile-dock__tab"><span class="mobile-dock__icon">▦</span><span>Diziler</span></a>
+ <a href="#filmler" class="mobile-dock__tab"><span class="mobile-dock__icon">▤</span><span>Filmler</span></a>
+ <button id="mobileLive" type="button" class="mobile-dock__tab mobile-dock__tab--live"><span class="mobile-dock__icon">●</span><span>Canlı TV</span></button>
+</nav>
 <div id="toast" role="status" class="toast" aria-live="polite"></div>
 </body></html>

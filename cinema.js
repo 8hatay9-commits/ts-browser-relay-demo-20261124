@@ -17,7 +17,8 @@ const data={};
 const watchState={id:null,number:null,entry:null};
 let selectedCollection=null,shown=0,currentFiltered=[],lastFocus=null;
 let tvState='unknown',tvChecking=false,toastTimer=null,openLayerName='';
-const HOST_TV='https://learned-phpbb-rental-contests.trycloudflare.com/tv-guest';
+const HOST_TV_FALLBACK='https://learned-phpbb-rental-contests.trycloudflare.com/tv-guest';
+let currentTvUrl=HOST_TV_FALLBACK;
 const recentKey='ibo-cinema-history-v2';
 
 function text(tag,content,cls){
@@ -244,9 +245,16 @@ function openSearch(){
  byId('globalSearch').focus({preventScroll:true});renderSearch();
 }
 function closeSearch(){byId('searchDrawer').hidden=true;byId('globalSearch').value=''}
-function openLive(){
- byId('liveFrame').src=HOST_TV;
+async function openLive(){
+ const frame=byId('liveFrame');
+ frame.src=currentTvUrl;
  layerOpen('liveLayer');
+ try{
+  const r=await fetch('/api/tv-status',{cache:'no-store',signal:AbortSignal.timeout(7000)});
+  if(!r.ok)throw Error('STATUS_UNAVAILABLE');
+  const info=await r.json();
+  if(info.viewerUrl&&byId('liveLayer').classList.contains('open')&&frame.src!==info.viewerUrl){currentTvUrl=info.viewerUrl;frame.src=currentTvUrl}
+ }catch{}
 }
 function closeLive(){layerClose('liveLayer')}
 function attachEvents(){
@@ -259,6 +267,7 @@ function attachEvents(){
   b.addEventListener('click',()=>openCollection(b.dataset.openCollection));
  }
  byId('headerLive').onclick=openLive;
+ byId('mobileLive').onclick=openLive;
  byId('openLive').onclick=openLive;
  byId('catalogClose').onclick=()=>layerClose('catalogLayer');
  byId('videoClose').onclick=()=>layerClose('videoLayer');
@@ -303,6 +312,10 @@ async function tvHealth(){
   if(!r.ok)throw Error('NOT_READY');
   const data=await r.json();
   tvState=data.bridge==='online'?(data.configured?'online':'setup'):'offline';
+  if(data.viewerUrl&&data.viewerUrl!==currentTvUrl){
+   currentTvUrl=data.viewerUrl;
+   if(byId('liveLayer').classList.contains('open')){byId('liveFrame').src=currentTvUrl;toast('Canlı TV bağlantısı yeniden kuruldu.');}
+  }
  }catch{tvState='offline'}
  finally{tvChecking=false}
  const dot=byId('liveDot'),label=byId('liveLabel');
