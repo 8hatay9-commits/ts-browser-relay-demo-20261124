@@ -7,7 +7,8 @@ import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 
 const base = path.dirname(fileURLToPath(import.meta.url));
-const PORT = Number(process.env.PORT || 18091);
+const portArg=process.argv.indexOf('--port');
+const PORT = Number(portArg>=0?process.argv[portArg+1]:(process.env.PORT || 18091));
 const HOST = process.env.HOST || '0.0.0.0';
 const origin = new URL(process.env.IPTV_SERVER_URL || 'http://fx.mertnet.in');
 if (!['http:', 'https:'].includes(origin.protocol)) throw Error('Unsupported provider protocol');
@@ -16,6 +17,8 @@ const personalHome=readFileSync(path.join(base,'home.html'));
 const cinemaCss=readFileSync(path.join(base,'cinema.css'));
 const cinemaLight=readFileSync(path.join(base,'cinema-light.css'));
 const cinemaV3=readFileSync(path.join(base,'cinema-v3.css'));
+const cinemaV5=readFileSync(path.join(base,'cinema-v5.css'));
+const stageJs=readFileSync(path.join(base,'stage.js'));
 const cinemaV4=readFileSync(path.join(base,'cinema-v4.css'));
 const cinemaJs=readFileSync(path.join(base,'cinema.js'));
 const cinemaCatalog=readFileSync(path.join(base,'catalog.json'));
@@ -165,6 +168,29 @@ function janitor() {
 const app=http.createServer(async(req,res)=>{
   const pathname=new URL(req.url,'http://localhost').pathname;
   try {
+    if(req.method==='GET' && pathname==='/cinema-v5.css') return reply(res,200,cinemaV5,'text/css; charset=utf-8');
+    if(req.method==='GET' && pathname==='/stage.js') return reply(res,200,stageJs,'text/javascript; charset=utf-8');
+    if(req.method==='GET' && /^\/live-media\/(?:health|live\.m3u8|s\d{8}\.ts|hls\.min\.js)$/.test(pathname)) {
+      const state=await guestHealth();
+      if(!state.viewerUrl)return json(res,503,{error:'LIVE_UNAVAILABLE'});
+      const suffix=pathname.slice('/live-media/'.length);
+      const target=new URL('/shared/'+suffix,state.viewerUrl);
+      const ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),16000);
+      res.on('close',()=>ctl.abort());
+      try {
+        const r=await fetch(target,{signal:ctl.signal,redirect:'error'});
+        if(!r.ok||!r.body)return json(res,502,{error:'LIVE_SOURCE_UNAVAILABLE'});
+        if(suffix==='live.m3u8') {
+          const raw=await r.text();
+          if(!raw.trimStart().startsWith('#EXTM3U'))return json(res,502,{error:'INVALID_MEDIA'});
+          const safe=raw.split('\n').map(line=>{const v=line.trim();if(!v||v.startsWith('#'))return line;const name=v.split('?')[0].split('/').pop();if(!/^s\d{8}\.ts$/.test(name))throw Error('INVALID_SEGMENT');return '/live-media/'+name;}).join('\n');
+          return reply(res,200,safe,'application/vnd.apple.mpegurl');
+        }
+        res.writeHead(200,{'content-type':suffix.endsWith('.js')?'text/javascript; charset=utf-8':suffix.endsWith('.ts')?'video/mp2t':'application/json','cache-control':'no-store','x-content-type-options':'nosniff'});
+        await pipeline(Readable.fromWeb(r.body),res);
+      }finally{clearTimeout(timer);ctl.abort()}
+      return;
+    }
     if(req.method==='GET' && pathname==='/api/health') return json(res,200,{ok:true,mode:'one-user-low-cpu-relay'});
     if(req.method==='GET' && pathname==='/api/tv-status') return json(res,200,await guestHealth());
     if(req.method==='GET' && pathname==='/') return reply(res,200,personalHome,'text/html; charset=utf-8');

@@ -147,6 +147,7 @@ function collectionTile(id){
 }
 function renderRails(){
  const series=byId('seriesCollections'),films=byId('filmCollections');
+ byId('curatedCollections').replaceChildren(...['kv','ks','cin'].map(collectionTile));
  series.replaceChildren(...seriesIds.map(collectionTile));
  films.replaceChildren(...filmIds.map(collectionTile));
  for(const [id,target] of [['kv','kvRail'],['pusu','pusuRail'],['cin','cinRail'],['ks','ksRail']]){
@@ -154,7 +155,7 @@ function renderRails(){
   byId(target).replaceChildren(...items.map(it=>entryCard(id,it)));
  }
  updateResume();
- byId('heroMeta').textContent=(data.kv?.length||0)+' bölüm · Kurtlar Vadisi arşivi';
+ if(byId('heroMeta'))byId('heroMeta').textContent=(data.kv?.length||0)+' bölüm · Kurtlar Vadisi arşivi';
 }
 function openCollection(id){
  if(!collectionInfo[id])return;
@@ -228,6 +229,7 @@ function playEntry(section,item){
  frame.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(item.id)+'?autoplay=1&playsinline=1&rel=0&modestbranding=1';
  saveHistory(section,item);
  updateNeighbors();
+ window.dispatchEvent(new Event('ibo:pause-live'));
  layerOpen('videoLayer');
 }
 function renderSearch(){
@@ -263,30 +265,14 @@ function openSearch(){
  byId('globalSearch').focus({preventScroll:true});renderSearch();
 }
 function closeSearch(){byId('searchDrawer').hidden=true;byId('globalSearch').value=''}
-async function openLive(){
- const frame=byId('liveFrame');
- frame.src=currentTvUrl;
- layerOpen('liveLayer');
- try{
-  const r=await fetch('/api/tv-status',{cache:'no-store',signal:AbortSignal.timeout(7000)});
-  if(!r.ok)throw Error('STATUS_UNAVAILABLE');
-  const info=await r.json();
-  if(info.viewerUrl&&byId('liveLayer').classList.contains('open')&&frame.src!==info.viewerUrl){currentTvUrl=info.viewerUrl;frame.src=currentTvUrl}
- }catch{}
-}
+async function openLive(){byId('canli').scrollIntoView({behavior:'smooth'});window.dispatchEvent(new Event('ibo:start-live'));}
 function closeLive(){layerClose('liveLayer')}
 function attachEvents(){
- byId('heroWatch').onclick=()=>{if(data.kv?.length)playEntry('kv',data.kv[0]);else toast('Arşiv yüklenemedi.')};
- byId('heroEpisodes').onclick=()=>openCollection('kv');
- byId('quickTv').onclick=openLive;
- byId('quickSeries').onclick=()=>byId('diziler').scrollIntoView({behavior:'smooth'});
- byId('quickMovies').onclick=()=>byId('filmler').scrollIntoView({behavior:'smooth'});
  for(const b of document.querySelectorAll('[data-open-collection]')){
   b.addEventListener('click',()=>openCollection(b.dataset.openCollection));
  }
  byId('headerLive').onclick=openLive;
  byId('mobileLive').onclick=openLive;
- byId('openLive').onclick=openLive;
  byId('catalogClose').onclick=()=>layerClose('catalogLayer');
  byId('videoClose').onclick=()=>layerClose('videoLayer');
  byId('closeLive').onclick=closeLive;
@@ -338,7 +324,7 @@ async function tvHealth(){
  finally{tvChecking=false}
  const dot=byId('liveDot'),label=byId('liveLabel');
  dot.className='state-dot'+(tvState==='online'?' online':tvState==='offline'?' offline':'');
- label.textContent=tvState==='online'?'İzleme alanı hazır':tvState==='setup'?'Kurulum gerekiyor':'Bağlantı kontrol ediliyor';
+ label.textContent=tvState==='online'?'İzleme alanı hazır':tvState==='setup'?'Kurulum gerekiyor':'Yayın bağlantısı şu anda kullanılamıyor';
 }
 async function init(){
  attachEvents();

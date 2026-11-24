@@ -9,20 +9,19 @@
   <title>İBO Özel Sinema | İzlemek istediğin her şey</title>
   <link rel="preconnect" href="https://i.ytimg.com" crossorigin>
   <link rel="stylesheet" href="/cinema-v4.css">
-  <script defer src="/cinema.js"></script>
+  <link rel="stylesheet" href="/cinema-v5.css"><script defer src="/cinema.js"></script><script defer src="/stage.js"></script>
 </head>
 <body>
   <header class="site-header" id="top">
     <div class="shell header-layout">
       <a class="logo" href="/" aria-label="İBO Özel Sinema ana sayfa">
-        <span class="logo-icon" aria-hidden="true">i<span>.</span></span>
-        <span class="logo-copy"><strong>İBO</strong><small>ÖZEL SİNEMA</small></span>
+        <strong class="brand-word">ibo</strong><span class="brand-caption">Özel Sinema</span>
       </a>
       <nav class="desktop-nav" aria-label="Ana menü">
-        <a href="#kesfet" class="nav-current">Keşfet</a>
+        <a href="#kesfet" >Keşfet</a>
         <a href="#diziler">Diziler</a>
         <a href="#filmler">Filmler</a>
-        <a href="#canli">Canlı yayın</a>
+        <a href="#canli" class="nav-current">Canlı TV</a>
       </nav>
       <div class="header-actions">
         <button class="header-search" id="searchToggle" type="button" aria-label="Film ve dizi ara" title="Ara">
@@ -30,7 +29,7 @@
           <span>Ara</span>
         </button>
         <button class="header-live" id="headerLive" type="button">
-          <span class="broadcast-pulse" aria-hidden="true"></span> CANLI TV <span aria-hidden="true">↗</span>
+          <span class="broadcast-pulse" aria-hidden="true"></span> CANLI TV
         </button>
       </div>
     </div>
@@ -46,67 +45,17 @@
   </div>
 
   <main id="kesfet">
-    <section class="welcome shell">
-      <div class="welcome-heading">
-        <div>
-          <p class="eyebrow"><span class="eyebrow-line"></span> KİŞİSEL SİNEMA ALANIN</p>
-          <h1>İyi seyirler<span class="accent-dot">.</span></h1>
-          <p class="welcome-note">Film, dizi ve canlı yayın. Ne izlemek istersen, burada.</p>
-        </div>
-        <div class="welcome-symbol" aria-hidden="true"><span>İBO</span><small>SCREENING ROOM</small></div>
+    <section class="screen-room shell" id="canli" aria-label="Canlı yayın">
+      <div class="screen-stage" id="screenStage">
+        <video id="stagePlayer" controls playsinline preload="none" aria-label="Canlı yayın oynatıcısı"></video>
+        <div class="screen-empty" id="stageEmpty"><span class="stage-eyebrow">İBO LIVE</span><h1>En iyi yer,<br>senin ekranın.</h1><p id="stageMessage" role="status">Canlı yayına bağlanmak için başlat.</p><button id="stageStart" class="stage-start" type="button">Canlı yayını başlat</button></div>
       </div>
-
-      <div class="feature-grid">
-        <article class="feature-main hero" aria-label="Kurtlar Vadisi öne çıkan dizi">
-          <div class="hero-photo" aria-hidden="true"></div>
-          <div class="hero-wash" aria-hidden="true"></div>
-          <div class="hero-content">
-            <div class="feature-badge"><span class="feature-badge-bar"></span> ÖNE ÇIKAN DİZİ <span>01 / 08</span></div>
-            <div class="hero-spacer"></div>
-            <p class="hero-topline">Kült dizi · Aksiyon / Dram</p>
-            <h2>Kurtlar<br><em>Vadisi</em></h2>
-            <p class="hero-description">Unutulmaz hikâyeyi ilk bölümden keşfet. Tüm bölümler bir arada.</p>
-            <div class="hero-buttons">
-              <button id="heroWatch" class="button button-primary" type="button">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5.5 10 6.5-10 6.5z" fill="currentColor" stroke="none"/></svg>
-                İzlemeye başla
-              </button>
-              <button id="heroEpisodes" class="button button-outline-light" type="button">Tüm bölümler <span aria-hidden="true">↗</span></button>
-            </div>
-            <p class="hero-meta" id="heroMeta">Bölümler yükleniyor</p>
-          </div>
-          <div class="feature-watermark" aria-hidden="true">İBO SEÇKİSİ</div>
-        </article>
-
-        <div class="feature-aside">
-          <article class="live-feature" id="canli" aria-label="Canlı yayın">
-            <div class="live-topline"><span><i class="live-led" id="liveDot"></i> CANLI YAYIN</span><span class="live-globe" aria-hidden="true">◉</span></div>
-            <div class="live-art" aria-hidden="true"><div class="live-orbit"></div><div class="live-orbit live-orbit-small"></div><div class="live-art-center"><span class="signal-icon">▸</span></div></div>
-            <div class="live-content">
-              <h2>Şimdi<br>ekranda.</h2>
-              <p id="liveLabel">Yayın kontrol ediliyor…</p>
-              <button id="quickTv" class="round-action round-action-light" type="button" aria-label="Canlı TV'yi aç"><span>Canlı TV'yi aç</span><span aria-hidden="true">↗</span></button>
-            </div>
-          </article>
-          <article class="resume-feature" aria-label="Son izlenen içerik">
-            <div class="resume-top"><span>SON AÇTIĞIN İÇERİK</span><span class="resume-asterisk" aria-hidden="true">✳</span></div>
-            <button id="resumeLast" class="resume-action" type="button">
-              <span id="resumeArt" class="resume-preview" aria-hidden="true">▶</span>
-              <span class="resume-caption"><strong id="resumeTitle">Bir hikâye seç</strong><small id="resumeSubtitle">İlk kez izlemek için keşfet</small></span>
-              <span class="resume-arrow" aria-hidden="true">↗</span>
-            </button>
-          </article>
-        </div>
-      </div>
+      <div class="screen-caption"><div class="channel-heading"><h2>beIN SPORTS 1</h2><span id="stageQuality" class="quality-tag" hidden></span><span class="channel-status" id="stageStatus" role="status">Canlı TV</span></div><a href="#seckiler" class="cinema-jump">Sinemaya geç</a></div>
+      <div class="stage-tools"><button id="stageRetry" type="button">Yeniden bağlan</button><span id="liveLabel">Bağlantı bekleniyor</span><i id="liveDot" hidden></i></div>
     </section>
-
+    <section class="shell curated" id="seckiler"><div class="section-heading"><h2>Sana özel seçkiler</h2><span>Bir hikâyeye daha yer var.</span></div><div class="curated-grid" id="curatedCollections"></div></section>
     <div class="shell catalog-root">
-      <div class="content-tabs" aria-label="Koleksiyonlara git">
-        <span class="tabs-lead">KEŞFET</span>
-        <button id="quickSeries" type="button">Dizi koleksiyonları <span>↗</span></button>
-        <button id="quickMovies" type="button">Film arşivi <span>↗</span></button>
-        <button id="openLive" type="button">Canlı televizyon <span>↗</span></button>
-      </div>
+      
 
       <section id="diziler" class="catalog-section">
         <div class="section-heading">
@@ -119,7 +68,7 @@
       <section id="featuredSeries" class="catalog-section">
         <div class="section-heading">
           <div><p class="section-kicker">02 — BÖLÜMLER</p><h2>Kurtlar Vadisi<span class="accent-dot">.</span></h2></div>
-          <button type="button" class="text-link" data-open-collection="kv">Bütün bölümler <span aria-hidden="true">↗</span></button>
+          <button type="button" class="text-link" data-open-collection="kv">Bütün bölümler </button>
         </div>
         <div id="kvRail" class="media-rail" aria-label="Kurtlar Vadisi bölümleri"></div>
       </section>
@@ -127,7 +76,7 @@
       <section id="pusuSeries" class="catalog-section">
         <div class="section-heading">
           <div><p class="section-kicker">03 — DEVAM SERİSİ</p><h2>Kurtlar Vadisi Pusu<span class="accent-dot">.</span></h2></div>
-          <button type="button" class="text-link" data-open-collection="pusu">Bütün bölümler <span aria-hidden="true">↗</span></button>
+          <button type="button" class="text-link" data-open-collection="pusu">Bütün bölümler </button>
         </div>
         <div id="pusuRail" class="media-rail" aria-label="Kurtlar Vadisi Pusu bölümleri"></div>
       </section>
@@ -143,7 +92,7 @@
       <section id="cinemaShelf" class="catalog-section">
         <div class="section-heading">
           <div><p class="section-kicker">05 — KORKU</p><h2>Cin Filmleri<span class="accent-dot">.</span></h2></div>
-          <button type="button" class="text-link" data-open-collection="cin">Tüm filmler <span aria-hidden="true">↗</span></button>
+          <button type="button" class="text-link" data-open-collection="cin">Tüm filmler </button>
         </div>
         <div id="cinRail" class="media-rail" aria-label="Cin filmleri"></div>
       </section>
@@ -151,7 +100,7 @@
       <section id="comedyShelf" class="catalog-section">
         <div class="section-heading">
           <div><p class="section-kicker">06 — KLASİKLER</p><h2>Kemal Sunal<span class="accent-dot">.</span></h2></div>
-          <button type="button" class="text-link" data-open-collection="ks">Tüm filmler <span aria-hidden="true">↗</span></button>
+          <button type="button" class="text-link" data-open-collection="ks">Tüm filmler </button>
         </div>
         <div id="ksRail" class="media-rail" aria-label="Kemal Sunal filmleri"></div>
       </section>
