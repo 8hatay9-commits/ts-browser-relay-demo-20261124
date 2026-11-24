@@ -155,6 +155,16 @@ const app=http.createServer(async(req,res)=>{
           const up=await upstream(source,9000);stop=up.stop;
           const mime=(up.response.headers.get('content-type')||'').split(';')[0];
           const sample={format:ext,status:up.response.status,mime,ms:Date.now()-start,firstBytes:0,signature:'none'};
+          if(!up.response.ok) {
+            const txt=(await up.response.text().catch(()=>'')).slice(0,240);
+            sample.errorClass=/IP\s*BANNED/i.test(txt)?'IP_BANNED'
+              :/ACCOUNT|EXPIRED|SUBSCRIB/i.test(txt)?'ACCOUNT_REJECTED'
+              :/CONNECTION|LIMIT/i.test(txt)?'CONNECTION_LIMIT'
+              :/ACCESS DENIED|FORBIDDEN/i.test(txt)?'ACCESS_DENIED'
+              :/CLOUDFLARE|ERROR\s*(CODE|1015|1003)/i.test(txt)?'CLOUDFLARE_BLOCK'
+              :/<!doctype|<html|<body/i.test(txt)?'HTML_ERROR'
+              :txt.trim()===''?'EMPTY_ERROR':'OTHER_ERROR';
+          }
           if(up.response.ok&&up.response.body){
             const reader=up.response.body.getReader();
             const t=setTimeout(()=>stop(),6500);
