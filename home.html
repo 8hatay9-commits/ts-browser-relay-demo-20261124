@@ -209,6 +209,39 @@ footer .logo{font-size:22px;margin-bottom:6px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
+<style id="ibo-visual-refresh">
+/* IBO visual refresh: catalogue chrome only. Player and live styles remain original. */
+body{background:#f4f6fa}
+.top,.top.solid{inset:18px 28px auto;height:70px;padding:0 26px;border:1px solid rgba(255,255,255,.8);border-radius:24px;background:rgba(248,250,253,.94);color:#172331;box-shadow:0 12px 40px #14233412;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.top .logo{font-size:30px;letter-spacing:-.065em;gap:9px}.top .logo b{color:#182b42}.top .logo span{font-size:17px;color:#667488;font-weight:600}
+.top .nav{position:absolute;left:50%;transform:translateX(-50%);padding:4px;border-radius:30px;background:#e9edf3}
+.top .nav button{color:#526174;font-size:14px;padding:9px 18px}.top .nav button.on{background:#1c2b40;color:#fff;box-shadow:0 3px 10px #182b4224}.top .nav button:hover:not(.on){background:#dae2ec;color:#172331}
+.top .icon-btn{background:#e9edf3;color:#24364d}.top .live-pill{color:#f4f6fa}
+.hero{margin:112px 28px 0;height:clamp(440px,64vh,690px);min-height:440px;border-radius:30px;background:#111c2a;box-shadow:0 20px 55px #1321391a}
+.hero::after{background:linear-gradient(90deg,rgba(9,17,29,.94),rgba(9,17,29,.55) 42%,rgba(9,17,29,.05) 80%),linear-gradient(0deg,rgba(9,17,29,.6),transparent 60%)}
+.hero-in{padding:0 clamp(28px,4vw,68px) 48px;max-width:760px}.hero h1{font-size:clamp(40px,5.4vw,76px);line-height:1.03;letter-spacing:-.045em;text-shadow:none}
+.hero .eyebrow{color:#d2e1f4;font-size:11px;letter-spacing:.2em}.hero .eyebrow i{background:#d2e1f4}
+.hero .meta{font-size:14px;color:#d9e1ec}.hero .acts{margin-top:28px}.hero .btn{border-radius:999px;height:50px;padding-inline:25px;font-size:14px}.hero .btn-g{border:1px solid #ffffff30;background:#ffffff14}.pager{bottom:44px;right:40px}.pager button{width:28px}.pager button i{height:3px}
+body>main{margin-top:28px;color:#172331;padding-top:0}body>main>.wrap{margin-bottom:42px}
+body>main .sec{margin-bottom:48px}body>main .sec-h{margin-bottom:20px}body>main .sec-h h2{font-size:clamp(22px,2.2vw,30px);letter-spacing:-.04em}body>main .sec-h small{color:#64748a;margin-top:7px;font-size:13px}
+body>main .more{background:#e6ebf3;color:#31435c;font-size:13px;padding-inline:18px}body>main .more:hover{background:#dae2ed}
+body>main .rail{gap:20px;padding-top:2px;padding-bottom:18px}body>main .card{width:clamp(230px,22vw,340px)}body>main .thumb{border-radius:18px}body>main .card h3{font-size:15px;margin-top:13px;letter-spacing:-.025em}body>main .card p{color:#6b788c;font-size:12px;margin-top:4px}
+body>main .dur,body>main .ext{color:#fff}body>main .card.all .thumb{background:#e5ebf3;color:#31445e}body>main .card:hover .thumb::after{box-shadow:inset 0 0 0 2px #8caccd}
+body>main .t10{width:clamp(200px,18vw,275px)}body>main .t10 .num{color:#f4f6fa;-webkit-text-stroke:1.5px #a7b5c6;font-size:clamp(100px,9vw,140px)}body>main .t10 .thumb{box-shadow:0 10px 25px #25354a17;border-radius:16px}body>main .t10:hover .num{-webkit-text-stroke-color:#294b75}
+body>main .live{color:#f4f6fa}
+body>main .cols{gap:20px}body>main .col{border-radius:20px;color:#fff;aspect-ratio:16/11}body>main .col div{left:23px;right:23px;bottom:22px}body>main .col small{color:#c9ddf4;font-size:10px;letter-spacing:.18em}body>main .col strong{margin-top:7px}body>main .col span{display:block;margin-top:6px}
+#colOv,#searchOv{background:#f4f6fa;color:#172331}#colOv .ov-top,#searchOv .ov-top{background:#f4f6faee;border-color:#dfe6ef}#colOv .close,#searchOv .close{background:#e5ebf3;color:#29405e}#colOv .field,#searchOv .field{background:#fff;border-color:#d7e0ec;border-radius:16px}#colOv .field input,#searchOv .field input{color:#172331}#colOv .col-head{color:#fff}#colOv .col-head::after{background:linear-gradient(0deg,#101c2ae6,#101c2a55)}#colOv .card p,#searchOv .card p{color:#65748a}#colOv .dur,#searchOv .dur,#colOv .ext,#searchOv .ext{color:#fff}#colOv .more,#searchOv .more{background:#e5ebf3;color:#31435c}#colOv .thumb,#searchOv .thumb{border-radius:16px}
+body>footer{border-color:#dbe3ee;background:#edf1f7;color:#64748a;padding-top:40px}body>footer .logo b{color:#263b56}body>footer .logo span{color:#65748a}
+@media(min-width:1700px){body>main .card{width:340px}.hero-in{max-width:850px}}
+@media(max-width:1100px) and (min-width:861px){.top{gap:10px;padding-inline:18px}.top .nav button{padding-inline:11px;font-size:13px}.top .logo span{display:none}}
+@media(max-width:860px){
+.top,.top.solid{inset:10px 12px auto;height:62px;padding:0 16px;border-radius:21px}.top .logo{font-size:26px}.top .logo span{font-size:14px}.top .icon-btn{width:38px;height:38px}.top-r{gap:7px}
+.hero{margin:88px 12px 0;min-height:450px;height:64vh;max-height:600px;border-radius:24px}.hero::after{background:linear-gradient(0deg,#0c182bee 0,#0c182b99 42%,#0c182b12 75%)}.hero-in{padding:0 22px 65px;text-align:left;width:100%}.hero h1{font-size:clamp(36px,7vw,60px)}.hero .eyebrow,.hero .meta{justify-content:flex-start}.hero .eyebrow{font-size:10px}.hero .meta{font-size:12px;gap:7px 10px}.hero .acts{justify-content:flex-start;margin-top:22px}.hero .acts .btn{flex:initial;height:46px;padding-inline:21px}.pager{bottom:17px;left:22px;right:auto;gap:6px;justify-content:flex-start}.pager button{width:24px}
+body>main{margin-top:22px}body>main .sec{margin-bottom:34px}body>main .sec-h{margin-bottom:16px}body>main .sec-h h2{font-size:23px}body>main .sec-h small{font-size:12px;max-width:220px}body>main .card{width:74vw;max-width:320px}body>main .rail{gap:14px}body>main .t10{width:49vw;max-width:230px}body>main .t10 .num{font-size:100px}body>main .cols{gap:12px}body>main .col{aspect-ratio:3/4}body>main .col div{left:14px;right:14px;bottom:18px}body>main .col strong{font-size:20px}
+.tabbar{left:12px;right:12px;bottom:calc(10px + var(--safe-b));padding:5px 6px;border:1px solid #fff;border-radius:24px;background:#f9fbf5f5;box-shadow:0 8px 32px #1b325426}.tabbar button{color:#67758a;border-radius:18px}.tabbar button.on{background:#e5ebf3;color:#1b3659}.tabbar button.tv{color:#ba2533}
+}
+@media(max-width:370px){.top .logo span{display:none}.hero{min-height:430px}.hero h1{font-size:36px}body>main .sec-h h2{font-size:20px}.hero-in{padding-inline:18px}}
+</style>
 </head>
 <body>
 <header class="top" id="top">
