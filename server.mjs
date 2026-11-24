@@ -142,12 +142,45 @@ const app=http.createServer(async(req,res)=>{
       return json(res,200,rows.filter(x=>Number.isSafeInteger(Number(x.stream_id))&&Number(x.stream_id)>0)
         .map(x=>({id:Number(x.stream_id),name:String(x.name||'Kanal').slice(0,150)})));
     }
+    const probe=pathname.match(/^\/api\/probe\/([0-9]{1,16})$/);
+    if(req.method==='GET' && probe) {
+      const id=Number(probe[1]);
+      if(!Number.isSafeInteger(id)||id<1)return json(res,400,{error:'invalid_id'});
+      const report=[];
+      for(const ext of ['ts','m3u8']){
+        const start=Date.now();
+        let stop=()=>{};
+        try {
+          const source=new URL('/live/'+encodeURIComponent(s.u)+'/'+encodeURIComponent(s.p)+'/'+id+'.'+ext,origin);
+          const up=await upstream(source,9000);stop=up.stop;
+          const mime=(up.response.headers.get('content-type')||'').split(';')[0];
+          const sample={format:ext,status:up.response.status,mime,ms:Date.now()-start,firstBytes:0,signature:'none'};
+          if(up.response.ok&&up.response.body){
+            const reader=up.response.body.getReader();
+            const t=setTimeout(()=>stop(),6500);
+            try {
+              const first=await reader.read();
+              const bytes=first.value||new Uint8Array();
+              sample.firstBytes=bytes.length;
+              const text=Buffer.from(bytes.subarray(0,100)).toString('utf8').trimStart();
+              sample.signature=bytes[0]===71?'MPEG_TS':text.startsWith('#EXTM3U')?'HLS':text.startsWith('<')?'HTML':text.startsWith('{')?'JSON':'unknown';
+              await reader.cancel().catch(()=>{});
+            }finally{clearTimeout(t);}
+          }
+          report.push(sample);
+        }catch(e){report.push({format:ext,error:e?.name||'error',ms:Date.now()-start});}
+        finally{stop();}
+      }
+      return json(res,200,{probe:report});
+    }
     const match=pathname.match(/^\/api\/stream\/([0-9]{1,16})\.ts$/);
     if(req.method==='GET' && match) {
       const id=Number(match[1]);
+      console.log('PLAY_REQUEST id='+id);
       if(!Number.isSafeInteger(id)||id<1) return json(res,400,{error:'invalid_id'});
       const source=new URL('/live/'+encodeURIComponent(s.u)+'/'+encodeURIComponent(s.p)+'/'+id+'.ts',origin);
       const {response,stop}=await upstream(source,20000);
+      console.log('PLAY_UPSTREAM id='+id+' http='+response.status+' mime='+(response.headers.get('content-type')||'unknown').split(';')[0]);
       if(!response.ok||!response.body){
         const status=response.status;stop();return json(res,502,{error:'provider_stream_unavailable',status});
       }
