@@ -17,7 +17,7 @@ const data={};
 const watchState={id:null,number:null,entry:null};
 let selectedCollection=null,shown=0,currentFiltered=[],lastFocus=null;
 let tvState='unknown',tvChecking=false,toastTimer=null,openLayerName='';
-const HOST_TV_FALLBACK='https://learned-phpbb-rental-contests.trycloudflare.com/tv-guest';
+const HOST_TV_FALLBACK='https://desktop-39mbc4k.tail13a4da.ts.net/tv-guest';
 let currentTvUrl=HOST_TV_FALLBACK;
 const recentKey='ibo-cinema-history-v2';
 
