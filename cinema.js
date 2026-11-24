@@ -116,7 +116,7 @@ function entryCard(section,item,cls='media-card'){
  const path=document.createElementNS('http://www.w3.org/2000/svg','path');path.setAttribute('d','m8 5 11 7-11 7z');svg.append(path);play.appendChild(svg);
  visual.appendChild(play);
  const q=quality(item);
- if(q)visual.appendChild(text('span',q,'media-card__badge'));
+ /* kalite rozeti kaldırıldı: küçük resimde zaten yazıyor */
  const details=text('span','','media-card__info');
  details.append(text('strong',niceTitle(section,item)));
  const secondary=[miniLabel(section,item),minutes(item.d)].filter(Boolean).join(' · ');
@@ -338,7 +338,7 @@ async function tvHealth(){
  finally{tvChecking=false}
  const dot=byId('liveDot'),label=byId('liveLabel');
  dot.className='state-dot'+(tvState==='online'?' online':tvState==='offline'?' offline':'');
- label.textContent=tvState==='online'?'İzleme alanı hazır':tvState==='setup'?'Kurulum gerekiyor':'Bağlantı kontrol ediliyor';
+ label.textContent=tvState==='online'?'Yayın açık · hemen izle':tvState==='setup'?'Kurulum gerekiyor':'Bağlantı kontrol ediliyor';
 }
 async function init(){
  attachEvents();
