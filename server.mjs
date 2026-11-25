@@ -23,6 +23,7 @@ const fwdImg=Object.fromEntries(['gs','fb','bjk','ts'].map(k=>[k,readFileSync(pa
 const playerJS = readFileSync(path.join(base, 'node_modules/mpegts.js/dist/mpegts.js'));
 const TV_TUNNELS=[process.env.IPTV_TUNNEL_PRIMARY||'https://desktop-39mbc4k.tail13a4da.ts.net',process.env.IPTV_TUNNEL_SECONDARY||'',process.env.IPTV_TUNNEL_TERTIARY||''].filter(x=>/^https:\/\/([a-z0-9-]+\.trycloudflare\.com|[a-z0-9-]+\.[a-z0-9-]+\.ts\.net)$/i.test(x));
 let healthCache={at:0,body:{bridge:'offline',configured:false,viewerUrl:null}};
+const relayOk={at:0,ok:true};
 async function guestHealth(){
  const now=Date.now();if(now-healthCache.at<7000)return healthCache.body;
  healthCache.at=now;
@@ -31,7 +32,9 @@ async function guestHealth(){
   catch{return null}
  }));
  const active=checks.find(Boolean);
- healthCache.body={bridge:active?'online':'offline',configured:!!active,viewerUrl:active?(process.env.IPTV_RELAY_URL||'https://ibo-tv-relay.ibo-sinema.workers.dev/tv-guest'):null};
+ const RELAY=process.env.IPTV_RELAY_URL||'https://ibo-tv-relay.ibo-sinema.workers.dev/tv-guest';
+ if(active&&now-relayOk.at>60000){relayOk.at=now;try{const r=await fetch(RELAY.replace(/\/tv-guest$/,'/ping'),{signal:AbortSignal.timeout(4000),cache:'no-store'});relayOk.ok=r.ok&&(await r.text())==='ok'}catch{relayOk.ok=false}}
+ healthCache.body={bridge:active?'online':'offline',configured:!!active,viewerUrl:active?(relayOk.ok?RELAY:active+'/tv-guest'):null};
  return healthCache.body;
 }
 
