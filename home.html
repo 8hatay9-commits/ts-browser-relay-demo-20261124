@@ -481,6 +481,12 @@ body>main .card h3,body>main .card b{letter-spacing:-.01em}
 .plwrap .stage{container-type:size}
 #plHost{inset:auto!important;left:50%!important;top:50%!important;width:100%;height:calc(100% + 240px);transform:translate(-50%,-50%);pointer-events:none;clip-path:inset(120px 0 120px 0)}
 #cQ{width:auto!important;padding:0 10px;font:800 12px/1 Inter,system-ui,sans-serif;letter-spacing:.02em;border:1px solid rgba(255,255,255,.22);height:28px!important;border-radius:7px!important;margin:0 4px}
+/* v21: kenar çizgisi + takılma koruması */
+#plHost{clip-path:inset(122px 2px 122px 2px)!important;will-change:transform;backface-visibility:hidden}
+#qMenu button:disabled{opacity:.35;cursor:not-allowed}
+#qMenu button:disabled small{color:rgba(255,255,255,.5)}
+#qToast{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:7;padding:9px 14px;border-radius:999px;background:rgba(18,18,20,.92);color:#fff;font:600 13px/1.2 Inter,system-ui,sans-serif;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
+#qToast.on{opacity:1}
 #qMenu{position:absolute;right:12px;bottom:64px;z-index:6;display:none;flex-direction:column;min-width:150px;padding:6px;border-radius:12px;background:rgba(18,18,20,.96);box-shadow:0 20px 50px -10px #000;border:1px solid rgba(255,255,255,.08)}
 #qMenu.open{display:flex}
 #qMenu b{font:700 11px/1 Inter,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);padding:10px 12px 8px}
@@ -591,7 +597,7 @@ body>main .card h3,body>main .card b{letter-spacing:-.01em}
 <div class="ov" id="play" role="dialog" aria-modal="true" aria-labelledby="plTitle">
  <div class="ov-top"><button type="button" class="close" data-close aria-label="Kapat"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button><h2 id="plTitle">Oynatılıyor</h2></div>
  <div class="pl-body">
-  <div class="plwrap" id="plWrap"><div class="stage" id="stage"><div id="plHost"></div><div id="plShield"></div><div class="cover" id="plCover"><img id="plCovImg" alt=""><div class="cv-in"><div class="cv-logo"><b>İ</b>BO<span>sinema</span></div><div class="spin"></div><button type="button" class="cv-play" id="cvPlay"><svg viewBox="0 0 24 24"><path d="m7 4 13 8-13 8z"/></svg><span id="cvPlayTx">Oynat</span></button><p id="plCovTxt">Film hazırlanıyor…</p></div></div></div><div id="qMenu" role="menu"><b>Kalite</b><button type="button" data-q="2160">4K <small>UHD</small></button><button type="button" data-q="1440">1440p <small>2K</small></button><button type="button" data-q="1080">1080p <small>Full HD</small></button></div><div class="ctl" id="plCtl"><button type="button" id="cPlay" aria-label="Oynat/Duraklat"><svg class="f" viewBox="0 0 24 24"><path d="m7 4 13 8-13 8z"/></svg></button><button type="button" id="cBack" aria-label="10 saniye geri"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button><button type="button" id="cFwd" aria-label="10 saniye ileri"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></button><span class="tm" id="cCur">0:00</span><input type="range" id="cSeek" min="0" max="1000" value="0" step="1" aria-label="İlerleme"><span class="tm" id="cDur">0:00</span><button type="button" id="cMute" aria-label="Ses"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg></button><input type="range" id="cVol" min="0" max="100" value="100" aria-label="Ses düzeyi"><span class="brand"><b>İ</b>BO</span><button type="button" id="cQ" aria-label="Kalite">1080p</button><button type="button" id="cFs" aria-label="Tam ekran"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div></div>
+  <div class="plwrap" id="plWrap"><div class="stage" id="stage"><div id="plHost"></div><div id="plShield"></div><div class="cover" id="plCover"><img id="plCovImg" alt=""><div class="cv-in"><div class="cv-logo"><b>İ</b>BO<span>sinema</span></div><div class="spin"></div><button type="button" class="cv-play" id="cvPlay"><svg viewBox="0 0 24 24"><path d="m7 4 13 8-13 8z"/></svg><span id="cvPlayTx">Oynat</span></button><p id="plCovTxt">Film hazırlanıyor…</p></div></div></div><div id="qToast"></div><div id="qMenu" role="menu"><b>Kalite</b><button type="button" data-q="2160">4K <small>UHD</small></button><button type="button" data-q="1440">1440p <small>2K</small></button><button type="button" data-q="1080">1080p <small>Full HD</small></button></div><div class="ctl" id="plCtl"><button type="button" id="cPlay" aria-label="Oynat/Duraklat"><svg class="f" viewBox="0 0 24 24"><path d="m7 4 13 8-13 8z"/></svg></button><button type="button" id="cBack" aria-label="10 saniye geri"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button><button type="button" id="cFwd" aria-label="10 saniye ileri"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></button><span class="tm" id="cCur">0:00</span><input type="range" id="cSeek" min="0" max="1000" value="0" step="1" aria-label="İlerleme"><span class="tm" id="cDur">0:00</span><button type="button" id="cMute" aria-label="Ses"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg></button><input type="range" id="cVol" min="0" max="100" value="100" aria-label="Ses düzeyi"><span class="brand"><b>İ</b>BO</span><button type="button" id="cQ" aria-label="Kalite">1080p</button><button type="button" id="cFs" aria-label="Tam ekran"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div></div>
   <div class="pl-info"><p id="plSub"></p><div class="pl-nav"><button type="button" class="btn btn-g" id="plPrev"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>Önceki</button><button type="button" class="btn btn-w" id="plNext">Sonraki<svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></button></div></div>
  </div>
 </div>
@@ -740,14 +746,14 @@ function cov(mode,txt){const c=$('plCover');c.classList.toggle('off',mode==='off
 function setV(r,v){r.value=v;r.style.setProperty('--v',(v/(+r.max||1)*100)+'%')}
 function tick(){if(!YP||!YP.getCurrentTime)return;const d=YP.getDuration()||0,t=YP.getCurrentTime()||0;$('cDur').textContent=fmt(d);if(!seeking){$('cCur').textContent=fmt(t);setV($('cSeek'),d?Math.round(t/d*1000):0)}}
 function plState(e){const st=e.data;$('cPlay').innerHTML=st===1?PAUSE_SVG:PLAY_SVG;
- if(st===1){ypStarted=true;clearTimeout(ypAsk);cov('off')}
+ if(st===1){ypStarted=true;clearTimeout(ypAsk);cov('off');qAvail()}
  if(st===2&&ypStarted){$('cvPlayTx').textContent='Devam et';$('cvPlay').onclick=()=>{if(YP&&YP.playVideo){YP.playVideo();cov('','')}};cov('ask','Duraklatıldı')}
  if(st===0){const n=neighbor(1);if(n&&!n.x){step(1)}else cov('ask','Film bitti. Tekrar izlemek için Oynat\u2019a bas.')}}
 function plErr(e){clearTimeout(ypAsk);const it=ypIt;const n=neighbor(1);cov('err','Bu içerik şu an açılamıyor.');if(n){$('cvPlayTx').textContent='Sonrakini izle';$('cvPlay').onclick=()=>step(1)}else{$('cvPlayTx').textContent='Kapat';$('cvPlay').onclick=()=>closeTop()}}
 async function plLoad(it){ypIt=it;ypStarted=false;clearTimeout(ypAsk);
  const ci=$('plCovImg');ci.onerror=()=>{if(!ci.dataset.f){ci.dataset.f=1;crop(ci,null);ci.src=yt(it.id)}};delete ci.dataset.f;crop(ci,it);ci.src=pic(it);
  $('cvPlayTx').textContent='Oynat';$('cvPlay').onclick=()=>{if(YP&&YP.playVideo){YP.playVideo();cov('','Film başlıyor…')}};
- cov('','Film hazırlanıyor…');$('cCur').textContent='0:00';$('cDur').textContent=it.d?fmt(it.d):'0:00';setV($('cSeek'),0);$('cPlay').innerHTML=PLAY_SVG;
+ Qcap=0;Qmax=2160;stallAt=0;lastMove=0;lastT=-1;qUi();cov('','Film hazırlanıyor…');$('cCur').textContent='0:00';$('cDur').textContent=it.d?fmt(it.d):'0:00';setV($('cSeek'),0);$('cPlay').innerHTML=PLAY_SVG;
  ypAsk=setTimeout(()=>{if(!ypStarted&&ypIt===it)cov('ask','Hazır. Başlatmak için Oynat\u2019a bas.')},3500);
  try{await ytApi()}catch{cov('err','Oynatıcı yüklenemedi. Bağlantını kontrol edip tekrar dene.');$('cvPlayTx').textContent='Tekrar dene';$('cvPlay').onclick=()=>plLoad(it);return}
  if(ypIt!==it)return;
@@ -767,12 +773,22 @@ function exitFs(){const w=$('plWrap');w.classList.remove('fsx');if(document.full
 let Q=+(localStorage.getItem('ibo_q')||1080);if(![1080,1440,2160].includes(Q))Q=1080;
 const QL={1080:'1080p',1440:'2K',2160:'4K'};
 function fitHost(){const st=$('stage'),h=$('plHost');if(!st||!h)return;const r=st.getBoundingClientRect();if(!r.width||!r.height)return;
- const vis=Math.min(r.width,r.height*16/9),dpr=window.devicePixelRatio||1,tw=Q*16/9,iw=Math.max(vis,tw),sc=vis/iw;
+ const vis=Math.min(r.width,r.height*16/9)+4,tw=Qr()*16/9,iw=Math.max(vis,tw),sc=vis/iw;
  h.style.width=iw+'px';h.style.height=(iw*9/16+240)+'px';h.style.transform='translate(-50%,-50%) scale('+sc+')'}
-function qUi(){$('cQ').textContent=QL[Q];document.querySelectorAll('#qMenu [data-q]').forEach(b=>b.classList.toggle('on',+b.dataset.q===Q))}
+let Qcap=0,Qmax=2160,stallAt=0,lastT=-1,lastMove=0,qT=null;
+function Qe(){let q=Q;if(Qcap&&q>Qcap)q=Qcap;if(q>Qmax)q=Qmax;return Math.max(1080,q)}
+function Qr(){const st=$('stage');let c=2160;if(st){const h=st.getBoundingClientRect().height*(window.devicePixelRatio||1)*2.2;c=h>=2160?2160:h>=1440?1440:1080}return Math.min(Qe(),c)}
+function qToast(t){const e=$('qToast');if(!e)return;e.textContent=t;e.classList.add('on');clearTimeout(qT);qT=setTimeout(()=>e.classList.remove('on'),3500)}
+function qAvail(){try{const L=YP&&YP.getAvailableQualityLevels?YP.getAvailableQualityLevels():[];if(!L||!L.length)return;const m=L.includes('hd2160')||L.includes('highres')?2160:L.includes('hd1440')?1440:1080;if(m!==Qmax){Qmax=m;qUi();fitHost()}}catch{}}
+function qDown(){const cur=Qe();if(cur<=1080)return false;Qcap=cur>=2160?1440:1080;fitHost();qUi();qToast('Bağlantı yavaşladı, '+QL[Qcap]+' kalitesine geçildi');return true}
+function guard(){if(!YP||!YP.getPlayerState||!ypStarted)return;const st=YP.getPlayerState(),now=Date.now(),t=YP.getCurrentTime()||0;
+ if(st===3){if(!stallAt)stallAt=now;if(now-stallAt>4500){stallAt=now;if(!qDown()){try{YP.seekTo(t+0.05,true)}catch{}}}}else stallAt=0;
+ if(st===1){if(Math.abs(t-lastT)>0.05){lastT=t;lastMove=now}else if(lastMove&&now-lastMove>6000){lastMove=now;if(!qDown()){try{YP.seekTo(t+0.1,true);YP.playVideo()}catch{}}}}else lastMove=now}
+setInterval(guard,1000);
+function qUi(){$('cQ').textContent=QL[Qe()];document.querySelectorAll('#qMenu [data-q]').forEach(b=>{const v=+b.dataset.q;b.disabled=v>Qmax;b.title=v>Qmax?'Bu filmde yok':'';b.classList.toggle('on',v===Qe())})}
 $('cQ').onclick=e=>{e.stopPropagation();$('qMenu').classList.toggle('open')};
-document.querySelectorAll('#qMenu [data-q]').forEach(b=>b.onclick=e=>{e.stopPropagation();Q=+b.dataset.q;try{localStorage.setItem('ibo_q',Q)}catch{}qUi();fitHost();$('qMenu').classList.remove('open');
- if(YP&&YP.getCurrentTime&&ypIt){const t=YP.getCurrentTime(),pl=YP.getPlayerState&&YP.getPlayerState()===1;try{YP.setPlaybackQuality&&YP.setPlaybackQuality(Q>=2160?'hd2160':Q>=1440?'hd1440':'hd1080')}catch{}if(pl){YP.seekTo(t,true)}}});
+document.querySelectorAll('#qMenu [data-q]').forEach(b=>b.onclick=e=>{e.stopPropagation();if(b.disabled)return;Q=+b.dataset.q;Qcap=0;try{localStorage.setItem('ibo_q',Q)}catch{}qUi();fitHost();$('qMenu').classList.remove('open');if(Qr()<Qe())qToast(QL[Qe()]+' tam ekranda devreye girer');
+ if(YP&&YP.getCurrentTime&&ypIt){const t=YP.getCurrentTime(),pl=YP.getPlayerState&&YP.getPlayerState()===1;try{YP.setPlaybackQuality&&YP.setPlaybackQuality(Qe()>=2160?'hd2160':Qe()>=1440?'hd1440':'hd1080')}catch{}if(pl){YP.seekTo(t,true)}}});
 document.addEventListener('click',e=>{if(!e.target.closest('#qMenu'))$('qMenu').classList.remove('open')});
 addEventListener('resize',fitHost);document.addEventListener('fullscreenchange',()=>setTimeout(fitHost,60));
 if(window.ResizeObserver)new ResizeObserver(fitHost).observe($('stage'));
