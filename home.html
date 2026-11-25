@@ -632,7 +632,7 @@ const COLS={
 const SERIES=['kv','pusu','uvb'],FILMS=['yk','dram','dub','gk','cin','ks','yes','ts'];
 const SLIDES=[["yk", 1, "Yeni eklendi · Yerli komedi"], ["dub", 5, "Yeni eklendi · Aksiyon"], ["dram", 3, "Yeni eklendi · Yerli dram"], ["pusu", 1, "Devam serisi"], ["ks", 1, "Kemal Sunal klasikleri"], ["cin", 1, "Korku gecesi"], ["ts", 3, "Türk sineması"], ["kv", 1, "İBO özel dizi"]];
 const TOP=[['kv',1],['ks',1],['pusu',1],['cin',1],['ks',3],['yes',1],['ts',1],['dub',1],['cin',2],['ks',2]];
-const TV_FALLBACK='https://desktop-39mbc4k.tail13a4da.ts.net/tv-guest';
+const TV_FALLBACK='https://ibo-tv-relay.ibo-sinema.workers.dev/tv-guest';
 let OWNER_K='';try{const m=location.hash.match(/k=([a-f0-9]{32,64})/i);if(m){localStorage.setItem('ibo_owner',m[1].toLowerCase());history.replaceState(null,'',location.pathname+location.search)}OWNER_K=localStorage.getItem('ibo_owner')||''}catch{}
 const HKEY='ibo-history-v3';
 let D={},tvUrl=TV_FALLBACK,tvState='unknown',cur=0,heroTimer=null,colId=null,colList=[],colShown=0,pl=null,toastT=null;

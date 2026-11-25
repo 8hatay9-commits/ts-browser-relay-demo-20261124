@@ -31,7 +31,7 @@ async function guestHealth(){
   catch{return null}
  }));
  const active=checks.find(Boolean);
- healthCache.body={bridge:active?'online':'offline',configured:!!active,viewerUrl:active?active+'/tv-guest':null};
+ healthCache.body={bridge:active?'online':'offline',configured:!!active,viewerUrl:active?(process.env.IPTV_RELAY_URL||'https://ibo-tv-relay.ibo-sinema.workers.dev/tv-guest'):null};
  return healthCache.body;
 }
 
