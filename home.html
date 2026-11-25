@@ -241,6 +241,10 @@ body>main{margin-top:22px}body>main .sec{margin-bottom:34px}body>main .sec-h{mar
 .tabbar{left:12px;right:12px;bottom:calc(10px + var(--safe-b));padding:5px 6px;border:1px solid #fff;border-radius:24px;background:#f9fbf5f5;box-shadow:0 8px 32px #1b325426}.tabbar button{color:#67758a;border-radius:18px}.tabbar button.on{background:#e5ebf3;color:#1b3659}.tabbar button.tv{color:#ba2533}
 }
 @media(max-width:370px){.top .logo span{display:none}.hero{min-height:430px}.hero h1{font-size:36px}body>main .sec-h h2{font-size:20px}.hero-in{padding-inline:18px}}
+.newb{position:absolute;top:10px;left:10px;z-index:2;padding:4px 9px;border-radius:999px;background:#e11d48;color:#fff;font:800 10px/1 Inter,system-ui,sans-serif;letter-spacing:.12em;box-shadow:0 4px 14px #e11d4855}
+.online{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 13px;border-radius:999px;background:#ffffffd9;border:1px solid #dfe6ef;color:#1b3659;font:700 13px/1 Inter,system-ui,sans-serif;white-space:nowrap}.online i{width:8px;height:8px;border-radius:50%;background:#16a34a;box-shadow:0 0 0 0 #16a34a88;animation:onp 2s infinite}.online em{font-style:normal;font-weight:600;color:#5b6b80}
+@keyframes onp{70%{box-shadow:0 0 0 7px #16a34a00}100%{box-shadow:0 0 0 0 #16a34a00}}
+@media(max-width:860px){.online{height:30px;padding:0 10px;font-size:12px}.online em{display:none}}
 </style>
 </head>
 <body>
@@ -253,6 +257,7 @@ body>main{margin-top:22px}body>main .sec{margin-bottom:34px}body>main .sec-h{mar
   <button type="button" data-go="koleksiyonlar">Koleksiyonlar</button>
  </nav>
  <div class="top-r">
+  <span class="online" id="onlineChip" hidden title="Şu an sitede olanlar"><i></i><span id="onlineN">1</span><em> çevrimiçi</em></span>
   <button type="button" class="icon-btn" id="searchBtn" aria-label="Ara"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
   <button type="button" class="live-pill" id="topLive" aria-label="Canlı TV"><i class="dot"></i><span>Canlı TV</span></button>
  </div>
@@ -281,8 +286,13 @@ body>main{margin-top:22px}body>main .sec{margin-bottom:34px}body>main .sec-h{mar
   </button>
  </section>
 
+ <section class="sec" id="newSec" hidden>
+  <div class="sec-h"><h2>Yeni eklenen filmler<small id="newInfo"></small></h2></div>
+  <div class="rail" id="newRail"></div>
+ </section>
+
  <section class="sec" id="topSec">
-  <div class="sec-h"><h2>Bugün İBO'da en çok izlenen 10</h2></div>
+  <div class="sec-h"><h2>İBO'nun seçtikleri<small>Ekibin önerdiği 10 yapım</small></h2></div>
   <div class="rail" id="topRail"></div>
  </section>
 
@@ -354,10 +364,13 @@ const COLS={
  ks:{title:'Kemal Sunal',kind:'Film',sub:'Unutulmayan komediler',key:'KOMEDİ',genre:'Komedi · Yeşilçam'},
  yes:{title:'Yeşilçam',kind:'Film',sub:'Türk sinemasının klasikleri',key:'YEŞİLÇAM',genre:'Dram · Klasik'},
  ts:{title:'Türk Sineması',kind:'Film',sub:'Yerli sinema seçkisi',key:'YERLİ FİLM',genre:'Dram · Yerli'},
- dub:{title:'Türkçe Dublaj',kind:'Film',sub:'Dünya sineması',key:'DUBLAJ',genre:'Aksiyon · Dublaj'}
+ dub:{title:'Aksiyon · Türkçe Dublaj',kind:'Film',sub:'Dünya sinemasından aksiyon',key:'DUBLAJ',genre:'Aksiyon · Dublaj'},
+ yk:{title:'Yerli Komedi',kind:'Film',sub:'Kahkaha garantili yeni filmler',key:'KOMEDİ',genre:'Komedi · Yerli'},
+ dram:{title:'Yerli Dram',kind:'Film',sub:'Ödüllü ve duygusal yerli filmler',key:'DRAM',genre:'Dram · Yerli'},
+ gk:{title:'Korku & Gerilim',kind:'Film',sub:'Türkçe dublaj gece seansı',key:'GERİLİM',genre:'Korku · Gerilim'}
 };
-const SERIES=['kv','pusu','uvb'],FILMS=['cin','ks','yes','ts','dub'];
-const SLIDES=[['kv',1,'İBO özel dizi'],['pusu',1,'Devam serisi'],['ks',1,'Kemal Sunal klasikleri'],['cin',1,'Korku gecesi'],['ts',1,'Türk sineması']];
+const SERIES=['kv','pusu','uvb'],FILMS=['yk','dram','dub','gk','cin','ks','yes','ts'];
+const SLIDES=[['kv',1,'İBO özel dizi'],['yk',1,'Yeni eklendi · Yerli komedi'],['dub',5,'Yeni eklendi · Aksiyon'],['dram',3,'Yeni eklendi · Yerli dram'],['pusu',1,'Devam serisi'],['ks',1,'Kemal Sunal klasikleri'],['cin',1,'Korku gecesi'],['ts',1,'Türk sineması']];
 const TOP=[['kv',1],['ks',1],['pusu',1],['cin',1],['ks',3],['yes',1],['ts',1],['dub',1],['cin',2],['ks',2]];
 const TV_FALLBACK='https://desktop-39mbc4k.tail13a4da.ts.net/tv-guest';
 let OWNER_K='';try{const m=location.hash.match(/k=([a-f0-9]{32,64})/i);if(m){localStorage.setItem('ibo_owner',m[1].toLowerCase());history.replaceState(null,'',location.pathname+location.search)}OWNER_K=localStorage.getItem('ibo_owner')||''}catch{}
@@ -384,6 +397,7 @@ function card(c,it,opts={}){
  const th=el('div','thumb');th.append(img(yt(it.id),name(c,it)));
  if(it.d)th.append(el('span','dur',dur(it.d)));
  if(it.x)th.append(el('span','ext','YouTube'));
+ if(it.new)th.append(el('span','newb','YENİ'));
  const pi=el('div','play-ic');pi.innerHTML='<span><svg class="f" viewBox="0 0 24 24"><path d="m7 4 13 8-13 8z"/></svg></span>';th.append(pi);
  if(opts.prog){const p=el('div','prog');const i=el('i');i.style.width=opts.prog+'%';p.append(i);th.append(p)}
  b.append(th,el('h3','',name(c,it)),el('p','',opts.sub||(COLS[c].kind==='Dizi'?COLS[c].title+' · '+it.n+'. Bölüm':COLS[c].title)));
@@ -460,7 +474,7 @@ function step(s){const it=neighbor(s);if(!it)return;if(it.x){play(pl.c,it);retur
 $('plPrev').onclick=()=>step(-1);$('plNext').onclick=()=>step(1);
 
 /* continue */
-function renderCont(){const h=hist().slice(0,10),r=$('contRail');r.replaceChildren();h.forEach(x=>r.append(card(x.c,find(x.c,x.n),{prog:35,sub:COLS[x.c].title})));$('contSec').hidden=!h.length}
+function renderCont(){const h=hist().slice(0,10),r=$('contRail');r.replaceChildren();h.forEach(x=>r.append(card(x.c,find(x.c,x.n),{sub:COLS[x.c].title})));$('contSec').hidden=!h.length}
 
 /* live */
 async function tvCheck(){try{const r=await fetch('/api/tv-status',{cache:'no-store',signal:AbortSignal.timeout(7000)});const j=await r.json();
@@ -483,6 +497,11 @@ function spy(){$('top').classList.toggle('solid',scrollY>40);let a='home';marks.
  document.querySelectorAll('[data-go]').forEach(b=>b.classList.toggle('on',b.dataset.go===a))}
 addEventListener('scroll',spy,{passive:true});
 
+/* presence */
+let PID='';try{PID=sessionStorage.getItem('ibo_pid')||'';if(!/^[a-z0-9]{16}$/.test(PID)){PID=Array.from(crypto.getRandomValues(new Uint8Array(8)),b=>b.toString(16).padStart(2,'0')).join('');sessionStorage.setItem('ibo_pid',PID)}}catch{PID=Math.random().toString(36).slice(2,18).padEnd(16,'0')}
+async function beat(){if(document.hidden)return;try{const r=await fetch('/api/presence',{method:'POST',cache:'no-store',headers:{'content-type':'application/json'},body:JSON.stringify({id:PID,live:$('liveOv').classList.contains('open')})});const j=await r.json();if(Number.isFinite(j.online)){$('onlineN').textContent=j.online;$('onlineChip').hidden=false}}catch{}}
+function presence(){beat();setInterval(beat,25000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)beat()})}
+
 /* init */
 async function init(){
  try{const r=await fetch('/catalog.json',{cache:'no-store'});D=(await r.json()).sections||{}}catch{D={}}
@@ -490,12 +509,15 @@ async function init(){
  hero();renderCont();
  const tr=$('topRail');TOP.forEach(([c,n],i)=>{const it=find(c,n);if(!it||!okId(it.id))return;const b=el('button','t10');b.type='button';b.setAttribute('aria-label',(i+1)+'. '+name(c,it));
   const th=el('div','thumb');th.append(img(yt(it.id),''));b.append(el('span','num',i+1),th);b.onclick=()=>play(c,it);tr.append(b)});
+ const nw=[];FILMS.forEach(c=>(D[c]||[]).forEach(it=>{if(it.new&&okId(it.id))nw.push([c,it])}));
+ if(nw.length){const order=[];const by={};nw.forEach(x=>(by[x[0]]=by[x[0]]||[]).push(x));let k=0,more=true;while(more){more=false;for(const c of FILMS){const l=by[c];if(l&&l[k]){order.push(l[k]);more=true}}k++}
+  const nr=$('newRail');order.slice(0,24).forEach(([c,it])=>nr.append(card(c,it,{sub:COLS[c].title})));$('newInfo').textContent=nw.length+' yeni film · komedi, dram, aksiyon, gerilim';$('newSec').hidden=false}
  const s=$('rowsSeries'),f=$('rowsFilms');
  SERIES.forEach(c=>{const r=row(c);r&&s.append(r)});FILMS.forEach(c=>{const r=row(c);r&&f.append(r)});
  const cols=$('cols');[...SERIES,...FILMS].forEach(c=>{const l=(D[c]||[]).filter(it=>okId(it.id));if(!l.length)return;const b=el('button','col');b.type='button';
   b.append(img(yt(l[0].id),''));const d=el('div');d.append(el('small','',COLS[c].key),el('strong','',COLS[c].title),el('span','',l.length+(COLS[c].kind==='Dizi'?' bölüm':' film')));b.append(d);b.onclick=()=>openCol(c);cols.append(b)});
  all=[];Object.keys(COLS).forEach(c=>(D[c]||[]).forEach(it=>{if(okId(it.id))all.push({c,it,k:(name(c,it)+' '+COLS[c].title).toLocaleLowerCase('tr')})}));
- spy();tvCheck();setInterval(()=>{if(!document.hidden)tvCheck()},60000);
+ spy();tvCheck();presence();setInterval(()=>{if(!document.hidden)tvCheck()},60000);
 }
 init();
 })();

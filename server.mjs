@@ -34,6 +34,7 @@ async function guestHealth(){
  return healthCache.body;
 }
 
+const presence = new Map();
 const sessions = new Map();
 const logins = new Map();
 const SESSION_MS = 12 * 60 * 60 * 1000;
@@ -178,6 +179,21 @@ const app=http.createServer(async(req,res)=>{
     if(req.method==='GET' && pathname==='/assets/mpegts.min.js')
       return reply(res,200,playerJS,'text/javascript; charset=utf-8');
     if(req.method==='POST' && !isValidOrigin(req)) return json(res,403,{error:'invalid_origin'});
+    if(req.method==='POST' && pathname==='/api/presence') {
+      let body;try{body=await getBody(req)}catch{return json(res,400,{error:'invalid_body'});}
+      const id=String(body?.id||'');
+      if(!/^[a-z0-9]{16}$/i.test(id)) return json(res,400,{error:'invalid_id'});
+      const now=Date.now();
+      if(presence.size<5000||presence.has(id)) presence.set(id,{at:now,live:!!body.live});
+      for(const [k,v] of presence) if(now-v.at>70000) presence.delete(k);
+      let live=0;for(const v of presence.values()) if(v.live) live++;
+      return json(res,200,{online:presence.size,live});
+    }
+    if(req.method==='GET' && pathname==='/api/presence') {
+      const now=Date.now();for(const [k,v] of presence) if(now-v.at>70000) presence.delete(k);
+      let live=0;for(const v of presence.values()) if(v.live) live++;
+      return json(res,200,{online:presence.size,live});
+    }
     if(req.method==='POST' && pathname==='/api/login') {
       janitor();
       const ip=req.socket.remoteAddress||'unknown', hit=logins.get(ip)||{n:0,expires:Date.now()+600000};
