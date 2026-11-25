@@ -321,6 +321,38 @@ body>footer{border-color:rgba(255,255,255,.06);background:#05070a;color:#7d8696}
 ::selection{background:#e50914;color:#fff}
 @media(max-width:860px){.hero::after{background:linear-gradient(0deg,#07090d 0,#07090df5 32%,#07090d99 55%,#07090d10 80%)}}
 #colImg{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 18%,#000 82%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 18%,#000 82%,transparent 100%)}
+#colImg.bd{-webkit-mask-image:none;mask-image:none}
+/* v12 IBO TV forwards banner */
+#liveBanner.live{grid-template-columns:minmax(260px,1fr) auto;grid-template-areas:"txt fwd" "btn fwd";min-height:340px;padding:clamp(22px,3vw,40px);background:#07090d}
+#liveBanner>div:first-child{grid-area:txt;align-self:end}
+#liveBanner>.btn{grid-area:btn;justify-self:start;align-self:start}
+#liveBanner::before{background:radial-gradient(60% 120% at 0 0,rgba(229,9,20,.55),transparent 62%),radial-gradient(60% 120% at 100% 100%,rgba(212,175,55,.22),transparent 60%),#07090d}
+#liveBanner h2{font-size:clamp(30px,3.6vw,50px)}
+.ibo-mark{display:inline-flex;align-items:baseline;gap:2px;font-weight:900;letter-spacing:-.04em;color:#fff}
+.ibo-mark em{font-style:normal;margin-left:6px;padding:0 8px;border-radius:8px;background:#e50914;color:#fff;font-size:.62em;letter-spacing:.04em;transform:translateY(-.18em)}
+#liveBanner .sub{color:rgba(255,255,255,.72);font-size:15px;margin:2px 0 8px}
+.fwd{grid-area:fwd;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;width:min(620px,52vw);align-self:center}
+.fwd figure{position:relative;margin:0;border-radius:16px;overflow:hidden;aspect-ratio:3/4;background:#0b0d12;box-shadow:0 18px 40px rgba(0,0,0,.55);transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.fwd figure:nth-child(even){transform:translateY(18px)}
+#liveBanner:hover .fwd figure{transform:translateY(-6px)}#liveBanner:hover .fwd figure:nth-child(even){transform:translateY(10px)}
+.fwd img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 12%}
+.fwd figure::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,#000 0,rgba(0,0,0,.6) 22%,transparent 48%);pointer-events:none}
+.fwd figure::before{content:'';position:absolute;left:0;right:0;top:0;height:3px;z-index:2}
+.fwd .gs::before{background:linear-gradient(90deg,#a90432,#fdb912)}.fwd .fb::before{background:linear-gradient(90deg,#163962,#ffed00)}.fwd .bjk::before{background:linear-gradient(90deg,#000,#fff)}.fwd .ts::before{background:linear-gradient(90deg,#7b1e3b,#65b8e4)}
+.fwd figcaption{position:absolute;left:10px;right:10px;bottom:10px;z-index:1;display:flex;flex-direction:column;line-height:1.1}
+.fwd figcaption b{font-family:var(--hf);font-weight:900;font-size:clamp(11px,1.05vw,15px);letter-spacing:.06em;color:#fff}
+.fwd figcaption small{font-size:11px;color:rgba(255,255,255,.65);font-weight:600}
+@media(max-width:860px){#liveBanner.live{grid-template-columns:1fr;grid-template-areas:"fwd" "txt" "btn";min-height:0}.fwd{width:100%;gap:8px;margin-bottom:12px}.fwd figure:nth-child(even){transform:translateY(10px)}#liveBanner:hover .fwd figure{transform:none}.fwd figcaption small{display:none}}
+
+/* v13 brand + footer polish */
+.logo{align-items:center}
+.logo b{color:#fff!important}
+.logo span{font-family:Inter,system-ui,sans-serif;font-size:10px!important;font-weight:800!important;letter-spacing:.22em!important;text-transform:uppercase;padding:4px 7px 3px;border-radius:6px;background:var(--ac);color:#fff!important;line-height:1}
+body>footer{background:linear-gradient(180deg,#07090d,#040507)!important;border-top:1px solid rgba(255,255,255,.06)!important}
+body>footer::before{content:'';display:block;height:1px;margin:-40px calc(var(--pad)*-1) 40px;background:linear-gradient(90deg,transparent,#e5091488,transparent)}
+.ft-top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.ft-nav{display:flex;gap:18px;flex-wrap:wrap}.ft-nav a{color:#aab2c0;text-decoration:none;font-weight:600;font-size:13px}.ft-nav a:hover{color:#fff}
+body>footer p{max-width:720px;line-height:1.6}
 </style>
 </head>
 <body>
@@ -355,10 +387,17 @@ body>footer{border-color:rgba(255,255,255,.06);background:#05070a;color:#7d8696}
   <button type="button" class="live" id="liveBanner" aria-label="Canlı TV'yi aç">
    <div>
     <span class="badge"><i class="dot"></i>CANLI</span>
-    <h2>Canlı TV</h2>
+    <h2><span class="ibo-mark">İBO<em>TV</em></span> Canlı</h2>
+    <p class="sub">Süper Lig’in dev forvetleri, maç heyecanı tek tıkla.</p>
     <p><i class="st" id="liveDot"></i><span id="liveLabel">Yayın kontrol ediliyor…</span></p>
    </div>
    <span class="btn btn-w"><svg class="f" viewBox="0 0 24 24"><path d="m7 4 13 8-13 8z"/></svg>Canlı izle</span>
+   <div class="fwd" aria-hidden="true">
+    <figure class="gs"><img src="/img/f_gs.webp" alt="" loading="lazy" decoding="async"><figcaption><b>OSIMHEN</b><small>Galatasaray</small></figcaption></figure>
+    <figure class="fb"><img src="/img/f_fb.webp" alt="" loading="lazy" decoding="async"><figcaption><b>LUKAKU</b><small>Fenerbahçe</small></figcaption></figure>
+    <figure class="bjk"><img src="/img/f_bjk.webp" alt="" loading="lazy" decoding="async"><figcaption><b>VLAHOVIĆ</b><small>Beşiktaş</small></figcaption></figure>
+    <figure class="ts"><img src="/img/f_ts.webp" alt="" loading="lazy" decoding="async"><figcaption><b>ONUACHU</b><small>Trabzonspor</small></figcaption></figure>
+   </div>
   </button>
  </section>
 
@@ -384,7 +423,7 @@ body>footer{border-color:rgba(255,255,255,.06);background:#05070a;color:#7d8696}
 </main>
 
 <footer>
- <div class="logo"><b>İBO</b><span>sinema</span></div>
+ <div class="ft-top"><div class="logo"><b>İBO</b><span>sinema</span></div><nav class="ft-nav" aria-label="Alt bağlantılar"><a href="#canli">Canlı TV</a><a href="#newSec">Yeni eklenenler</a><a href="#">Başa dön</a></nav></div>
  <p>Diziler, filmler ve canlı TV tek ekranda. Filmler ve diziler yapımcıların resmi kanallarından, İBO oynatıcısında yayınlanır; görüntü kalitesi kaynağa ve bağlantına göre değişir.</p>
 </footer>
 
@@ -446,16 +485,17 @@ const COLS={
  gk:{title:'Korku & Gerilim',kind:'Film',sub:'Türkçe dublaj gece seansı',key:'GERİLİM',genre:'Korku · Gerilim'}
 };
 const SERIES=['kv','pusu','uvb'],FILMS=['yk','dram','dub','gk','cin','ks','yes','ts'];
-const SLIDES=[['yk',1,'Yeni eklendi · Yerli komedi'],['dub',5,'Yeni eklendi · Aksiyon'],['dram',3,'Yeni eklendi · Yerli dram'],['pusu',1,'Devam serisi'],['ks',1,'Kemal Sunal klasikleri'],['cin',1,'Korku gecesi'],['ts',1,'Türk sineması'],['kv',1,'İBO özel dizi']];
+const SLIDES=[["yk", 1, "Yeni eklendi · Yerli komedi"], ["dub", 5, "Yeni eklendi · Aksiyon"], ["dram", 3, "Yeni eklendi · Yerli dram"], ["pusu", 1, "Devam serisi"], ["ks", 1, "Kemal Sunal klasikleri"], ["cin", 1, "Korku gecesi"], ["ts", 3, "Türk sineması"], ["kv", 1, "İBO özel dizi"]];
 const TOP=[['kv',1],['ks',1],['pusu',1],['cin',1],['ks',3],['yes',1],['ts',1],['dub',1],['cin',2],['ks',2]];
 const TV_FALLBACK='https://desktop-39mbc4k.tail13a4da.ts.net/tv-guest';
 let OWNER_K='';try{const m=location.hash.match(/k=([a-f0-9]{32,64})/i);if(m){localStorage.setItem('ibo_owner',m[1].toLowerCase());history.replaceState(null,'',location.pathname+location.search)}OWNER_K=localStorage.getItem('ibo_owner')||''}catch{}
 const HKEY='ibo-history-v3';
 let D={},tvUrl=TV_FALLBACK,tvState='unknown',cur=0,heroTimer=null,colId=null,colList=[],colShown=0,pl=null,toastT=null;
 const yt=(id,q)=>'https://i.ytimg.com/vi/'+id+'/'+(q||'hqdefault')+'.jpg';
-const pic=it=>it.p?'https://i.ytimg.com/vi/'+it.id+'/'+(it.p[0]==='m'?'maxres':'sd')+it.p[1]+'.jpg':yt(it.id,'hq720');
-function crop(e,it){if(it&&it.k){e.style.setProperty('--k',it.k);e.style.setProperty('--ty',(it.k*(.5-(it.o??.5))*100).toFixed(2)+'%')}else{e.style.removeProperty('--k');e.style.removeProperty('--ty')}return e}
-function pimg(it,alt){const i=img(pic(it),alt);crop(i,it);i.onerror=()=>{if(!i.dataset.f){i.dataset.f=1;i.style.removeProperty('--k');i.style.removeProperty('--ty');i.src=yt(it.id)}else i.style.opacity=0};return i}
+const TM='https://image.tmdb.org/t/p/';
+const pic=(it,sz)=>it.bd?TM+(sz||'w780')+'/'+it.bd:it.p?'https://i.ytimg.com/vi/'+it.id+'/'+(it.p[0]==='m'?'maxres':'sd')+it.p[1]+'.jpg':yt(it.id,'hq720');
+function crop(e,it){if(it&&it.k&&!it.bd){e.style.setProperty('--k',it.k);e.style.setProperty('--ty',(it.k*(.5-(it.o??.5))*100).toFixed(2)+'%')}else{e.style.removeProperty('--k');e.style.removeProperty('--ty')}return e}
+function pimg(it,alt,sz){const i=img(pic(it,sz),alt);crop(i,it);i.onerror=()=>{if(it.bd&&!i.dataset.b){i.dataset.b=1;const o={...it,bd:0};crop(i,o);i.src=pic(o);return}if(!i.dataset.f){i.dataset.f=1;i.style.removeProperty('--k');i.style.removeProperty('--ty');i.src=yt(it.id)}else i.style.opacity=0};return i}
 const okId=id=>typeof id==='string'&&/^[A-Za-z0-9_-]{11}$/.test(id);
 const dur=s=>{if(!s)return'';const m=Math.round(s/60);return m>=60?Math.floor(m/60)+' sa '+(m%60)+' dk':m+' dk'};
 const name=(c,it)=>it.t||COLS[c].title+' · '+it.n+'. Bölüm';
@@ -479,7 +519,7 @@ function card(c,it,opts={}){
  if(it.new)th.append(el('span','newb','YENİ'));
  const pi=el('div','play-ic');pi.innerHTML='<span><svg class="f" viewBox="0 0 24 24"><path d="m7 4 13 8-13 8z"/></svg></span>';th.append(pi);
  if(opts.prog){const p=el('div','prog');const i=el('i');i.style.width=opts.prog+'%';p.append(i);th.append(p)}
- b.append(th,el('h3','',name(c,it)),el('p','',opts.sub||(COLS[c].kind==='Dizi'?COLS[c].title+' · '+it.n+'. Bölüm':COLS[c].title)));
+ const dz=COLS[c].kind==='Dizi'&&!it.t;b.append(th,el('h3','',dz&&!opts.sub?it.n+'. Bölüm':name(c,it)),el('p','',opts.sub||COLS[c].title));
  b.onclick=()=>play(c,it);return b;
 }
 function allCard(c){
@@ -498,7 +538,7 @@ function row(c){
 /* hero */
 function hero(){
  const imgs=$('heroImgs'),pg=$('pager');const ok=SLIDES.filter(s=>find(s[0],s[1]));
- ok.forEach((s,i)=>{const it=find(s[0],s[1]);const d=el('div','hero-img'+(i?'':' on'));const hi=it.p&&it.p[0]==='m'?pimg(it,''):img(yt(it.id,'maxresdefault'),'');if(!(it.p&&it.p[0]==='m'))hi.onerror=()=>{if(!hi.dataset.f){hi.dataset.f=1;hi.src=yt(it.id)}};hi.loading=i?'lazy':'eager';if(!i)hi.fetchPriority='high';d.append(hi);imgs.append(d);
+ ok.forEach((s,i)=>{const it=find(s[0],s[1]);const d=el('div','hero-img'+(i?'':' on'));const hi=it.bd?pimg(it,'','w1280'):it.p&&it.p[0]==='m'?pimg(it,''):img(yt(it.id,'maxresdefault'),'');if(it.bd){hi.srcset=TM+'w1280/'+it.bd+' 1280w, '+TM+'original/'+it.bd+' 1920w';hi.sizes='100vw'}else if(!(it.p&&it.p[0]==='m'))hi.onerror=()=>{if(!hi.dataset.f){hi.dataset.f=1;hi.src=yt(it.id)}};hi.loading=i?'lazy':'eager';if(!i)hi.fetchPriority='high';d.append(hi);imgs.append(d);
   const b=el('button');b.type='button';b.setAttribute('aria-label',(i+1)+'. öne çıkan');b.append(el('i'));b.onclick=()=>{show(i);loop()};pg.append(b)});
  const show=i=>{cur=i;[...imgs.children].forEach((d,j)=>d.classList.toggle('on',j===i));[...pg.children].forEach((b,j)=>{b.classList.toggle('on',j===i);b.classList.toggle('done',j<i)});
   const [c,n,kick]=ok[i],it=find(c,n),C=COLS[c],box=$('heroIn');box.replaceChildren();
@@ -524,7 +564,7 @@ document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeTop(fals
 /* collection */
 function openCol(c){colId=c;const C=COLS[c];colList=(D[c]||[]).filter(it=>okId(it.id));
  $('colTitle').textContent=C.title;$('colName').textContent=C.title;$('colInfo').textContent=C.sub+' · '+colList.length+(C.kind==='Dizi'?' bölüm':' film');
- {const ci=$('colImg'),f0=colList.find(x=>x.p&&x.p[0]==='m')||colList[0];delete ci.dataset.f;crop(ci,f0&&f0.k?{k:Math.min(f0.k,1.15),o:f0.o}:null);ci.src=f0?pic(f0):'';ci.onerror=function(){if(f0&&!this.dataset.f){this.dataset.f=1;crop(this,null);this.src=yt(f0.id)}}}
+ {const ci=$('colImg'),f0=colList.find(x=>x.bd)||colList.find(x=>x.p&&x.p[0]==='m')||colList[0];delete ci.dataset.f;crop(ci,f0&&f0.k&&!f0.bd?{k:Math.min(f0.k,1.15),o:f0.o}:null);ci.src=f0?(f0.bd?TM+'original/'+f0.bd:pic(f0)):'';ci.classList.toggle('bd',!!(f0&&f0.bd));ci.onerror=function(){if(f0&&!this.dataset.f){this.dataset.f=1;crop(this,null);this.src=yt(f0.id)}}}
  $('colFilter').value='';colShown=0;$('colGrid').replaceChildren();moreCol();openOv('colOv')}
 function filtered(){const q=$('colFilter').value.trim().toLocaleLowerCase('tr');if(!q)return colList;return colList.filter(it=>name(colId,it).toLocaleLowerCase('tr').includes(q)||String(it.n)===q)}
 function moreCol(){const l=filtered(),g=$('colGrid');l.slice(colShown,colShown+40).forEach(it=>g.append(card(colId,it)));colShown=Math.min(l.length,colShown+40);$('colMore').hidden=colShown>=l.length;if(!l.length)g.append(el('p','empty','Sonuç bulunamadı.'))}
@@ -634,7 +674,7 @@ async function init(){
  const s=$('rowsSeries'),f=$('rowsFilms');
  SERIES.forEach(c=>{const r=row(c);r&&s.append(r)});FILMS.forEach(c=>{const r=row(c);r&&f.append(r)});
  const cols=$('cols');[...SERIES,...FILMS].forEach(c=>{const l=(D[c]||[]).filter(it=>okId(it.id));if(!l.length)return;const b=el('button','col');b.type='button';
-  b.append(pimg(l[0],''));const d=el('div');d.append(el('small','',COLS[c].key),el('strong','',COLS[c].title),el('span','',l.length+(COLS[c].kind==='Dizi'?' bölüm':' film')));b.append(d);b.onclick=()=>openCol(c);cols.append(b)});
+  b.append(pimg(l.find(x=>x.bd)||l[0],''));const d=el('div');d.append(el('small','',COLS[c].key),el('strong','',COLS[c].title),el('span','',l.length+(COLS[c].kind==='Dizi'?' bölüm':' film')));b.append(d);b.onclick=()=>openCol(c);cols.append(b)});
  all=[];Object.keys(COLS).forEach(c=>(D[c]||[]).forEach(it=>{if(okId(it.id))all.push({c,it,k:(name(c,it)+' '+COLS[c].title).toLocaleLowerCase('tr')})}));
  spy();tvCheck();presence();setInterval(()=>{if(!document.hidden)tvCheck()},60000);
 }
