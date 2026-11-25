@@ -245,6 +245,82 @@ body>main{margin-top:22px}body>main .sec{margin-bottom:34px}body>main .sec-h{mar
 .online{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 13px;border-radius:999px;background:#ffffffd9;border:1px solid #dfe6ef;color:#1b3659;font:700 13px/1 Inter,system-ui,sans-serif;white-space:nowrap}.online i{width:8px;height:8px;border-radius:50%;background:#16a34a;box-shadow:0 0 0 0 #16a34a88;animation:onp 2s infinite}.online em{font-style:normal;font-weight:600;color:#5b6b80}
 @keyframes onp{70%{box-shadow:0 0 0 7px #16a34a00}100%{box-shadow:0 0 0 0 #16a34a00}}
 @media(max-width:860px){.online{height:30px;padding:0 10px;font-size:12px}.online em{display:none}}
+
+/* v10: sharp stills, own player */
+[hidden]{display:none!important}
+.col-head{overflow:hidden;border-radius:0 0 22px 22px;margin-bottom:18px}
+#colOv .col-head::after{background:linear-gradient(0deg,rgba(7,9,13,.92),rgba(7,9,13,.25) 70%)}
+.thumb img,.col img,.ph img{transform:translateY(var(--ty,0%)) scale(var(--k,1))}
+.card:hover .thumb img,.t10:hover .thumb img{transform:translateY(var(--ty,0%)) scale(calc(var(--k,1)*1.06))}
+.hero-img{overflow:hidden}.hero-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:translateY(var(--ty,0%)) scale(var(--k,1))}
+#colImg{transform:translateY(var(--ty,0%)) scale(var(--k,1))}
+.thumb::before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(0deg,rgba(0,0,0,.55),rgba(0,0,0,0) 45%);pointer-events:none}
+.thumb>span,.thumb>.play-ic,.thumb>.prog{z-index:2}
+.ext{display:flex;align-items:center;gap:4px}
+.plwrap{display:flex;flex-direction:column;width:100%;max-width:calc((100dvh - 250px)*16/9);margin:0 auto;border-radius:16px;overflow:hidden;background:#000;box-shadow:0 30px 80px -30px rgba(229,9,20,.35),0 0 0 1px rgba(255,255,255,.06)}
+.plwrap .stage{border-radius:0;max-height:none}
+#plHost,#plHost iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.cover{position:absolute;inset:0;z-index:3;display:grid;place-items:center;background:#000;transition:opacity .45s}
+.cover.off{opacity:0;pointer-events:none}
+.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.42) saturate(1.1);transform:translateY(var(--ty,0%)) scale(calc(var(--k,1)*1.04))}
+.cv-in{position:relative;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;padding:20px}
+.cv-logo{font-family:var(--hf);font-weight:800;font-size:clamp(34px,5vw,64px);letter-spacing:-.05em;line-height:1;color:#fff;text-shadow:0 6px 30px rgba(0,0,0,.6)}.cv-logo b{color:var(--ac)}.cv-logo span{font-weight:600;font-size:.42em;letter-spacing:.02em;color:#d6dbe3;margin-left:8px}
+.cv-in p{color:#d6dbe3;font-size:15px;max-width:420px}
+.spin{width:44px;height:44px;border-radius:50%;border:3px solid rgba(255,255,255,.18);border-top-color:var(--ac);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.cv-play{display:none;align-items:center;gap:10px;height:56px;padding:0 28px;border-radius:999px;background:var(--ac);color:#fff;font-weight:800;font-size:17px;box-shadow:0 10px 40px -10px var(--ac)}
+.cv-play svg{width:22px;height:22px;fill:#fff;stroke:none}
+.cover.ask .spin{display:none}.cover.ask .cv-play{display:inline-flex}
+.cover.err .spin{display:none}.cover.err .cv-play{display:inline-flex;background:#fff;color:#000}.cover.err .cv-play svg{fill:#000}
+.ctl{display:flex;align-items:center;gap:6px;padding:10px 14px;background:linear-gradient(180deg,#0d1118,#07090d);border-top:1px solid rgba(255,255,255,.06);color:#fff;user-select:none}
+.ctl button{width:40px;height:40px;flex:none;border-radius:10px;display:grid;place-items:center;color:#fff;transition:.15s}
+.ctl button:hover{background:rgba(255,255,255,.1)}
+.ctl button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ctl button svg.f{fill:currentColor;stroke:none}
+.ctl .tm{font:600 13px Inter,sans-serif;font-variant-numeric:tabular-nums;color:#c8ced8;min-width:44px;text-align:center}
+.ctl input[type=range]{-webkit-appearance:none;appearance:none;height:6px;border-radius:99px;background:linear-gradient(90deg,var(--ac) var(--v,0%),rgba(255,255,255,.18) var(--v,0%));cursor:pointer}
+.ctl input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(229,9,20,.35)}
+.ctl input[type=range]::-moz-range-thumb{width:16px;height:16px;border:0;border-radius:50%;background:#fff}
+#cSeek{flex:1;min-width:60px}#cVol{width:90px;margin-left:4px}
+.pl-body{min-height:calc(100dvh - 72px)}
+.ctl .brand{font-family:var(--hf);font-weight:800;font-size:15px;letter-spacing:-.04em;margin:0 6px 0 16px;opacity:.9}.ctl .brand b{color:var(--ac)}
+.plwrap:fullscreen,.plwrap.fsx{max-width:none;width:100vw;height:100dvh;border-radius:0;box-shadow:none}
+.plwrap.fsx{position:fixed;inset:0;z-index:999}
+.plwrap:fullscreen .stage,.plwrap.fsx .stage{flex:1;aspect-ratio:auto}
+@media (max-width:860px){.plwrap{border-radius:12px;max-width:none}.ctl{gap:2px;padding:6px 8px}.ctl button{width:36px;height:36px}#cVol,.ctl .brand,#cBack,#cFwd{display:none}.ctl .tm{min-width:38px;font-size:12px}}
+
+/* v11: modern dark cinema theme */
+body{background:radial-gradient(1200px 600px at 50% -10%,#2a0a0f55,transparent 70%),#07090d;color:#f4f6fa}
+.top,.top.solid{background:rgba(12,15,21,.72);border:1px solid rgba(255,255,255,.08);color:#fff;box-shadow:0 18px 50px -20px #000}
+.top .logo b{color:#fff}.top .logo span{color:#8b95a5}
+.top .nav{background:rgba(255,255,255,.06)}
+.top .nav button{color:#aab3c2}.top .nav button.on{background:#fff;color:#0b0d12;box-shadow:0 6px 18px -6px #0008}.top .nav button:hover:not(.on){background:rgba(255,255,255,.1);color:#fff}
+.top .icon-btn{background:rgba(255,255,255,.08);color:#fff}.top .icon-btn:hover{background:rgba(255,255,255,.16)}
+.hero{background:#0b0e14;box-shadow:0 40px 90px -30px #000,0 0 0 1px rgba(255,255,255,.05)}
+.hero::after{background:linear-gradient(90deg,rgba(7,9,13,.95),rgba(7,9,13,.55) 42%,rgba(7,9,13,0) 80%),linear-gradient(0deg,rgba(7,9,13,.75),transparent 55%)}
+body>main{color:#f4f6fa}
+body>main .sec-h h2{color:#fff}body>main .sec-h small{color:#8b95a5}
+body>main .more{background:rgba(255,255,255,.08);color:#e6eaf0;border:1px solid rgba(255,255,255,.08)}body>main .more:hover{background:rgba(255,255,255,.16);color:#fff}
+body>main .card p{color:#8b95a5}body>main .card h3{color:#eef1f5}
+body>main .thumb{background:#11151c;box-shadow:0 14px 34px -16px #000;transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+body>main .card:hover .thumb{transform:translateY(-4px);box-shadow:0 24px 44px -18px #000}
+body>main .card:hover .thumb::after{box-shadow:inset 0 0 0 2px rgba(255,255,255,.85)}
+body>main .card.all .thumb{background:#161b24;color:#cfd6e0}
+body>main .t10 .num{color:#07090d;-webkit-text-stroke:1.5px #4a515d}body>main .t10:hover .num{-webkit-text-stroke-color:#fff}body>main .t10 .thumb{box-shadow:0 18px 40px -18px #000}
+body>main .col{box-shadow:0 18px 40px -20px #000;outline:1px solid rgba(255,255,255,.06);outline-offset:-1px}
+#colOv,#searchOv{background:#07090d;color:#f4f6fa}
+#colOv .ov-top,#searchOv .ov-top{background:rgba(7,9,13,.86);border-color:rgba(255,255,255,.06)}
+#colOv .ov-top h2,#searchOv .ov-top h2{color:#fff}
+#colOv .close,#searchOv .close{background:rgba(255,255,255,.08);color:#fff}
+#colOv .field,#searchOv .field{background:#11151c;border-color:rgba(255,255,255,.1)}#colOv .field input,#searchOv .field input{color:#fff}#colOv .field svg,#searchOv .field svg{color:#8b95a5}
+#colOv .card p,#searchOv .card p,#colOv .empty,#searchOv .empty{color:#8b95a5}#colOv .card h3,#searchOv .card h3{color:#eef1f5}
+body>footer{border-color:rgba(255,255,255,.06);background:#05070a;color:#7d8696}body>footer .logo b{color:#fff}body>footer .logo span{color:#7d8696}
+.tabbar{border:1px solid rgba(255,255,255,.08);background:rgba(14,17,23,.86);box-shadow:0 12px 36px -10px #000;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.tabbar button{color:#8b95a5}.tabbar button.on{background:rgba(255,255,255,.1);color:#fff}.tabbar button.tv{color:#ff4d57}
+.online{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:#fff}.online em{color:#9aa3b2}
+::selection{background:#e50914;color:#fff}
+@media(max-width:860px){.hero::after{background:linear-gradient(0deg,#07090d 0,#07090df5 32%,#07090d99 55%,#07090d10 80%)}}
+#colImg{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 18%,#000 82%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 18%,#000 82%,transparent 100%)}
 </style>
 </head>
 <body>
@@ -309,7 +385,7 @@ body>main{margin-top:22px}body>main .sec{margin-bottom:34px}body>main .sec-h{mar
 
 <footer>
  <div class="logo"><b>İBO</b><span>sinema</span></div>
- <p>Diziler, filmler ve canlı TV tek ekranda. Videolar YouTube üzerinden oynatılır; görüntü kalitesi kaynağa ve bağlantına göre değişir.</p>
+ <p>Diziler, filmler ve canlı TV tek ekranda. Filmler ve diziler yapımcıların resmi kanallarından, İBO oynatıcısında yayınlanır; görüntü kalitesi kaynağa ve bağlantına göre değişir.</p>
 </footer>
 
 <nav class="tabbar" aria-label="Alt menü">
@@ -337,7 +413,7 @@ body>main{margin-top:22px}body>main .sec{margin-bottom:34px}body>main .sec-h{mar
 <div class="ov" id="play" role="dialog" aria-modal="true" aria-labelledby="plTitle">
  <div class="ov-top"><button type="button" class="close" data-close aria-label="Kapat"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button><h2 id="plTitle">Oynatılıyor</h2></div>
  <div class="pl-body">
-  <div class="stage"><iframe id="plFrame" title="Video oynatıcı" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+  <div class="plwrap" id="plWrap"><div class="stage" id="stage"><div id="plHost"></div><div class="cover" id="plCover"><img id="plCovImg" alt=""><div class="cv-in"><div class="cv-logo"><b>İ</b>BO<span>sinema</span></div><div class="spin"></div><button type="button" class="cv-play" id="cvPlay"><svg viewBox="0 0 24 24"><path d="m7 4 13 8-13 8z"/></svg><span id="cvPlayTx">Oynat</span></button><p id="plCovTxt">Film hazırlanıyor…</p></div></div></div><div class="ctl" id="plCtl"><button type="button" id="cPlay" aria-label="Oynat/Duraklat"><svg class="f" viewBox="0 0 24 24"><path d="m7 4 13 8-13 8z"/></svg></button><button type="button" id="cBack" aria-label="10 saniye geri"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button><button type="button" id="cFwd" aria-label="10 saniye ileri"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></button><span class="tm" id="cCur">0:00</span><input type="range" id="cSeek" min="0" max="1000" value="0" step="1" aria-label="İlerleme"><span class="tm" id="cDur">0:00</span><button type="button" id="cMute" aria-label="Ses"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg></button><input type="range" id="cVol" min="0" max="100" value="100" aria-label="Ses düzeyi"><span class="brand"><b>İ</b>BO</span><button type="button" id="cFs" aria-label="Tam ekran"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div></div>
   <div class="pl-info"><p id="plSub"></p><div class="pl-nav"><button type="button" class="btn btn-g" id="plPrev"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>Önceki</button><button type="button" class="btn btn-w" id="plNext">Sonraki<svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></button></div></div>
  </div>
 </div>
@@ -370,13 +446,16 @@ const COLS={
  gk:{title:'Korku & Gerilim',kind:'Film',sub:'Türkçe dublaj gece seansı',key:'GERİLİM',genre:'Korku · Gerilim'}
 };
 const SERIES=['kv','pusu','uvb'],FILMS=['yk','dram','dub','gk','cin','ks','yes','ts'];
-const SLIDES=[['kv',1,'İBO özel dizi'],['yk',1,'Yeni eklendi · Yerli komedi'],['dub',5,'Yeni eklendi · Aksiyon'],['dram',3,'Yeni eklendi · Yerli dram'],['pusu',1,'Devam serisi'],['ks',1,'Kemal Sunal klasikleri'],['cin',1,'Korku gecesi'],['ts',1,'Türk sineması']];
+const SLIDES=[['yk',1,'Yeni eklendi · Yerli komedi'],['dub',5,'Yeni eklendi · Aksiyon'],['dram',3,'Yeni eklendi · Yerli dram'],['pusu',1,'Devam serisi'],['ks',1,'Kemal Sunal klasikleri'],['cin',1,'Korku gecesi'],['ts',1,'Türk sineması'],['kv',1,'İBO özel dizi']];
 const TOP=[['kv',1],['ks',1],['pusu',1],['cin',1],['ks',3],['yes',1],['ts',1],['dub',1],['cin',2],['ks',2]];
 const TV_FALLBACK='https://desktop-39mbc4k.tail13a4da.ts.net/tv-guest';
 let OWNER_K='';try{const m=location.hash.match(/k=([a-f0-9]{32,64})/i);if(m){localStorage.setItem('ibo_owner',m[1].toLowerCase());history.replaceState(null,'',location.pathname+location.search)}OWNER_K=localStorage.getItem('ibo_owner')||''}catch{}
 const HKEY='ibo-history-v3';
 let D={},tvUrl=TV_FALLBACK,tvState='unknown',cur=0,heroTimer=null,colId=null,colList=[],colShown=0,pl=null,toastT=null;
 const yt=(id,q)=>'https://i.ytimg.com/vi/'+id+'/'+(q||'hqdefault')+'.jpg';
+const pic=it=>it.p?'https://i.ytimg.com/vi/'+it.id+'/'+(it.p[0]==='m'?'maxres':'sd')+it.p[1]+'.jpg':yt(it.id,'hq720');
+function crop(e,it){if(it&&it.k){e.style.setProperty('--k',it.k);e.style.setProperty('--ty',(it.k*(.5-(it.o??.5))*100).toFixed(2)+'%')}else{e.style.removeProperty('--k');e.style.removeProperty('--ty')}return e}
+function pimg(it,alt){const i=img(pic(it),alt);crop(i,it);i.onerror=()=>{if(!i.dataset.f){i.dataset.f=1;i.style.removeProperty('--k');i.style.removeProperty('--ty');i.src=yt(it.id)}else i.style.opacity=0};return i}
 const okId=id=>typeof id==='string'&&/^[A-Za-z0-9_-]{11}$/.test(id);
 const dur=s=>{if(!s)return'';const m=Math.round(s/60);return m>=60?Math.floor(m/60)+' sa '+(m%60)+' dk':m+' dk'};
 const name=(c,it)=>it.t||COLS[c].title+' · '+it.n+'. Bölüm';
@@ -394,9 +473,9 @@ function remember(c,n){try{const h=hist().filter(x=>!(x.c===c&&x.n===n));h.unshi
 /* cards */
 function card(c,it,opts={}){
  const b=el('button','card');b.type='button';
- const th=el('div','thumb');th.append(img(yt(it.id),name(c,it)));
+ const th=el('div','thumb');th.append(pimg(it,name(c,it)));
  if(it.d)th.append(el('span','dur',dur(it.d)));
- if(it.x)th.append(el('span','ext','YouTube'));
+ if(it.x)th.append(el('span','ext','↗ Harici'));
  if(it.new)th.append(el('span','newb','YENİ'));
  const pi=el('div','play-ic');pi.innerHTML='<span><svg class="f" viewBox="0 0 24 24"><path d="m7 4 13 8-13 8z"/></svg></span>';th.append(pi);
  if(opts.prog){const p=el('div','prog');const i=el('i');i.style.width=opts.prog+'%';p.append(i);th.append(p)}
@@ -419,7 +498,7 @@ function row(c){
 /* hero */
 function hero(){
  const imgs=$('heroImgs'),pg=$('pager');const ok=SLIDES.filter(s=>find(s[0],s[1]));
- ok.forEach((s,i)=>{const it=find(s[0],s[1]);const d=el('div','hero-img'+(i?'':' on'));d.style.backgroundImage='url("'+yt(it.id,'maxresdefault')+'"),url("'+yt(it.id,'hqdefault')+'")';imgs.append(d);
+ ok.forEach((s,i)=>{const it=find(s[0],s[1]);const d=el('div','hero-img'+(i?'':' on'));const hi=it.p&&it.p[0]==='m'?pimg(it,''):img(yt(it.id,'maxresdefault'),'');if(!(it.p&&it.p[0]==='m'))hi.onerror=()=>{if(!hi.dataset.f){hi.dataset.f=1;hi.src=yt(it.id)}};hi.loading=i?'lazy':'eager';if(!i)hi.fetchPriority='high';d.append(hi);imgs.append(d);
   const b=el('button');b.type='button';b.setAttribute('aria-label',(i+1)+'. öne çıkan');b.append(el('i'));b.onclick=()=>{show(i);loop()};pg.append(b)});
  const show=i=>{cur=i;[...imgs.children].forEach((d,j)=>d.classList.toggle('on',j===i));[...pg.children].forEach((b,j)=>{b.classList.toggle('on',j===i);b.classList.toggle('done',j<i)});
   const [c,n,kick]=ok[i],it=find(c,n),C=COLS[c],box=$('heroIn');box.replaceChildren();
@@ -436,7 +515,7 @@ function hero(){
 const stack=[];
 function openOv(id){const o=$(id);if(o.classList.contains('open'))return;o.classList.add('open');stack.push(id);document.body.classList.add('lock');history.pushState({ov:id},'');o.scrollTop=0;setTimeout(()=>o.querySelector('[data-close]')?.focus({preventScroll:true}),30)}
 function closeTop(fromPop){const id=stack.pop();if(!id)return;const o=$(id);o.classList.remove('open');
- if(id==='play')frame('plFrame');if(id==='liveOv')frame('liveFrame');
+ if(id==='play')plStop();if(id==='liveOv')frame('liveFrame');
  if(!stack.length)document.body.classList.remove('lock');if(!fromPop)history.back()}
 window.addEventListener('popstate',()=>{if(stack.length)closeTop(true)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&stack.length)closeTop(false)});
@@ -445,7 +524,7 @@ document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeTop(fals
 /* collection */
 function openCol(c){colId=c;const C=COLS[c];colList=(D[c]||[]).filter(it=>okId(it.id));
  $('colTitle').textContent=C.title;$('colName').textContent=C.title;$('colInfo').textContent=C.sub+' · '+colList.length+(C.kind==='Dizi'?' bölüm':' film');
- $('colImg').src=colList[0]?yt(colList[0].id,'maxresdefault'):'';$('colImg').onerror=function(){if(colList[0]&&!this.dataset.f){this.dataset.f=1;this.src=yt(colList[0].id)}};
+ {const ci=$('colImg'),f0=colList.find(x=>x.p&&x.p[0]==='m')||colList[0];delete ci.dataset.f;crop(ci,f0&&f0.k?{k:Math.min(f0.k,1.15),o:f0.o}:null);ci.src=f0?pic(f0):'';ci.onerror=function(){if(f0&&!this.dataset.f){this.dataset.f=1;crop(this,null);this.src=yt(f0.id)}}}
  $('colFilter').value='';colShown=0;$('colGrid').replaceChildren();moreCol();openOv('colOv')}
 function filtered(){const q=$('colFilter').value.trim().toLocaleLowerCase('tr');if(!q)return colList;return colList.filter(it=>name(colId,it).toLocaleLowerCase('tr').includes(q)||String(it.n)===q)}
 function moreCol(){const l=filtered(),g=$('colGrid');l.slice(colShown,colShown+40).forEach(it=>g.append(card(colId,it)));colShown=Math.min(l.length,colShown+40);$('colMore').hidden=colShown>=l.length;if(!l.length)g.append(el('p','empty','Sonuç bulunamadı.'))}
@@ -466,12 +545,52 @@ function play(c,it){
  remember(c,it.n);renderCont();
  if(it.x){window.open('https://www.youtube.com/watch?v='+it.id,'_blank','noopener,noreferrer');toast('Bu bölüm YouTube\'da açılıyor.');return}
  pl={c,n:it.n};$('plTitle').textContent=name(c,it);$('plSub').textContent=COLS[c].title+(COLS[c].kind==='Dizi'?' · '+it.n+'. Bölüm':'')+(it.d?' · '+dur(it.d):'');
- frame('plFrame','https://www.youtube-nocookie.com/embed/'+encodeURIComponent(it.id)+'?autoplay=1&playsinline=1&rel=0&modestbranding=1');
- nav();openOv('play')}
+ openOv('play');plLoad(it);nav()}
 function neighbor(step){if(!pl)return null;const a=(D[pl.c]||[]).filter(playable);const i=a.findIndex(x=>x.n===pl.n);return a[i+step]||null}
 function nav(){$('plPrev').disabled=!neighbor(-1);$('plNext').disabled=!neighbor(1)}
-function step(s){const it=neighbor(s);if(!it)return;if(it.x){play(pl.c,it);return}pl.n=it.n;remember(pl.c,it.n);renderCont();$('plTitle').textContent=name(pl.c,it);$('plSub').textContent=COLS[pl.c].title+(COLS[pl.c].kind==='Dizi'?' · '+it.n+'. Bölüm':'')+(it.d?' · '+dur(it.d):'');frame('plFrame','https://www.youtube-nocookie.com/embed/'+encodeURIComponent(it.id)+'?autoplay=1&playsinline=1&rel=0&modestbranding=1');nav()}
+function step(s){const it=neighbor(s);if(!it)return;if(it.x){play(pl.c,it);return}pl.n=it.n;remember(pl.c,it.n);renderCont();$('plTitle').textContent=name(pl.c,it);$('plSub').textContent=COLS[pl.c].title+(COLS[pl.c].kind==='Dizi'?' · '+it.n+'. Bölüm':'')+(it.d?' · '+dur(it.d):'');plLoad(it);nav()}
 $('plPrev').onclick=()=>step(-1);$('plNext').onclick=()=>step(1);
+
+
+/* İBO player (YouTube IFrame API, own controls) */
+let YP=null,ypReady=null,ypTimer=null,ypIt=null,ypStarted=false,ypAsk=null,seeking=false;
+const fmt=t=>{t=Math.max(0,Math.floor(t||0));const h=Math.floor(t/3600),m=Math.floor(t%3600/60),x=t%60;return(h?h+':'+String(m).padStart(2,'0'):m)+':'+String(x).padStart(2,'0')};
+function ytApi(){if(ypReady)return ypReady;ypReady=new Promise((ok,no)=>{if(window.YT&&YT.Player)return ok();const pr=window.onYouTubeIframeAPIReady;window.onYouTubeIframeAPIReady=()=>{pr&&pr();ok()};const sc=document.createElement('script');sc.src='https://www.youtube.com/iframe_api';sc.async=true;sc.onerror=()=>{ypReady=null;no()};document.head.append(sc)});return ypReady}
+const PLAY_SVG='<svg class="f" viewBox="0 0 24 24"><path d="m7 4 13 8-13 8z"/></svg>',PAUSE_SVG='<svg class="f" viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>';
+function cov(mode,txt){const c=$('plCover');c.classList.toggle('off',mode==='off');c.classList.toggle('ask',mode==='ask');c.classList.toggle('err',mode==='err');if(txt!=null)$('plCovTxt').textContent=txt}
+function setV(r,v){r.value=v;r.style.setProperty('--v',(v/(+r.max||1)*100)+'%')}
+function tick(){if(!YP||!YP.getCurrentTime)return;const d=YP.getDuration()||0,t=YP.getCurrentTime()||0;$('cDur').textContent=fmt(d);if(!seeking){$('cCur').textContent=fmt(t);setV($('cSeek'),d?Math.round(t/d*1000):0)}}
+function plState(e){const st=e.data;$('cPlay').innerHTML=st===1?PAUSE_SVG:PLAY_SVG;
+ if(st===1){ypStarted=true;clearTimeout(ypAsk);cov('off')}
+ if(st===0){const n=neighbor(1);if(n&&!n.x){step(1)}else cov('ask','Film bitti. Tekrar izlemek için Oynat\u2019a bas.')}}
+function plErr(e){clearTimeout(ypAsk);const it=ypIt;cov('err','Bu film şu an İBO oynatıcısında açılamıyor (yapımcı kısıtlaması).');$('cvPlayTx').textContent='Harici oynatıcıda aç';$('cvPlay').onclick=()=>{if(it)window.open('https://www.youtube.com/watch?v='+it.id,'_blank','noopener,noreferrer')}}
+async function plLoad(it){ypIt=it;ypStarted=false;clearTimeout(ypAsk);
+ const ci=$('plCovImg');ci.onerror=()=>{if(!ci.dataset.f){ci.dataset.f=1;crop(ci,null);ci.src=yt(it.id)}};delete ci.dataset.f;crop(ci,it);ci.src=pic(it);
+ $('cvPlayTx').textContent='Oynat';$('cvPlay').onclick=()=>{if(YP&&YP.playVideo){YP.playVideo();cov('','Film başlıyor…')}};
+ cov('','Film hazırlanıyor…');$('cCur').textContent='0:00';$('cDur').textContent=it.d?fmt(it.d):'0:00';setV($('cSeek'),0);$('cPlay').innerHTML=PLAY_SVG;
+ ypAsk=setTimeout(()=>{if(!ypStarted&&ypIt===it)cov('ask','Hazır. Başlatmak için Oynat\u2019a bas.')},3500);
+ try{await ytApi()}catch{cov('err','Oynatıcı yüklenemedi. Bağlantını kontrol edip tekrar dene.');$('cvPlayTx').textContent='Tekrar dene';$('cvPlay').onclick=()=>plLoad(it);return}
+ if(ypIt!==it)return;
+ if(YP&&YP.loadVideoById){YP.loadVideoById(it.id);return}
+ $('plHost').replaceChildren(el('div','','' ));const host=$('plHost').firstChild;
+ YP=new YT.Player(host,{host:'https://www.youtube-nocookie.com',videoId:it.id,width:'100%',height:'100%',
+  playerVars:{autoplay:1,controls:0,rel:0,playsinline:1,iv_load_policy:3,disablekb:1,fs:0,modestbranding:1,cc_load_policy:0,origin:location.origin},
+  events:{onReady:e=>{try{e.target.setVolume(+$('cVol').value);e.target.playVideo()}catch{}},onStateChange:plState,onError:plErr}});
+ clearInterval(ypTimer);ypTimer=setInterval(tick,500)}
+function plStop(){clearTimeout(ypAsk);clearInterval(ypTimer);ypIt=null;try{YP&&YP.destroy&&YP.destroy()}catch{}YP=null;$('plHost').replaceChildren();cov('','');exitFs()}
+function toggle(){if(!YP||!YP.getPlayerState)return;YP.getPlayerState()===1?YP.pauseVideo():YP.playVideo()}
+function jump(s){if(YP&&YP.getCurrentTime)YP.seekTo(Math.max(0,YP.getCurrentTime()+s),true)}
+function muteUi(){const m=YP&&YP.isMuted&&YP.isMuted();$('cMute').style.opacity=m?.5:1}
+function exitFs(){const w=$('plWrap');w.classList.remove('fsx');if(document.fullscreenElement)document.exitFullscreen().catch(()=>{})}
+$('cPlay').onclick=toggle;$('cBack').onclick=()=>jump(-10);$('cFwd').onclick=()=>jump(10);
+$('cSeek').oninput=e=>{seeking=true;const d=YP&&YP.getDuration?YP.getDuration():0;setV(e.target,e.target.value);$('cCur').textContent=fmt(d*e.target.value/1000)};
+$('cSeek').onchange=e=>{const d=YP&&YP.getDuration?YP.getDuration():0;if(d)YP.seekTo(d*e.target.value/1000,true);seeking=false};
+$('cVol').oninput=e=>{setV(e.target,e.target.value);if(YP&&YP.setVolume){YP.setVolume(+e.target.value);if(+e.target.value>0)YP.unMute();muteUi()}};
+$('cMute').onclick=()=>{if(!YP||!YP.isMuted)return;YP.isMuted()?YP.unMute():YP.mute();setTimeout(muteUi,60)};
+$('cFs').onclick=()=>{const w=$('plWrap');if(document.fullscreenElement||w.classList.contains('fsx')){exitFs();return}if(w.requestFullscreen){w.requestFullscreen().then(()=>{try{screen.orientation.lock('landscape').catch(()=>{})}catch{}}).catch(()=>w.classList.add('fsx'))}else w.classList.add('fsx')};
+setV($('cVol'),100);
+document.addEventListener('keydown',e=>{if(!$('play').classList.contains('open')||/INPUT|TEXTAREA/.test(e.target.tagName)&&e.target.type!=='range')return;
+ if(e.key===' '||e.key==='k'){e.preventDefault();toggle()}else if(e.key==='ArrowRight'){jump(10)}else if(e.key==='ArrowLeft'){jump(-10)}else if(e.key==='f'){$('cFs').click()}else if(e.key==='m'){$('cMute').click()}});
 
 /* continue */
 function renderCont(){const h=hist().slice(0,10),r=$('contRail');r.replaceChildren();h.forEach(x=>r.append(card(x.c,find(x.c,x.n),{sub:COLS[x.c].title})));$('contSec').hidden=!h.length}
@@ -508,14 +627,14 @@ async function init(){
  if(!Object.keys(D).length){$('heroIn').append(el('h1','','Katalog yüklenemedi'),el('p','','Sayfayı yenilemeyi dene.'));return}
  hero();renderCont();
  const tr=$('topRail');TOP.forEach(([c,n],i)=>{const it=find(c,n);if(!it||!okId(it.id))return;const b=el('button','t10');b.type='button';b.setAttribute('aria-label',(i+1)+'. '+name(c,it));
-  const th=el('div','thumb');th.append(img(yt(it.id),''));b.append(el('span','num',i+1),th);b.onclick=()=>play(c,it);tr.append(b)});
+  const th=el('div','thumb');th.append(pimg(it,''));b.append(el('span','num',i+1),th);b.onclick=()=>play(c,it);tr.append(b)});
  const nw=[];FILMS.forEach(c=>(D[c]||[]).forEach(it=>{if(it.new&&okId(it.id))nw.push([c,it])}));
  if(nw.length){const order=[];const by={};nw.forEach(x=>(by[x[0]]=by[x[0]]||[]).push(x));let k=0,more=true;while(more){more=false;for(const c of FILMS){const l=by[c];if(l&&l[k]){order.push(l[k]);more=true}}k++}
   const nr=$('newRail');order.slice(0,24).forEach(([c,it])=>nr.append(card(c,it,{sub:COLS[c].title})));$('newInfo').textContent=nw.length+' yeni film · komedi, dram, aksiyon, gerilim';$('newSec').hidden=false}
  const s=$('rowsSeries'),f=$('rowsFilms');
  SERIES.forEach(c=>{const r=row(c);r&&s.append(r)});FILMS.forEach(c=>{const r=row(c);r&&f.append(r)});
  const cols=$('cols');[...SERIES,...FILMS].forEach(c=>{const l=(D[c]||[]).filter(it=>okId(it.id));if(!l.length)return;const b=el('button','col');b.type='button';
-  b.append(img(yt(l[0].id),''));const d=el('div');d.append(el('small','',COLS[c].key),el('strong','',COLS[c].title),el('span','',l.length+(COLS[c].kind==='Dizi'?' bölüm':' film')));b.append(d);b.onclick=()=>openCol(c);cols.append(b)});
+  b.append(pimg(l[0],''));const d=el('div');d.append(el('small','',COLS[c].key),el('strong','',COLS[c].title),el('span','',l.length+(COLS[c].kind==='Dizi'?' bölüm':' film')));b.append(d);b.onclick=()=>openCol(c);cols.append(b)});
  all=[];Object.keys(COLS).forEach(c=>(D[c]||[]).forEach(it=>{if(okId(it.id))all.push({c,it,k:(name(c,it)+' '+COLS[c].title).toLocaleLowerCase('tr')})}));
  spy();tvCheck();presence();setInterval(()=>{if(!document.hidden)tvCheck()},60000);
 }
