@@ -477,6 +477,20 @@ body>main .card:hover .thumb{transform:scale(1.04);box-shadow:0 18px 40px -12px 
 body>main .card:hover .thumb::after{box-shadow:none!important}
 body>main .card h3,body>main .card b{letter-spacing:-.01em}
 .tabbar{-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);background:rgba(10,10,12,.82)!important}
+/* v19: YouTube izi tamamen gizli (başlık, kanal, logo, öneriler) */
+.plwrap .stage{container-type:size}
+#plHost{inset:auto!important;left:50%!important;top:50%!important;width:100%;height:calc(100% + 240px);transform:translate(-50%,-50%);pointer-events:none;clip-path:inset(120px 0 120px 0)}
+#cQ{width:auto!important;padding:0 10px;font:800 12px/1 Inter,system-ui,sans-serif;letter-spacing:.02em;border:1px solid rgba(255,255,255,.22);height:28px!important;border-radius:7px!important;margin:0 4px}
+#qMenu{position:absolute;right:12px;bottom:64px;z-index:6;display:none;flex-direction:column;min-width:150px;padding:6px;border-radius:12px;background:rgba(18,18,20,.96);box-shadow:0 20px 50px -10px #000;border:1px solid rgba(255,255,255,.08)}
+#qMenu.open{display:flex}
+#qMenu b{font:700 11px/1 Inter,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);padding:10px 12px 8px}
+#qMenu button{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px;border-radius:8px;color:#fff;font:600 15px/1 Inter,system-ui,sans-serif;text-align:left}
+#qMenu button:hover{background:rgba(255,255,255,.08)}
+#qMenu button.on::after{content:"";width:8px;height:8px;border-radius:50%;background:#e50914}
+#qMenu button small{font-size:11px;font-weight:800;color:#e50914;letter-spacing:.04em}
+.plwrap{position:relative}
+#plHost iframe{pointer-events:none}
+#plShield{position:absolute;inset:0;z-index:2;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
 </style>
 </head>
 <body>
@@ -577,7 +591,7 @@ body>main .card h3,body>main .card b{letter-spacing:-.01em}
 <div class="ov" id="play" role="dialog" aria-modal="true" aria-labelledby="plTitle">
  <div class="ov-top"><button type="button" class="close" data-close aria-label="Kapat"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button><h2 id="plTitle">Oynatılıyor</h2></div>
  <div class="pl-body">
-  <div class="plwrap" id="plWrap"><div class="stage" id="stage"><div id="plHost"></div><div class="cover" id="plCover"><img id="plCovImg" alt=""><div class="cv-in"><div class="cv-logo"><b>İ</b>BO<span>sinema</span></div><div class="spin"></div><button type="button" class="cv-play" id="cvPlay"><svg viewBox="0 0 24 24"><path d="m7 4 13 8-13 8z"/></svg><span id="cvPlayTx">Oynat</span></button><p id="plCovTxt">Film hazırlanıyor…</p></div></div></div><div class="ctl" id="plCtl"><button type="button" id="cPlay" aria-label="Oynat/Duraklat"><svg class="f" viewBox="0 0 24 24"><path d="m7 4 13 8-13 8z"/></svg></button><button type="button" id="cBack" aria-label="10 saniye geri"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button><button type="button" id="cFwd" aria-label="10 saniye ileri"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></button><span class="tm" id="cCur">0:00</span><input type="range" id="cSeek" min="0" max="1000" value="0" step="1" aria-label="İlerleme"><span class="tm" id="cDur">0:00</span><button type="button" id="cMute" aria-label="Ses"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg></button><input type="range" id="cVol" min="0" max="100" value="100" aria-label="Ses düzeyi"><span class="brand"><b>İ</b>BO</span><button type="button" id="cFs" aria-label="Tam ekran"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div></div>
+  <div class="plwrap" id="plWrap"><div class="stage" id="stage"><div id="plHost"></div><div id="plShield"></div><div class="cover" id="plCover"><img id="plCovImg" alt=""><div class="cv-in"><div class="cv-logo"><b>İ</b>BO<span>sinema</span></div><div class="spin"></div><button type="button" class="cv-play" id="cvPlay"><svg viewBox="0 0 24 24"><path d="m7 4 13 8-13 8z"/></svg><span id="cvPlayTx">Oynat</span></button><p id="plCovTxt">Film hazırlanıyor…</p></div></div></div><div id="qMenu" role="menu"><b>Kalite</b><button type="button" data-q="2160">4K <small>UHD</small></button><button type="button" data-q="1440">1440p <small>2K</small></button><button type="button" data-q="1080">1080p <small>Full HD</small></button></div><div class="ctl" id="plCtl"><button type="button" id="cPlay" aria-label="Oynat/Duraklat"><svg class="f" viewBox="0 0 24 24"><path d="m7 4 13 8-13 8z"/></svg></button><button type="button" id="cBack" aria-label="10 saniye geri"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button><button type="button" id="cFwd" aria-label="10 saniye ileri"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></button><span class="tm" id="cCur">0:00</span><input type="range" id="cSeek" min="0" max="1000" value="0" step="1" aria-label="İlerleme"><span class="tm" id="cDur">0:00</span><button type="button" id="cMute" aria-label="Ses"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg></button><input type="range" id="cVol" min="0" max="100" value="100" aria-label="Ses düzeyi"><span class="brand"><b>İ</b>BO</span><button type="button" id="cQ" aria-label="Kalite">1080p</button><button type="button" id="cFs" aria-label="Tam ekran"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div></div>
   <div class="pl-info"><p id="plSub"></p><div class="pl-nav"><button type="button" class="btn btn-g" id="plPrev"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>Önceki</button><button type="button" class="btn btn-w" id="plNext">Sonraki<svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></button></div></div>
  </div>
 </div>
@@ -727,6 +741,7 @@ function setV(r,v){r.value=v;r.style.setProperty('--v',(v/(+r.max||1)*100)+'%')}
 function tick(){if(!YP||!YP.getCurrentTime)return;const d=YP.getDuration()||0,t=YP.getCurrentTime()||0;$('cDur').textContent=fmt(d);if(!seeking){$('cCur').textContent=fmt(t);setV($('cSeek'),d?Math.round(t/d*1000):0)}}
 function plState(e){const st=e.data;$('cPlay').innerHTML=st===1?PAUSE_SVG:PLAY_SVG;
  if(st===1){ypStarted=true;clearTimeout(ypAsk);cov('off')}
+ if(st===2&&ypStarted){$('cvPlayTx').textContent='Devam et';$('cvPlay').onclick=()=>{if(YP&&YP.playVideo){YP.playVideo();cov('','')}};cov('ask','Duraklatıldı')}
  if(st===0){const n=neighbor(1);if(n&&!n.x){step(1)}else cov('ask','Film bitti. Tekrar izlemek için Oynat\u2019a bas.')}}
 function plErr(e){clearTimeout(ypAsk);const it=ypIt;const n=neighbor(1);cov('err','Bu içerik şu an açılamıyor.');if(n){$('cvPlayTx').textContent='Sonrakini izle';$('cvPlay').onclick=()=>step(1)}else{$('cvPlayTx').textContent='Kapat';$('cvPlay').onclick=()=>closeTop()}}
 async function plLoad(it){ypIt=it;ypStarted=false;clearTimeout(ypAsk);
@@ -737,7 +752,7 @@ async function plLoad(it){ypIt=it;ypStarted=false;clearTimeout(ypAsk);
  try{await ytApi()}catch{cov('err','Oynatıcı yüklenemedi. Bağlantını kontrol edip tekrar dene.');$('cvPlayTx').textContent='Tekrar dene';$('cvPlay').onclick=()=>plLoad(it);return}
  if(ypIt!==it)return;
  if(YP&&YP.loadVideoById){YP.loadVideoById(it.id);return}
- $('plHost').replaceChildren(el('div','','' ));const host=$('plHost').firstChild;
+ $('plHost').replaceChildren(el('div','','' ));const host=$('plHost').firstChild;fitHost();
  YP=new YT.Player(host,{host:'https://www.youtube-nocookie.com',videoId:it.id,width:'100%',height:'100%',
   playerVars:{autoplay:1,controls:0,rel:0,playsinline:1,iv_load_policy:3,disablekb:1,fs:0,modestbranding:1,cc_load_policy:0,origin:location.origin},
   events:{onReady:e=>{try{e.target.setVolume(+$('cVol').value);e.target.playVideo()}catch{}},onStateChange:plState,onError:plErr}});
@@ -747,7 +762,22 @@ function toggle(){if(!YP||!YP.getPlayerState)return;YP.getPlayerState()===1?YP.p
 function jump(s){if(YP&&YP.getCurrentTime)YP.seekTo(Math.max(0,YP.getCurrentTime()+s),true)}
 function muteUi(){const m=YP&&YP.isMuted&&YP.isMuted();$('cMute').style.opacity=m?.5:1}
 function exitFs(){const w=$('plWrap');w.classList.remove('fsx');if(document.fullscreenElement)document.exitFullscreen().catch(()=>{})}
-$('cPlay').onclick=toggle;$('cBack').onclick=()=>jump(-10);$('cFwd').onclick=()=>jump(10);
+
+/* kalite: oynatıcıyı hedef çözünürlükte çizip küçültür, YouTube o kaliteyi seçer */
+let Q=+(localStorage.getItem('ibo_q')||1080);if(![1080,1440,2160].includes(Q))Q=1080;
+const QL={1080:'1080p',1440:'2K',2160:'4K'};
+function fitHost(){const st=$('stage'),h=$('plHost');if(!st||!h)return;const r=st.getBoundingClientRect();if(!r.width||!r.height)return;
+ const vis=Math.min(r.width,r.height*16/9),dpr=window.devicePixelRatio||1,tw=Q*16/9,iw=Math.max(vis,tw),sc=vis/iw;
+ h.style.width=iw+'px';h.style.height=(iw*9/16+240)+'px';h.style.transform='translate(-50%,-50%) scale('+sc+')'}
+function qUi(){$('cQ').textContent=QL[Q];document.querySelectorAll('#qMenu [data-q]').forEach(b=>b.classList.toggle('on',+b.dataset.q===Q))}
+$('cQ').onclick=e=>{e.stopPropagation();$('qMenu').classList.toggle('open')};
+document.querySelectorAll('#qMenu [data-q]').forEach(b=>b.onclick=e=>{e.stopPropagation();Q=+b.dataset.q;try{localStorage.setItem('ibo_q',Q)}catch{}qUi();fitHost();$('qMenu').classList.remove('open');
+ if(YP&&YP.getCurrentTime&&ypIt){const t=YP.getCurrentTime(),pl=YP.getPlayerState&&YP.getPlayerState()===1;try{YP.setPlaybackQuality&&YP.setPlaybackQuality(Q>=2160?'hd2160':Q>=1440?'hd1440':'hd1080')}catch{}if(pl){YP.seekTo(t,true)}}});
+document.addEventListener('click',e=>{if(!e.target.closest('#qMenu'))$('qMenu').classList.remove('open')});
+addEventListener('resize',fitHost);document.addEventListener('fullscreenchange',()=>setTimeout(fitHost,60));
+if(window.ResizeObserver)new ResizeObserver(fitHost).observe($('stage'));
+qUi();
+$('cPlay').onclick=toggle;$('plShield').onclick=toggle;$('cBack').onclick=()=>jump(-10);$('cFwd').onclick=()=>jump(10);
 $('cSeek').oninput=e=>{seeking=true;const d=YP&&YP.getDuration?YP.getDuration():0;setV(e.target,e.target.value);$('cCur').textContent=fmt(d*e.target.value/1000)};
 $('cSeek').onchange=e=>{const d=YP&&YP.getDuration?YP.getDuration():0;if(d)YP.seekTo(d*e.target.value/1000,true);seeking=false};
 $('cVol').oninput=e=>{setV(e.target,e.target.value);if(YP&&YP.setVolume){YP.setVolume(+e.target.value);if(+e.target.value>0)YP.unMute();muteUi()}};
