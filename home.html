@@ -808,7 +808,7 @@ function renderCont(){const h=hist().slice(0,10),r=$('contRail');r.replaceChildr
 
 /* live */
 async function tvCheck(){try{const r=await fetch('/api/tv-status',{cache:'no-store',signal:AbortSignal.timeout(7000)});const j=await r.json();
-  if(j.bridge==='online'&&typeof j.viewerUrl==='string'&&/^https:\/\/[^/]+\/tv-guest$/.test(j.viewerUrl)){tvUrl=j.viewerUrl;tvState='on'}else tvState=j.configured?'off':'off'}catch{tvState='unknown'}
+  if(j.bridge==='online'&&typeof j.viewerUrl==='string'&&/^(https:\/\/[^/]+)?\/tv-guest$/.test(j.viewerUrl)){tvUrl=j.viewerUrl;tvState='on'}else tvState=j.configured?'off':'off'}catch{tvState='unknown'}
  $('liveDot').className='st'+(tvState==='on'?' on':tvState==='off'?' off':'');
  $('liveLabel').textContent=tvState==='on'?'Yayın açık · hemen izle':tvState==='off'?'Yayın şu an kapalı':'Bağlantı kontrol ediliyor';return tvState}
 async function openLive(){openOv('liveOv');$('liveMsg').classList.remove('on');frame('liveFrame');const s=await tvCheck();

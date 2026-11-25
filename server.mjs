@@ -31,8 +31,43 @@ async function guestHealth(){
   catch{return null}
  }));
  const active=checks.find(Boolean);
- healthCache.body={bridge:active?'online':'offline',configured:!!active,viewerUrl:active?active+'/tv-guest':null};
+ tvActive=active||tvActive;healthCache.body={bridge:active?'online':'offline',configured:!!active,viewerUrl:active?'/tv-guest':null};
  return healthCache.body;
+}
+
+
+/* v21 relay: canlı yayın parçaları PC'den bir kez çekilir, izleyicilere buradan dağıtılır */
+let tvActive=null,cfBase=null;const segCache=new Map(),inflight=new Map(),plCache=new Map();
+const SEG_MAX=48;
+function cfFrom(text){const m=text.match(/https:\/\/[a-z0-9-]+\.trycloudflare\.com\/shared\//i);if(m)cfBase=m[0].slice(0,-'/shared/'.length);}
+async function upFetch(p,opt={}){
+ const bases=[];if(/\.ts$/.test(p)&&cfBase)bases.push(cfBase);if(tvActive)bases.push(tvActive);if(!bases.length){await guestHealth();if(tvActive)bases.push(tvActive)}
+ let last;for(const b of bases){try{const r=await fetch(b+p,{...opt,signal:AbortSignal.timeout(/\.ts$/.test(p)?20000:8000),cache:'no-store'});if(r.ok||r.status<500)return r;last=r}catch(e){last=e}}
+ if(last instanceof Response)return last;throw last||Error('NO_UPSTREAM');
+}
+async function getSeg(p){
+ const c=segCache.get(p);if(c)return c;
+ if(inflight.has(p))return inflight.get(p);
+ const job=(async()=>{const r=await upFetch(p);if(!r.ok)throw Error('UP_'+r.status);const b=Buffer.from(await r.arrayBuffer());const v={b,type:r.headers.get('content-type')||'video/mp2t'};segCache.set(p,v);while(segCache.size>SEG_MAX)segCache.delete(segCache.keys().next().value);return v})();
+ inflight.set(p,job);try{return await job}finally{inflight.delete(p)}
+}
+async function getPl(p){
+ const c=plCache.get(p),now=Date.now();if(c&&now-c.at<1000)return c;
+ if(inflight.has(p))return inflight.get(p);
+ const job=(async()=>{const r=await upFetch(p);if(!r.ok)throw Error('UP_'+r.status);let t=await r.text();cfFrom(t);t=t.replace(/https:\/\/[a-z0-9.-]+\/shared\//gi,'/shared/');const v={t,at:Date.now()};plCache.set(p,v);for(const u of t.split('\n').filter(x=>/^\/shared\/[A-Za-z0-9_]+\.ts$/.test(x)).slice(-2))getSeg(u).catch(()=>{});return v})();
+ inflight.set(p,job);try{return await job}finally{inflight.delete(p)}
+}
+async function tvRelay(req,res,pathname){
+ const q=new URL(req.url,'http://localhost').search;
+ try{
+  if(req.method==='GET'&&/^\/shared\/[A-Za-z0-9_]+\.ts$/.test(pathname)){const v=await getSeg(pathname);res.writeHead(200,{'content-type':v.type,'content-length':v.b.length,'cache-control':'public, max-age=60','access-control-allow-origin':'*'});return res.end(v.b)}
+  if(req.method==='GET'&&/^\/shared\/[A-Za-z0-9_]+\.m3u8$/.test(pathname)){const v=await getPl(pathname);res.writeHead(200,{'content-type':'application/vnd.apple.mpegurl','cache-control':'no-store','access-control-allow-origin':'*'});return res.end(v.t)}
+  const h={};for(const k of ['content-type','x-ibo-owner','accept'])if(req.headers[k])h[k]=req.headers[k];
+  let body;if(req.method==='POST'){const ch=[];for await(const c of req){ch.push(c);if(ch.reduce((a,b)=>a+b.length,0)>65536)return json(res,413,{error:'too_large'})}body=Buffer.concat(ch)}
+  const r=await upFetch(pathname+q,{method:req.method,headers:h,body});
+  const out={'content-type':r.headers.get('content-type')||'application/octet-stream','cache-control':r.headers.get('cache-control')||'no-store'};
+  const b=Buffer.from(await r.arrayBuffer());res.writeHead(r.status,out);return res.end(b);
+ }catch(e){return json(res,502,{error:'tv_relay_unavailable'})}
 }
 
 const presence = new Map();
@@ -169,6 +204,7 @@ const app=http.createServer(async(req,res)=>{
   try {
     if(req.method==='GET' && pathname==='/api/health') return json(res,200,{ok:true,mode:'one-user-low-cpu-relay'});
     if(req.method==='GET' && pathname==='/api/tv-status') return json(res,200,await guestHealth());
+    if(pathname==='/tv-guest'||pathname.startsWith('/shared/')) return tvRelay(req,res,pathname);
     if(req.method==='GET' && pathname==='/') return reply(res,200,personalHome,'text/html; charset=utf-8');
     if(req.method==='GET' && pathname==='/cinema.css') return reply(res,200,cinemaCss,'text/css; charset=utf-8');
     if(req.method==='GET' && pathname==='/cinema-light.css') return reply(res,200,cinemaLight,'text/css; charset=utf-8');
