@@ -353,6 +353,92 @@ body>footer::before{content:'';display:block;height:1px;margin:-40px calc(var(--
 .ft-top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:14px}
 .ft-nav{display:flex;gap:18px;flex-wrap:wrap}.ft-nav a{color:#aab2c0;text-decoration:none;font-weight:600;font-size:13px}.ft-nav a:hover{color:#fff}
 body>footer p{max-width:720px;line-height:1.6}
+
+/* v14 lux: siyah-altın özel salon */
+:root{--g1:#f6e4a8;--g2:#d8b45a;--g3:#9c7a35;--gl:rgba(216,180,90,.28);--sf:Georgia,"Noto Serif","Times New Roman",serif}
+::selection{background:#d8b45a;color:#120d04}
+.logo span{background:linear-gradient(180deg,var(--g1),var(--g2) 60%,var(--g3))!important;color:#160f03!important}
+.top .nav button.on{background:linear-gradient(180deg,var(--g1),var(--g2));color:#160f03}
+.btn-w,.hero .btn-w{background:linear-gradient(180deg,var(--g1),var(--g2) 62%,#b38c3c)!important;color:#160f03!important;box-shadow:0 12px 30px -10px rgba(216,180,90,.55),inset 0 1px 0 rgba(255,255,255,.6)!important}
+body>main .sec-h h2{font-family:var(--sf);font-weight:700;letter-spacing:.005em}
+body>main .card:hover .thumb::after{box-shadow:inset 0 0 0 2px var(--g2)}
+body>main .t10:hover .num{-webkit-text-stroke-color:var(--g2)}
+.tabbar button.on{color:var(--g1)}
+body>footer::before{background:linear-gradient(90deg,transparent,var(--g2),transparent)!important}
+.hero{box-shadow:0 40px 90px -30px #000,0 0 0 1px rgba(216,180,90,.14)!important}
+.hero-in h1,.hero-in h2{font-family:var(--sf);letter-spacing:-.01em}
+/* İBO TV salonu: en üstte, forvetler büyük */
+#canli.stage-top{margin:112px 28px 22px;padding:0}
+#canli.stage-top+.hero{margin-top:0}
+#liveBanner.live{grid-template-columns:minmax(320px,.85fr) 1.15fr;grid-template-areas:"txt fwd" "btn fwd";min-height:clamp(440px,58vh,600px);padding:0;gap:0 24px;border-radius:30px;border:1px solid var(--gl);background:#050506;box-shadow:0 50px 110px -40px #000,0 0 80px -40px rgba(216,180,90,.35)}
+#liveBanner::before{background:radial-gradient(70% 90% at 0 0,rgba(216,180,90,.22),transparent 60%),radial-gradient(50% 70% at 0 100%,rgba(140,10,22,.35),transparent 65%),#050506!important}
+#liveBanner>div:first-child{padding:0 0 18px clamp(28px,4vw,60px);align-self:end}
+#liveBanner>.btn{margin:0 0 clamp(28px,5vh,52px) clamp(28px,4vw,60px)}
+#liveBanner .badge{background:linear-gradient(180deg,#d10c22,#8f0010);box-shadow:0 0 0 1px rgba(255,120,130,.35)}
+#liveBanner h2{font-family:var(--sf);font-weight:700;font-size:clamp(36px,4.4vw,64px);letter-spacing:-.01em;line-height:1.02;margin:14px 0 8px}
+.ibo-mark{font-family:var(--sf);font-weight:700;letter-spacing:0;background:linear-gradient(180deg,#fff8e2,var(--g2) 70%,var(--g3));-webkit-background-clip:text;background-clip:text;color:transparent}
+.ibo-mark em{font-family:Inter,system-ui,sans-serif;font-weight:900;-webkit-text-fill-color:#fff;background:linear-gradient(180deg,#e8122a,#a3000f)}
+#liveBanner .sub{font-family:var(--sf);font-style:italic;font-size:clamp(15px,1.3vw,19px);color:rgba(246,228,168,.82);margin:4px 0 12px}
+.fwd{width:100%;height:100%;gap:0;align-self:stretch;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 16%);mask-image:linear-gradient(90deg,transparent 0,#000 16%)}
+.fwd figure,.fwd figure:nth-child(even),#liveBanner:hover .fwd figure,#liveBanner:hover .fwd figure:nth-child(even){aspect-ratio:auto;height:100%;border-radius:0;box-shadow:none;transform:none}
+.fwd figure+figure{border-left:1px solid rgba(216,180,90,.35)}
+.fwd img{object-position:50% 18%;transition:transform 1.2s cubic-bezier(.2,.7,.2,1),filter .6s;filter:saturate(1.05) contrast(1.05)}
+#liveBanner:hover .fwd img{transform:scale(1.045)}
+.fwd figure::after{background:linear-gradient(0deg,#050506 0,rgba(5,5,6,.75) 20%,transparent 50%)}
+.fwd figure::before{height:2px;top:auto;bottom:0;opacity:.9}
+.fwd figcaption{left:0;right:0;bottom:18px;align-items:center;text-align:center}
+.fwd figcaption b{font-family:var(--sf);font-weight:700;font-size:clamp(13px,1.25vw,19px);letter-spacing:.14em;background:linear-gradient(180deg,#fff8e2,var(--g2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.fwd figcaption small{margin-top:4px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+@media(max-width:860px){
+ #canli.stage-top{margin:88px 12px 16px}
+ #liveBanner.live{grid-template-columns:1fr;grid-template-areas:"fwd" "txt" "btn";min-height:0;border-radius:24px}
+ .fwd{height:clamp(240px,58vw,340px);margin:0;-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent);mask-image:linear-gradient(180deg,#000 72%,transparent)}
+ .fwd figcaption{bottom:26px}.fwd figcaption b{font-size:11px;letter-spacing:.08em}
+ #liveBanner>div:first-child{padding:0 22px 6px;margin-top:-18px;position:relative}
+ #liveBanner>.btn{margin:6px 22px 24px}
+ #liveBanner h2{font-size:clamp(32px,9vw,42px);margin:10px 0 6px}
+}
+/* v15 sinema afişi: kutusuz, kenardan kenara */
+.top,.top.solid{inset:0 0 auto!important;height:78px;padding:0 clamp(18px,4vw,56px);border:0!important;border-radius:0!important;box-shadow:none!important;background:linear-gradient(180deg,rgba(0,0,0,.88),rgba(0,0,0,.35) 70%,transparent)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.top.solid{background:rgba(4,4,5,.94)!important;box-shadow:0 1px 0 rgba(216,180,90,.25)!important}
+.top .nav{background:transparent!important;padding:0;gap:6px}
+.top .nav button,.top .nav button.on,.top .nav button:hover:not(.on){background:transparent!important;box-shadow:none!important;border-radius:0;padding:10px 14px;font-family:var(--sf);font-size:15px;letter-spacing:.04em;color:rgba(255,255,255,.62)}
+.top .nav button:hover:not(.on){color:#fff}
+.top .nav button.on{color:var(--g1)!important;box-shadow:inset 0 -2px 0 var(--g2)!important}
+.top .online{background:transparent!important;border:0!important}
+#canli.stage-top{margin:0!important;padding:0}
+#liveBanner.live{display:block;position:relative;min-height:clamp(560px,100vh,980px);border:0;border-radius:0;box-shadow:none;background:#000}
+#liveBanner::before{display:none}
+#liveBanner .fwd{position:absolute;inset:0;height:100%;display:grid;grid-template-columns:repeat(4,1fr);z-index:0;-webkit-mask-image:none;mask-image:none}
+#liveBanner .fwd::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(0deg,#000 0,rgba(0,0,0,.92) 18%,rgba(0,0,0,.35) 46%,transparent 62%),linear-gradient(90deg,rgba(0,0,0,.7),transparent 45%),radial-gradient(120% 80% at 50% 0,transparent 55%,rgba(0,0,0,.6))}
+#liveBanner .fwd figure+figure{border-left:1px solid rgba(216,180,90,.22)}
+#liveBanner .fwd figure::after{display:none}
+#liveBanner .fwd img{object-position:50% 14%}
+#liveBanner .fwd figcaption{top:96px;bottom:auto;z-index:3}
+#liveBanner>div:first-child,#liveBanner>.btn{position:relative;z-index:3}
+#liveBanner>div:first-child{position:absolute;left:clamp(22px,5vw,80px);bottom:clamp(110px,15vh,170px);padding:0;max-width:640px}
+#liveBanner>.btn{position:absolute;left:clamp(22px,5vw,80px);bottom:clamp(44px,7vh,80px);margin:0;padding:16px 34px;font-size:16px;border-radius:4px}
+#liveBanner h2{font-size:clamp(44px,6.4vw,104px);text-shadow:0 6px 40px #000}
+#liveBanner .sub{font-size:clamp(16px,1.6vw,24px)}
+.hero,#canli.stage-top+.hero{margin:0!important;border-radius:0!important;box-shadow:none!important;height:clamp(520px,86vh,900px)}
+body>main{padding-top:8px}
+@media(max-width:860px){
+ .top,.top.solid{height:62px}
+ #liveBanner.live{min-height:max(600px,92svh)}
+ #liveBanner .fwd figcaption{top:76px}
+ #liveBanner .fwd figcaption b{font-size:10px;letter-spacing:.06em}
+ #liveBanner .fwd figcaption small{font-size:8px;letter-spacing:.1em}
+ #liveBanner>div:first-child{left:20px;right:20px;bottom:104px}
+ #liveBanner>.btn{left:20px;right:20px;bottom:34px;justify-content:center}
+ #liveBanner h2{font-size:clamp(40px,12vw,56px)}
+ .hero{height:78svh}
+}
+#liveBanner .fwd figcaption{display:none}
+.tabbar{left:0!important;right:0!important;bottom:0!important;border-radius:0!important;border:0!important;border-top:1px solid rgba(216,180,90,.22)!important;background:rgba(3,3,4,.96)!important;box-shadow:none!important}
+.tabbar button.on{background:transparent!important}
+#liveBanner.live{min-height:clamp(440px,66vh,700px)}
+.hero,#canli.stage-top+.hero{height:clamp(400px,58vh,620px)!important;min-height:400px}
+@media(max-width:860px){#liveBanner.live{min-height:max(500px,70svh)}.hero,#canli.stage-top+.hero{height:62svh!important;min-height:380px}}
 </style>
 </head>
 <body>
@@ -371,6 +457,24 @@ body>footer p{max-width:720px;line-height:1.6}
  </div>
 </header>
 
+ <section class="sec wrap stage-top" id="canli" aria-label="İBO TV Canlı">
+  <button type="button" class="live" id="liveBanner" aria-label="Canlı TV'yi aç">
+   <div>
+    <span class="badge"><i class="dot"></i>CANLI</span>
+    <h2><span class="ibo-mark">İBO<em>TV</em></span> Canlı</h2>
+    <p class="sub">Dev forvetler, büyük maçlar. Özel salonunuz hazır.</p>
+    <p><i class="st" id="liveDot"></i><span id="liveLabel">Yayın kontrol ediliyor…</span></p>
+   </div>
+   <span class="btn btn-w"><svg class="f" viewBox="0 0 24 24"><path d="m7 4 13 8-13 8z"/></svg>Canlı izle</span>
+   <div class="fwd" aria-hidden="true">
+    <figure class="gs"><img src="/img/f_gs.webp" alt="" fetchpriority="high" decoding="async"><figcaption><b>OSIMHEN</b><small>Galatasaray</small></figcaption></figure>
+    <figure class="fb"><img src="/img/f_fb.webp" alt="" fetchpriority="high" decoding="async"><figcaption><b>LUKAKU</b><small>Fenerbahçe</small></figcaption></figure>
+    <figure class="bjk"><img src="/img/f_bjk.webp" alt="" fetchpriority="high" decoding="async"><figcaption><b>VLAHOVIĆ</b><small>Beşiktaş</small></figcaption></figure>
+    <figure class="ts"><img src="/img/f_ts.webp" alt="" fetchpriority="high" decoding="async"><figcaption><b>ONUACHU</b><small>Trabzonspor</small></figcaption></figure>
+   </div>
+  </button>
+ </section>
+
 <section class="hero" id="home" aria-label="Öne çıkanlar">
  <div id="heroImgs"></div>
  <div class="hero-in" id="heroIn"></div>
@@ -383,23 +487,6 @@ body>footer p{max-width:720px;line-height:1.6}
   <div class="rail" id="contRail"></div>
  </section>
 
- <section class="sec wrap" id="canli">
-  <button type="button" class="live" id="liveBanner" aria-label="Canlı TV'yi aç">
-   <div>
-    <span class="badge"><i class="dot"></i>CANLI</span>
-    <h2><span class="ibo-mark">İBO<em>TV</em></span> Canlı</h2>
-    <p class="sub">Süper Lig’in dev forvetleri, maç heyecanı tek tıkla.</p>
-    <p><i class="st" id="liveDot"></i><span id="liveLabel">Yayın kontrol ediliyor…</span></p>
-   </div>
-   <span class="btn btn-w"><svg class="f" viewBox="0 0 24 24"><path d="m7 4 13 8-13 8z"/></svg>Canlı izle</span>
-   <div class="fwd" aria-hidden="true">
-    <figure class="gs"><img src="/img/f_gs.webp" alt="" loading="lazy" decoding="async"><figcaption><b>OSIMHEN</b><small>Galatasaray</small></figcaption></figure>
-    <figure class="fb"><img src="/img/f_fb.webp" alt="" loading="lazy" decoding="async"><figcaption><b>LUKAKU</b><small>Fenerbahçe</small></figcaption></figure>
-    <figure class="bjk"><img src="/img/f_bjk.webp" alt="" loading="lazy" decoding="async"><figcaption><b>VLAHOVIĆ</b><small>Beşiktaş</small></figcaption></figure>
-    <figure class="ts"><img src="/img/f_ts.webp" alt="" loading="lazy" decoding="async"><figcaption><b>ONUACHU</b><small>Trabzonspor</small></figcaption></figure>
-   </div>
-  </button>
- </section>
 
  <section class="sec" id="newSec" hidden>
   <div class="sec-h"><h2>Yeni eklenen filmler<small id="newInfo"></small></h2></div>
@@ -515,7 +602,7 @@ function card(c,it,opts={}){
  const b=el('button','card');b.type='button';
  const th=el('div','thumb');th.append(pimg(it,name(c,it)));
  if(it.d)th.append(el('span','dur',dur(it.d)));
- if(it.x)th.append(el('span','ext','↗ Harici'));
+
  if(it.new)th.append(el('span','newb','YENİ'));
  const pi=el('div','play-ic');pi.innerHTML='<span><svg class="f" viewBox="0 0 24 24"><path d="m7 4 13 8-13 8z"/></svg></span>';th.append(pi);
  if(opts.prog){const p=el('div','prog');const i=el('i');i.style.width=opts.prog+'%';p.append(i);th.append(p)}
@@ -583,7 +670,7 @@ $('q').oninput=()=>{const q=$('q').value.trim().toLocaleLowerCase('tr'),g=$('qGr
 function play(c,it){
  if(!playable(it)){toast('Bu içerik şu an oynatılamıyor.');return}
  remember(c,it.n);renderCont();
- if(it.x){window.open('https://www.youtube.com/watch?v='+it.id,'_blank','noopener,noreferrer');toast('Bu bölüm YouTube\'da açılıyor.');return}
+ if(it.x){toast('Bu içerik şu an oynatılamıyor.');return}
  pl={c,n:it.n};$('plTitle').textContent=name(c,it);$('plSub').textContent=COLS[c].title+(COLS[c].kind==='Dizi'?' · '+it.n+'. Bölüm':'')+(it.d?' · '+dur(it.d):'');
  openOv('play');plLoad(it);nav()}
 function neighbor(step){if(!pl)return null;const a=(D[pl.c]||[]).filter(playable);const i=a.findIndex(x=>x.n===pl.n);return a[i+step]||null}
@@ -603,7 +690,7 @@ function tick(){if(!YP||!YP.getCurrentTime)return;const d=YP.getDuration()||0,t=
 function plState(e){const st=e.data;$('cPlay').innerHTML=st===1?PAUSE_SVG:PLAY_SVG;
  if(st===1){ypStarted=true;clearTimeout(ypAsk);cov('off')}
  if(st===0){const n=neighbor(1);if(n&&!n.x){step(1)}else cov('ask','Film bitti. Tekrar izlemek için Oynat\u2019a bas.')}}
-function plErr(e){clearTimeout(ypAsk);const it=ypIt;cov('err','Bu film şu an İBO oynatıcısında açılamıyor (yapımcı kısıtlaması).');$('cvPlayTx').textContent='Harici oynatıcıda aç';$('cvPlay').onclick=()=>{if(it)window.open('https://www.youtube.com/watch?v='+it.id,'_blank','noopener,noreferrer')}}
+function plErr(e){clearTimeout(ypAsk);const it=ypIt;const n=neighbor(1);cov('err','Bu içerik şu an açılamıyor.');if(n){$('cvPlayTx').textContent='Sonrakini izle';$('cvPlay').onclick=()=>step(1)}else{$('cvPlayTx').textContent='Kapat';$('cvPlay').onclick=()=>closeTop()}}
 async function plLoad(it){ypIt=it;ypStarted=false;clearTimeout(ypAsk);
  const ci=$('plCovImg');ci.onerror=()=>{if(!ci.dataset.f){ci.dataset.f=1;crop(ci,null);ci.src=yt(it.id)}};delete ci.dataset.f;crop(ci,it);ci.src=pic(it);
  $('cvPlayTx').textContent='Oynat';$('cvPlay').onclick=()=>{if(YP&&YP.playVideo){YP.playVideo();cov('','Film başlıyor…')}};
@@ -663,7 +750,7 @@ function presence(){beat();setInterval(beat,25000);document.addEventListener('vi
 
 /* init */
 async function init(){
- try{const r=await fetch('/catalog.json',{cache:'no-store'});D=(await r.json()).sections||{}}catch{D={}}
+ try{const r=await fetch('/catalog.json',{cache:'no-store'});D=(await r.json()).sections||{};for(const k in D)if(Array.isArray(D[k]))D[k]=D[k].filter(it=>it&&!it.x)}catch{D={}}
  if(!Object.keys(D).length){$('heroIn').append(el('h1','','Katalog yüklenemedi'),el('p','','Sayfayı yenilemeyi dene.'));return}
  hero();renderCont();
  const tr=$('topRail');TOP.forEach(([c,n],i)=>{const it=find(c,n);if(!it||!okId(it.id))return;const b=el('button','t10');b.type='button';b.setAttribute('aria-label',(i+1)+'. '+name(c,it));
